@@ -1,5 +1,5 @@
 import React from 'react';
-
+import LoginForm from './forms/LoginForm';
 function Home() {
     return (
         <div className="container">
