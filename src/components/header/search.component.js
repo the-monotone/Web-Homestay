@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { Form, Input, ListGroup, ListGroupItem, Button} from 'reactstrap';
 import "react-datepicker/dist/react-datepicker.css";
-import './SearchForm.css';
+import './search.css';
 import { autocompleteApi, placeDetailApi } from '../../api/goong.api';
 import useSearch from '../../hook/useSearch';
 

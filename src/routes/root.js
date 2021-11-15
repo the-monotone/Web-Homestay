@@ -1,16 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
-import Header from './header/HeaderComponent';
-import Home from './HomeComponent';
-import Host from './HostComponent';
+import HomePage from '../pages/home.page';
+import HostPage from '../pages/host.page';
 
 function Root() {
     return (
         <BrowserRouter>
-            <Header />
             <Switch>
-                <Route path="/home" component={Home} />
-                <Route path="/host" component={Host} />
+                <Route path="/home" component={HomePage} />
+                <Route path="/host" component={HostPage} />
                 <Redirect to="/home" />
             </Switch>
         </BrowserRouter>   
