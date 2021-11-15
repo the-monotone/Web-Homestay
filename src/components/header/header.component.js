@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, {useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import {Button, Collapse, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalHeader, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem} from 'reactstrap';
-import  './header.css';
+import  './header.component.css';
 import SearchForm from './search.component';
 
 function Header() {
