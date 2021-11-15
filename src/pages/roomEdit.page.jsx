@@ -15,6 +15,7 @@ export const RoomEdit = () => {
   const { dispatch } = useContext(ManagerRoomContext);
 
   const location = useLocation();
+  console.log(location);
   const {room} = location.state;
   console.log(room);
 
