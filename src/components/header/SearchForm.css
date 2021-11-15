@@ -1,0 +1,22 @@
+#select-guest {
+    position: absolute;
+    width: fit-content;
+    right: 0px;
+    padding: 10px;
+}
+
+#search-place {
+    background-color: white;
+    position: absolute;
+    width: fit-content;
+    left: 0px;
+    padding: 10px;
+}
+
+.form-background {
+    background-color: lightgrey;
+}
+
+.input {
+    width: 100%;
+}

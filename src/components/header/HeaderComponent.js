@@ -1,21 +1,25 @@
-import { faAddressCard, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faAddressCard, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, {useState} from 'react';
 import { NavLink } from 'react-router-dom';
-import {Collapse, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalHeader, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem } from 'reactstrap';
-import LoginForm from './forms/LoginForm';
+import {Button, Collapse, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalHeader, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem} from 'reactstrap';
+import  './Header.css';
+import SearchForm from './SearchForm';
 
 function Header() {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isCollapse, setCollapse] = useState(false);
     const [isLoginModal, setLoginModal] = useState(false);
+    const [isSearchModal, setSearchModal] = useState(false);
 
     const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
     const toggleNavbar = () => setCollapse(prevState => !prevState);
     const toggleLoginModal = () => setLoginModal(prevState => !prevState);
+    const toggleSearchModal = () => setSearchModal(prevState => !prevState);
+
     return (
-        <Navbar light expand="md">
-            <div className="container">
+        <Navbar id="nav-bar" light expand="md" className="flex-column ms-3 me-3">
+            <div className="d-md-flex flex-row align-self-stretch">
                 <NavbarToggler onClick={toggleNavbar} />
                 <NavbarBrand href="/home" className="me-auto">Homestay</NavbarBrand>
                 <Collapse navbar isOpen={isCollapse}>
@@ -32,6 +36,12 @@ function Header() {
                                 {' '}Trở thành chủ nhà
                             </NavLink>
                         </NavItem>
+                    </Nav>
+                    <Nav navbar className="m-auto">
+                        <Button id="search-bar" className="gray-border shadow round-radius" color="transparent" onClick={toggleSearchModal}>
+                            <div>Bắt đầu tìm kiếm</div>
+                            <FontAwesomeIcon className="fa-lg search-icon" icon={faSearch} />
+                        </Button>
                     </Nav>
                     <Nav navbar className="ms-auto">
                         <NavItem>
@@ -52,9 +62,11 @@ function Header() {
                 <Modal isOpen={isLoginModal} toggle={toggleLoginModal}>
                     <ModalHeader toggle={toggleLoginModal}>Đăng nhập</ModalHeader>
                     <ModalBody>
-                        <LoginForm />
                     </ModalBody>
                 </Modal>
+            </div>
+            <div className="align-self-center m-2">
+                {isSearchModal && <SearchForm />}
             </div>
         </Navbar>
     )

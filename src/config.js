@@ -1,0 +1,1 @@
+export const GOONG_API_KEY = '5g7HMezGJa74Ivh2V3nxMGwNz5A23HxaYxtSTV3d';

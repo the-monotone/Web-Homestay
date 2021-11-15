@@ -1,0 +1,21 @@
+#search-bar {
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+}
+
+.gray-border {
+    border: 1px solid #aeaeae ;
+}
+
+.gray-border-right {
+    border-right: 1px solid #aeaeae;
+}
+
+.round-radius {
+    border-radius: 0.3rem;
+}
+
+.shadow {
+    box-shadow: 1px 1px 5px;
+}
