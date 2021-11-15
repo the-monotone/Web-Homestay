@@ -11,3 +11,116 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* My Css */
+.card {
+  border: 2px solid rgba(0,0,0,.125)
+}
+
+.checked {
+  background-color: rgba(74, 240, 102, 0.808);
+}
+
+.facility-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.myCard {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 2px solid rgba(0,0,0,.125);
+  border-radius: 10px;
+}
+
+.myCard:hover {
+  background-color: rgba(129, 199, 231, 0.541);
+  cursor: pointer;
+}
+
+.card-text {
+  
+}
+
+.field-inline-2 {
+  display: flex;
+}
+
+.dis-flex {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.dis-flex span {
+  margin: 5px 5px;
+  border-radius: 50%;
+  justify-content: center;
+}
+i {
+  font-size: 25px;
+  margin: 5px 5px;
+  color: rgb(236, 78, 20);
+}
+
+i:hover {
+  cursor: pointer;
+}
+
+.number-input input {
+  border-radius: 30px;
+  text-align: center;
+}
+
+input {
+  align-self: center;
+  height: 40px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+-moz-appearance: textfield;
+}
+
+/* Room manager */
+
+/*Card*/
+.card-carousel {
+  width: 100%;
+}
+
+.my-badge {
+  margin-right: 5px;
+}
+
+.card {
+  height: 100%;
+  width: 540px;
+  display: inline;
+}
+
+#link-edit-button {
+  position: relative;
+  text-decoration: none;
+  color: black;
+}
+
+#my-card {
+  max-width: 540px;
+  margin-bottom: 20px;
+}
+
+#room-list-block {
+  max-width: 600px;
+}
+
