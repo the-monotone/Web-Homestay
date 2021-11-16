@@ -4,3 +4,9 @@ export const CHANGE_ENDDATE = "CHANGE_ENDDATE";
 export const CHANGE_ADULT_GUEST = "CHANGE_ADULT_GUEST";
 export const CHANGE_CHILD_GUEST = "CHANGE_CHILD_GUEST";
 export const CHANGE_BABY_GUEST = "CHANGE_BABY_GUEST";
+
+export const ADD_ROOM = 'ADD_ROOM'
+export const DELETE_ROOM = 'DELETE_ROOM'
+export const UPDATE_ROOM = 'UPDATE_ROOM'
+export const GET_ROOM = 'GET_ROOM'
+export const SAVE_ROOM = 'SAVE_ROOM'

@@ -7,7 +7,7 @@ import { MultiSelect } from "../components/forms/MultiSelect";
 import { NumField } from "../components/forms/NumField";
 import { RoomContext } from "../context/roomContext";
 import { ManagerRoomContext } from "../context/managerRoomContext";
-import { ADD_ROOM } from "../reducer/type";
+import { ADD_ROOM } from "../reducer/actionTypes";
 
 export const RoomSignUp = () => {
   const { roomType, roomFacility } = useContext(RoomContext);

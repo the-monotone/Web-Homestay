@@ -8,7 +8,7 @@ import { NumField } from "../components/forms/NumField";
 import { RoomContext } from "../context/roomContext";
 import { ManagerRoomContext } from "../context/managerRoomContext";
 import { useLocation } from 'react-router-dom'
-import { UPDATE_ROOM } from "../reducer/type";
+import { UPDATE_ROOM } from "../reducer/actionTypes";
 
 export const RoomEdit = () => {
   const { roomType, roomFacility } = useContext(RoomContext);
