@@ -27,7 +27,7 @@ function Root() {
                         <RoomContextProvider>
                             <Route path='/' element={<Signup />} />
                             <Route path='/roomsignup' element={<RoomSignUp/>} />
-                            <Route path='/roomedit' element={<RoomEdit/>} />
+                            <Route path='/roomedit' element={<RoomEdit />} />
                             <Route path='/roommanager' element = {<RoomManager/>} />
                         </RoomContextProvider>
                     </RoomListProvider>
