@@ -25,7 +25,7 @@ function Header() {
                 <Collapse navbar isOpen={isCollapse}>
                     <Nav navbar>
                         <NavItem>
-                            <NavLink to="/home" className="nav-link">
+                            <NavLink to="/" className="nav-link">
                                 <FontAwesomeIcon className="fa-lg" icon={faHome}/>
                                 {' '}Trang chủ
                             </NavLink>

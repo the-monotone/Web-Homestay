@@ -4,7 +4,7 @@ import {
     UPDATE_ROOM,
     GET_ROOM,
     SAVE_ROOM
-} from './type'
+} from './actionTypes'
 
 
 const RANDOM_RANGE = 100000;

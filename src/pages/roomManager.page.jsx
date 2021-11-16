@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { RoomCard } from '../components/forms/RoomCard';
 import { Row, Button } from 'react-bootstrap'
 import { ManagerRoomContext } from '../context/managerRoomContext';
-import { GET_ROOM } from '../reducer/type';
+import { GET_ROOM } from '../reducer/actionTypes';
 
 export const RoomManager = () => {
 
