@@ -12,8 +12,6 @@
     cursor: pointer;
 }
 
-.myButton:active {
-}
 
 .myButton span {
     width: 100%;

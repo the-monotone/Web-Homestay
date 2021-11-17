@@ -6,7 +6,7 @@
 .edit-card-button {
   position: absolute;
   right: 0;
-  top: 0;
+  bottom: 50%;
   height: 50%;
   width: 70px;
   border-top-right-radius: 3px;
@@ -62,7 +62,7 @@
   width: 0;
 }
 
-.my-card .remove-card-button span {
+.my-card .remove-card-button span { 
   opacity: 0;
 }
 
@@ -77,3 +77,37 @@
   transition-delay: 0.5s;
 }
 
+@media only screen and (max-width: 770px) {
+  .edit-card-button {
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    height: 50px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 3px;
+  }
+  .remove-card-button {
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    height: 50px;
+  }
+  .my-card .edit-card-button span {
+
+    height: 20px;
+  }
+  .my-card .remove-card-button span {
+    height: 20px;
+  }
+
+  .my-card:hover .remove-card-button {
+    visibility: visible;
+    width: 50%;
+    transition: width 1.5s;
+  }
+  .my-card:hover .edit-card-button {
+    visibility: visible;
+    width: 50%;
+    transition: width 1.5s;
+  }
+}
