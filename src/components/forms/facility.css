@@ -1,0 +1,14 @@
+.myFacility {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 2px solid rgba(0, 0, 0, 0.125);
+  border-radius: 10px;
+}
+
+.myFacility:hover {
+  background-color: rgba(129, 199, 231, 0.541);
+  cursor: pointer;
+}

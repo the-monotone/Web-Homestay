@@ -15,6 +15,7 @@ const RoomListProvider = ({children}) => {
             payload: null
         })
     },[])
+    
     useEffect(() => {
         dispatch({
             type: 'SAVE_ROOM',

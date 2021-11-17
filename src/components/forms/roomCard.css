@@ -1,0 +1,79 @@
+.my-card {
+  height: 100%;
+}
+
+
+.edit-card-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 50%;
+  width: 70px;
+  border-top-right-radius: 3px;
+  background-color:rgb(80, 121, 255);
+
+}
+.edit-card-button:hover {
+  background-color: rgb(10, 74, 248);
+}
+.edit-card-button:active {
+  background-color: rgb(13, 9, 248);
+}
+
+.my-card .edit-card-button {
+  visibility: hidden;
+  width: 0;
+}
+
+.my-card .edit-card-button span {
+  opacity: 0;
+}
+
+.my-card:hover .edit-card-button {
+  visibility: visible;
+  width: 70px;
+  transition: width 1.5s;
+}
+
+.my-card:hover .edit-card-button span {
+  opacity: 1;
+  transition: opacity 1s;
+  transition-delay: 0.5s;
+}
+
+.remove-card-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  width: 70px;
+  border-bottom-right-radius: 3px;
+  background-color: rgb(236, 30, 30);
+}
+.remove-card-button:hover {
+  background-color: rgb(248, 6, 6);
+}
+.remove-card-button:active {
+  background-color: rgb(204, 8, 8);
+}
+
+.my-card .remove-card-button {
+  visibility: hidden;
+  width: 0;
+}
+
+.my-card .remove-card-button span {
+  opacity: 0;
+}
+
+.my-card:hover .remove-card-button {
+  visibility: visible;
+  width: 70px;
+  transition: width 1.5s;
+}
+.my-card:hover .remove-card-button span {
+  opacity: 1;
+  transition: opacity 1s;
+  transition-delay: 0.5s;
+}
+

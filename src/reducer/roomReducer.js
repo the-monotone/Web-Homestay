@@ -23,8 +23,10 @@ export const roomReducer = (state, action) => {
         case GET_ROOM:
         {
             console.log("Getting room list...");
+            let tempRoomList = [];
             const rooms = localStorage.getItem('roomlist');
-            if (rooms) state = JSON.parse(rooms);
+            if (rooms) tempRoomList = JSON.parse(rooms);
+            if (tempRoomList.length > 0) state = tempRoomList;
             return state;
         }
         case SAVE_ROOM:
@@ -45,14 +47,20 @@ export const roomReducer = (state, action) => {
         case DELETE_ROOM:
         {
             let tempRoomList = [...state];
-            tempRoomList = tempRoomList.filter(_room => _room !== payload.room )
+            tempRoomList = tempRoomList.filter(_room => _room.id !== payload)
             console.log('Deleted');
             return tempRoomList;
         }
         case UPDATE_ROOM: 
         {
+            let tempRoomList = [...state];
+            for (let i in tempRoomList) {
+                if (tempRoomList[i].id === payload.id) {
+                    tempRoomList[i] = {...payload};
+                }
+            }
             console.log('Updated');
-            return state;
+            return tempRoomList;
         }
         default:
             return state;

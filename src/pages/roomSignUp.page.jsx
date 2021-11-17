@@ -8,10 +8,14 @@ import { NumField } from "../components/forms/NumField";
 import { RoomContext } from "../context/roomContext";
 import { ManagerRoomContext } from "../context/managerRoomContext";
 import { ADD_ROOM } from "../reducer/actionTypes";
+import { useNavigate } from "react-router";
 
 export const RoomSignUp = () => {
   const { roomType, roomFacility } = useContext(RoomContext);
   const { dispatch } = useContext(ManagerRoomContext);
+
+  const navigate = useNavigate();
+
 
   const validate = Yup.object({
     name: Yup.string().required("Bắt buộc"),
@@ -47,6 +51,7 @@ export const RoomSignUp = () => {
       type: ADD_ROOM,
       payload: room
     })
+    navigate('/roommanager')
   };
 
   const initialValue = {
@@ -61,6 +66,7 @@ export const RoomSignUp = () => {
     num_bedroom: 0,
     price: 0.0,
   };
+
 
   return (
     <Formik

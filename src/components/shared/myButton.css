@@ -1,0 +1,20 @@
+.myButton {
+    text-align: center;
+    display: flex;
+}
+.myButton span {
+    margin: auto;
+    color:white;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.myButton:hover {   
+    cursor: pointer;
+}
+
+.myButton:active {
+}
+
+.myButton span {
+    width: 100%;
+}

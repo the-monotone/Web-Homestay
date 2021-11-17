@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { SelectButton } from "../components/forms/SelectButton";
@@ -7,18 +7,19 @@ import { MultiSelect } from "../components/forms/MultiSelect";
 import { NumField } from "../components/forms/NumField";
 import { RoomContext } from "../context/roomContext";
 import { ManagerRoomContext } from "../context/managerRoomContext";
-import { useLocation } from 'react-router-dom'
-import { UPDATE_ROOM } from "../reducer/actionTypes";
+import { useLocation, useNavigate } from 'react-router-dom'
+import { UPDATE_ROOM, DELETE_ROOM } from "../reducer/actionTypes";
+import { Button } from 'react-bootstrap'
 
 export const RoomEdit = () => {
   const { roomType, roomFacility } = useContext(RoomContext);
   const { dispatch } = useContext(ManagerRoomContext);
 
   const location = useLocation();
-  console.log(location);
   const {room} = location.state;
-  console.log(room);
 
+
+  const navigate = useNavigate();
 
   const validate = Yup.object({
     name: Yup.string().required("Bắt buộc"),
@@ -50,11 +51,21 @@ export const RoomEdit = () => {
   });
 
   const onSubmit = (_room) => {
+    console.log('Update: ', _room);
     dispatch({
       type: UPDATE_ROOM,
       payload: _room
     })
+    navigate(-1);
   };
+  
+  const onDelete = () => {
+    dispatch({
+      type: DELETE_ROOM,
+      payload: room.id
+    })
+    navigate(-1);
+  }
 
   const initialValue = room;
 
@@ -112,15 +123,16 @@ export const RoomEdit = () => {
               pos="col-md-6"
             />
 
-            <button className="btn btn-dark mt-3" type="update">
-              Sửa
-            </button>
-            <button className="btn btn-dark mt-3 ms-3" type="delete">
-              Xoá
-            </button>
-            <button className="btn btn-danger mt-3 ms-3" type="reset">
-              Huỷ
-            </button>
+              <Button variant="outline-success" className="mt-3" type="submit">
+                Lưu thay đổi
+              </Button>
+              <Button variant="outline-danger" className="mt-3 ms-3" type="button" onClick={onDelete}>
+                Xoá phòng
+              </Button>
+              <Button variant="outline-danger" className="mt-3 ms-3" type="reset">
+                Huỷ thay đổi
+              </Button>
+
           </Form>
         </div>
       )}
