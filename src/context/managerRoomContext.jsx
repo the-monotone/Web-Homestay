@@ -6,7 +6,6 @@ export const ManagerRoomContext = createContext();
 
 const RoomListProvider = ({children}) => {
 
-
     const [roomList, dispatch] = useReducer(roomReducer, RoomList);
 
     useEffect(() => {

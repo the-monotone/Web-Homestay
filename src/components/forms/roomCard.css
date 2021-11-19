@@ -32,13 +32,13 @@
 .my-card:hover .edit-card-button {
   visibility: visible;
   width: 70px;
-  transition: width 1.5s;
+  transition: width 0.75s;
 }
 
 .my-card:hover .edit-card-button span {
   opacity: 1;
-  transition: opacity 1s;
-  transition-delay: 0.5s;
+  transition: opacity 0.75s;
+  transition-delay: 0.25s;
 }
 
 .remove-card-button {
@@ -69,12 +69,12 @@
 .my-card:hover .remove-card-button {
   visibility: visible;
   width: 70px;
-  transition: width 1.5s;
+  transition: width 0.75s;
 }
 .my-card:hover .remove-card-button span {
   opacity: 1;
-  transition: opacity 1s;
-  transition-delay: 0.5s;
+  transition: opacity 0.75s;
+  transition-delay: 0.25s;
 }
 
 @media only screen and (max-width: 770px) {
@@ -103,11 +103,11 @@
   .my-card:hover .remove-card-button {
     visibility: visible;
     width: 50%;
-    transition: width 1.5s;
+    transition: width 1s;
   }
   .my-card:hover .edit-card-button {
     visibility: visible;
     width: 50%;
-    transition: width 1.5s;
+    transition: width 1s;
   }
 }

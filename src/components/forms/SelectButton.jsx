@@ -6,7 +6,7 @@ export const SelectButton = ({label, ...props}) => {
 
 
     return(
-        <div className="mb-3">
+        <div className={props.pos}>
             <label htmlFor={field.name}>{label}</label>
             <div>
                 <select id={field.name} name = {field.name} value={field.value} className="form-select" {...field}>
