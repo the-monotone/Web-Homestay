@@ -8,7 +8,7 @@
   right: 0;
   bottom: 50%;
   height: 50%;
-  width: 70px;
+  width: 65px;
   border-top-right-radius: 3px;
   background-color:rgb(80, 121, 255);
 
@@ -31,7 +31,7 @@
 
 .my-card:hover .edit-card-button {
   visibility: visible;
-  width: 70px;
+  width: 65px;
   transition: width 0.75s;
 }
 
@@ -46,7 +46,7 @@
   right: 0;
   bottom: 0;
   height: 50%;
-  width: 70px;
+  width: 65px;
   border-bottom-right-radius: 3px;
   background-color: rgb(236, 30, 30);
 }
@@ -68,13 +68,17 @@
 
 .my-card:hover .remove-card-button {
   visibility: visible;
-  width: 70px;
+  width: 65px;
   transition: width 0.75s;
 }
 .my-card:hover .remove-card-button span {
   opacity: 1;
   transition: opacity 0.75s;
   transition-delay: 0.25s;
+}
+
+.carouse-inner{
+  max-height: 80px;
 }
 
 @media only screen and (max-width: 770px) {
@@ -110,4 +114,8 @@
     width: 50%;
     transition: width 1s;
   }
+}
+
+img {
+  max-height: 150px; 
 }

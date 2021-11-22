@@ -10,7 +10,9 @@ import { ManagerRoomContext } from "../context/managerRoomContext";
 import { ADD_ROOM } from "../reducer/actionTypes";
 import { useNavigate } from "react-router";
 import { Button, Row, ProgressBar } from "react-bootstrap";
-import './roomSignup.page.css'
+import './roomSignup.page.css';
+import { useSpring, animated } from 'react-spring'
+import { ImageForm } from "../components/forms/ImageForm";
 
 export const RoomSignUp = () => {
   const { roomType, roomFacility } = useContext(RoomContext);
@@ -18,7 +20,9 @@ export const RoomSignUp = () => {
 
   const navigate = useNavigate();
 
+
   const onSubmit = async (room) => {
+    console.log(room)
     await dispatch({
       type: ADD_ROOM,
       payload: room,
@@ -37,19 +41,27 @@ export const RoomSignUp = () => {
     num_bed: 0,
     num_bedroom: 0,
     num_bathroom: 0,
-    price: 0.0,
+    price: 23012.13,
   };
 
   return (
     <FormikStepper initialValues={initialValue} onSubmit={onSubmit}>
       <Form>
+        <FormikStep>
+          <ImageForm 
+            label="Ảnh"
+            name="image"
+            type="file"
+            pos="col-md-12 image-field"
+          />
+        </FormikStep>
         <FormikStep
           validationSchema={Yup.object({
             name: Yup.string().required("Bắt buộc"),
           })}
           className="room-name-field"
         >
-          <TextField label="Tên phòng" name="name" type="text" pos="col-8" />
+          <TextField name="name" type="text" pos="col-8" />
         </FormikStep>
         <FormikStep
           validationSchema={Yup.object({
@@ -58,7 +70,6 @@ export const RoomSignUp = () => {
           className = "room-type-field"
         >
           <SelectButton
-            label="Phòng của bạn thuộc loại phòng nào?"
             name="room_type"
             options={roomType}
             pos="col-8"
@@ -120,6 +131,7 @@ export const RoomSignUp = () => {
             options={roomFacility}
           />
         </FormikStep>
+        
         <FormikStep
           validationSchema={Yup.object({
             price: Yup.number()
@@ -139,12 +151,14 @@ export const RoomSignUp = () => {
           })}
           className = "room-price-field"
         >
+          <div className = "price-group">
           <NumField
-            label="Giá phòng"
             name="price"
             type="number"
-            pos="col-md-8"
+            pos="col-md-12 price-input"
           />
+          <div className="price-description"><span>đ</span> mỗi đêm</div>
+          </div>
         </FormikStep>
       </Form>
     </FormikStepper>
@@ -152,7 +166,11 @@ export const RoomSignUp = () => {
 };
 
 export const FormikStep = ({ children }) => {
-  return <>{children}</>;
+  const styleAnimate = useSpring({
+    from: {opacity: 0, y: 100},
+    to: {opacity: 1, y: 0}
+  })
+  return <animated.div style={styleAnimate} className="input-wrap">{children}</animated.div>;
 };
 
 export const FormikStepper = ({ children, ...props }) => {
@@ -164,6 +182,11 @@ export const FormikStepper = ({ children, ...props }) => {
   function isLastStep() {
     return step === childrenArray.length - 1;
   }
+  
+  const styleAnimate = useSpring({
+    from: {opacity: 0, y: 100},
+    to: {opacity: 1, y: 0}
+  })
 
   function getTitle(classNam) {
     switch(classNam) {
@@ -197,7 +220,7 @@ export const FormikStepper = ({ children, ...props }) => {
         <Form>
           <Row className="input-step">
             <div className="label-field">
-              <div className="title">{getTitle(currentChild.props.className)}</div>
+              <animated.div style={styleAnimate}><div className="title">{getTitle(currentChild.props.className)}</div></animated.div>
             </div>
             <div className="input-field">
               <div className = "input-row">{currentChild}</div>

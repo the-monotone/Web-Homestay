@@ -1,0 +1,11 @@
+.roomlist-container {
+    background-color: rgb(232, 237, 240);
+    border-radius: 10px;
+    padding-bottom: 10px;
+    min-height: 180px;
+}
+.roomlist-container p {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}

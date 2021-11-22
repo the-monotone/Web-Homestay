@@ -1,0 +1,21 @@
+img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.upload-image-label {
+    background-color: rgb(20, 179, 123);
+    color: white;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+.upload-image-label:active {
+    background-color: rgb(9, 133, 89);
+}
+.image-field {
+    align-content: center;
+    justify-content: center;
+}

@@ -7,6 +7,7 @@ export const MultiSelect = ({label, ...props}) => {
     const [field, ,helper] = useField(props);
         
     const [facilities, setFacilities] = useState(field.value);
+
     
     useEffect(() => {
         setFacilities([...field.value]);

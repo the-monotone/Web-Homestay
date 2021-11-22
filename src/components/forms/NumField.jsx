@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {ErrorMessage, useField } from "formik";
+import "./input.css";
 
 export const NumField = ({label, ...props}) => {
 
