@@ -5,7 +5,6 @@ import { Signup } from '../pages/signUp.page';
 import {RoomSignUp} from '../pages/roomSignUp.page';
 import { RoomEdit } from '../pages/roomEdit.page';
 import { RoomManager } from '../pages/roomManager.page';
-
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import {
