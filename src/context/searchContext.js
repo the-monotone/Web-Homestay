@@ -12,11 +12,7 @@ const initialState = {
     },
     startDate: null,
     endDate: null,
-    guest: {
-        adult: 0,
-        child: 0,
-        baby: 0
-    }
+    guest: 0
 };
 
 const SearchContextProvider = ({children}) => {
@@ -30,22 +26,14 @@ const SearchContextProvider = ({children}) => {
     const changeEndDate = payload => {
         dispatch({type: ActionTypes.CHANGE_ENDDATE, payload});
     }
-    const changeAdultGuest = payload => {
-        dispatch({type: ActionTypes.CHANGE_ADULT_GUEST, payload});
-    }
-    const changeChildGuest = payload => {
-        dispatch({type: ActionTypes.CHANGE_CHILD_GUEST, payload});
-    }
-    const changeBabyGuest = payload => {
-        dispatch({type: ActionTypes.CHANGE_BABY_GUEST, payload});
+    const changeGuest = payload => {
+        dispatch({type: ActionTypes.CHANGE_GUEST, payload});
     }
     const contextValue = {
         changePlace,
         changeStartDate,
         changeEndDate,
-        changeAdultGuest,
-        changeChildGuest,
-        changeBabyGuest,
+        changeGuest,
         ...state
     }
 

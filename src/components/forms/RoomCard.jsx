@@ -9,7 +9,7 @@ import { ManagerRoomContext } from '../../context/managerRoomContext';
 import { DELETE_ROOM } from '../../reducer/actionTypes';
 
 
-export const RoomCard = ({room}) => {
+export const RoomCard = ({onClick, isEditable, room}) => {
 
     const {dispatch} = useContext(ManagerRoomContext);
 
@@ -34,25 +34,27 @@ export const RoomCard = ({room}) => {
                         </Carousel>
                     </Col>
                     <Col md="8">
-                        <Card.Body>
+                        <Card.Body onClick={onClick}>
                             <Card.Title>{room.name}</Card.Title>
                             <Badge pill>{`${room.num_guest} khách`}</Badge>{' '}
                             <Badge pill>{`${room.num_bed} giường`}</Badge>{' '}
                             <Badge pill>{`${room.num_bedroom} phòng tắm`}</Badge>{' '}
                             <FacilityBadgeList facList={room.room_facility} />
-                            <div className="room-edit-option">
-                                <Link to="/roomedit" state={{room}}>
-                                    <MyButton text="Chỉnh sửa" classNam = "edit-card-button"/>
-                                </Link>
-                                <div onClick={() => {
-                                    dispatch({
-                                        type: DELETE_ROOM,
-                                        payload: room.id
-                                    })
-                                }}>
-                                    <MyButton text="Xoá" classNam = "remove-card-button"/>
+                            { isEditable &&
+                                <div className="room-edit-option">
+                                    <Link to="/roomedit" state={{room}}>
+                                        <MyButton text="Chỉnh sửa" classNam = "edit-card-button"/>
+                                    </Link>
+                                    <div onClick={() => {
+                                        dispatch({
+                                            type: DELETE_ROOM,
+                                            payload: room.id
+                                        })
+                                    }}>
+                                        <MyButton text="Xoá" classNam = "remove-card-button"/>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         </Card.Body>
                     </Col>
                 </Row>

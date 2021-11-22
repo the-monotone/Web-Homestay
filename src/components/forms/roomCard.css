@@ -1,5 +1,5 @@
 .my-card {
-  height: 100%;
+  height: fit-content;
 }
 
 
@@ -110,4 +110,8 @@
     width: 50%;
     transition: width 1.5s;
   }
+}
+
+.my-card .card-body:hover {
+  cursor: pointer;
 }

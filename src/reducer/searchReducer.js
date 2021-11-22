@@ -20,40 +20,10 @@ const SearchReducer = (state, action) => {
                 endDate: action.payload
             }
         }
-        case ActionTypes.CHANGE_ADULT_GUEST: {
-            const newGuest = {
-                ...state.guest, 
-                adult: action.payload
-            }
+        case ActionTypes.CHANGE_GUEST: {
             return {
                 ...state,
-                guest: {
-                    ...newGuest
-                }
-            }
-        }
-        case ActionTypes.CHANGE_CHILD_GUEST: {
-            const newGuest = {
-                ...state.guest,
-                child: action.payload
-            }
-            return {
-                ...state,
-                guest: {
-                    ...newGuest
-                }
-            }
-        }
-        case ActionTypes.CHANGE_BABY_GUEST: {
-            const newGuest = {
-                ...state.guest,
-                baby: action.payload
-            }
-            return {
-                ...state,
-                guest: {
-                    ...newGuest
-                }
+                guest: action.payload
             }
         }
         default: {

@@ -1,73 +1,59 @@
 import { faAddressCard, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, {useState} from 'react';
-import { NavLink } from 'react-router-dom';
-import {Button, Collapse, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalHeader, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem} from 'reactstrap';
+import {Button, Container, Dropdown, Modal, Nav, Navbar, NavItem} from 'react-bootstrap';
+import SearchModal from './search.component';
 import  './header.component.css';
-import SearchForm from './search.component';
 
 function Header() {
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [isCollapse, setCollapse] = useState(false);
     const [isLoginModal, setLoginModal] = useState(false);
     const [isSearchModal, setSearchModal] = useState(false);
 
-    const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
-    const toggleNavbar = () => setCollapse(prevState => !prevState);
-    const toggleLoginModal = () => setLoginModal(prevState => !prevState);
-    const toggleSearchModal = () => setSearchModal(prevState => !prevState);
-
     return (
-        <Navbar id="nav-bar" light expand="md" className="flex-column ms-4 me-4">
-            <div className="d-md-flex flex-row align-self-stretch">
-                <NavbarToggler onClick={toggleNavbar} />
-                <NavbarBrand href="/home" className="me-auto">Homestay</NavbarBrand>
-                <Collapse navbar isOpen={isCollapse}>
+        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky top-0">
+            <Container>
+                <Navbar.Toggle />
+                <Navbar.Brand href="/" className="me-auto">Homestay</Navbar.Brand>
+                <Navbar.Collapse>
                     <Nav navbar>
-                        <NavItem>
-                            <NavLink to="/" className="nav-link">
-                                <FontAwesomeIcon className="fa-lg" icon={faHome}/>
-                                {' '}Trang chủ
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink to="/host" className="nav-link">
-                                <FontAwesomeIcon className="fa-lg" icon={faAddressCard} />
-                                {' '}Trở thành chủ nhà
-                            </NavLink>
-                        </NavItem>
+                        <Nav.Link href="/">
+                            <FontAwesomeIcon className="fa-lg" icon={faHome}/>
+                            {' '}Trang chủ
+                        </Nav.Link>
+                        <Nav.Link href="/host">
+                            <FontAwesomeIcon className="fa-lg" icon={faAddressCard} />
+                            {' '}Trở thành chủ nhà
+                        </Nav.Link>
                     </Nav>
                     <Nav navbar className="m-auto">
-                        <Button id="search-bar" className="gray-border shadow round-radius" color="transparent" onClick={toggleSearchModal}>
+                        <Button id="search-bar" className="gray-border shadow round-radius" variant="light" onClick={() => setSearchModal(true)}>
                             <div>Bắt đầu tìm kiếm</div>
                             <FontAwesomeIcon className="fa-lg search-icon" icon={faSearch} />
                         </Button>
                     </Nav>
                     <Nav navbar className="ms-auto">
                         <NavItem>
-                            <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} >
-                                <DropdownToggle nav caret>Cài đặt</DropdownToggle>
-                                <DropdownMenu>
-                                    <DropdownItem onClick={toggleLoginModal}>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="outline-info">Cài đặt</Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onClick={() => setLoginModal(true)}>
                                         Đăng nhập
-                                    </DropdownItem>
-                                    <DropdownItem>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item>
                                         Đăng ký
-                                    </DropdownItem>
-                                </DropdownMenu>
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
                             </Dropdown>
                         </NavItem>
                     </Nav>
-                </Collapse>
-                <Modal isOpen={isLoginModal} toggle={toggleLoginModal}>
-                    <ModalHeader toggle={toggleLoginModal}>Đăng nhập</ModalHeader>
-                    <ModalBody>
-                    </ModalBody>
+                </Navbar.Collapse>
+                <Modal show={isLoginModal} onHide={() => setLoginModal(false)}>
+                    <Modal.Header closeButton>Đăng nhập</Modal.Header>
+                    <Modal.Body>
+                    </Modal.Body>
                 </Modal>
-            </div>
-            <div className="align-self-center m-2">
-                {isSearchModal && <SearchForm />}
-            </div>
+                <SearchModal show={isSearchModal} onHide={() => setSearchModal(false)}/>
+            </Container>
         </Navbar>
     )
 }

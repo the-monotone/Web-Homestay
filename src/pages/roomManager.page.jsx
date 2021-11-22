@@ -24,7 +24,7 @@ export const RoomManager = () => {
                     roomList.map(room => {
                         return (
                             <Col key = {room.id} id="my-card">
-                                <RoomCard room={room}/>
+                                <RoomCard isEditable room={room}/>
                             </Col>
                         )})
                 }
