@@ -6,7 +6,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.15",
-    "@reduxjs/toolkit": "^1.6.2",
+    "@goongmaps/goong-map-react": "^1.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -19,11 +19,13 @@
     "react-bootstrap": "^2.0.2",
     "react-datepicker": "^4.3.0",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.5",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
+<<<<<<< HEAD
+=======
     "react-spring": "^9.3.1",
     "reactstrap": "^8.10.0",
+>>>>>>> 8b42ab205b0cc2ffc8dcc7c7e7aa3dfece06e39b
     "web-vitals": "^1.1.2",
     "yup": "^0.32.11"
   },

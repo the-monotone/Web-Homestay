@@ -29,8 +29,10 @@ export const RoomList = [{
     num_bedroom: 1,
     num_guest: 1,
     price: 1,
+    rating: 5.0,
     room_facility: [1, 5],
-    room_type: "1"
+    room_type: "1",
+    rule: "Được mang chó mèo, không ở quá số người quy định, k đổi pass wifi"
   },
   {
     address: "",
@@ -41,6 +43,7 @@ export const RoomList = [{
     num_bedroom: 1,
     num_guest: 1,
     price: 1,
+    rating: 4.9,
     room_facility: [1, 4],
     room_type: "2"
   },
@@ -53,6 +56,7 @@ export const RoomList = [{
     num_bedroom: 1,
     num_guest: 1,
     price: 1,
+    rating: 5.0,
     room_facility: [1, 3],
     room_type: "3"
   },
@@ -65,6 +69,7 @@ export const RoomList = [{
     num_bedroom: 1,
     num_guest: 1,
     price: 1,
+    rating: 5.0,
     room_facility: [2, 3],
     room_type: "4"
   },
@@ -77,6 +82,7 @@ export const RoomList = [{
     num_bedroom: 1,
     num_guest: 1,
     price: 1,
+    rating: 5.0,
     room_facility: [4, 3],
     room_type: "3"
   },
@@ -89,9 +95,44 @@ export const RoomList = [{
     num_bedroom: 1,
     num_guest: 1,
     price: 1,
+    rating: 5.0,
     room_facility: [5, 2],
     room_type: "2"
   }]
+
+export const RoomFeedback = [
+  {
+    id: 1,
+    roomId: 4527,
+    username: "Linh Vy",
+    description: "Phòng hơi nhỏ nhưng cực kỳ ấm cúng và sạch sẽ\nĐiều thích nhất của căn phòng này là chăn ga đc xả cực kỳ thơm, cảm giác như ở nhà vậy\nTv có đủ các ứng dụng đang hot: netflix, youtube, vie on, xịn nhất trong số những chỗ từng ở qua\nHighly recommend!",
+    createdDate: "01/10/2021"
+  },
+  {
+    id: 2,
+    roomId: 4527,
+    userId: 2,
+    username: "Ngoc",
+    description: "Căn hộ rất sạch sẽ, có view đẹp nhìn ra hồ, Host hỗ trợ rất nhanh khi mình có thắc mắc",
+    createdDate: "01/07/2020"
+  },
+  {
+    id: 3,
+    roomId: 4527,
+    userId: 3,
+    username: "Phuc",
+    description: "Very nice",
+    createdDate: "01/02/2021"
+  },
+  {
+    id: 4,
+    roomId: 4527,
+    userId: 4,
+    username: "Quản Trọng",
+    description: "The apartment is clean, morden and well-equipped. The host is quick to respond and helpful. Will definitely come back again if I have a chance.",
+    createdDate: "06/09/2021"
+  }
+]
 
 export const idContainer = [];
 for (let i = 0; i < 100000; i++)

@@ -12,6 +12,22 @@ code {
     monospace;
 }
 
+.gray-border {
+  border: 1px solid #aeaeae ;
+}
+
+.gray-border-right {
+  border-right: 1px solid #aeaeae;
+}
+
+.round-radius {
+  border-radius: 0.3rem;
+}
+
+.shadow {
+  box-shadow: 1px 1px 5px;
+}
+
 /* My Css */
 .card {
   border: 2px solid rgba(0,0,0,.125)
@@ -64,10 +80,6 @@ i:hover {
 
 .my-badge {
   margin-right: 5px;
-}
-
-.col-md-4 {
-  margin: auto;
 }
 
 .add-room-signup {

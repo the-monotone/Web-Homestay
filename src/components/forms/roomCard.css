@@ -1,5 +1,5 @@
 .my-card {
-  height: 100%;
+  height: fit-content;
 }
 
 
@@ -116,6 +116,9 @@
   }
 }
 
+.my-card .card-body:hover {
+  cursor: pointer;
+}
 img {
   max-height: 150px; 
 }

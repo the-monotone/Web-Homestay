@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
 
 import Root from './routes/root';
 import reportWebVitals from './reportWebVitals';
 import SearchContextProvider from './context/searchContext';
 import RoomContextProvider from './context/roomContext';
 import RoomListProvider from './context/managerRoomContext';
+
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
 
 ReactDOM.render(
     <RoomListProvider>
