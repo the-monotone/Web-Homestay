@@ -29,13 +29,8 @@ export const RoomManager = () => {
                 {
                     roomList.map(room => {
                         return (
-<<<<<<< HEAD
                             <Col key = {room.id} id="my-card">
                                 <RoomCard isEditable room={room}/>
-=======
-                            <Col key = {room.id}>
-                                <RoomCard room={room}/>
->>>>>>> 8b42ab205b0cc2ffc8dcc7c7e7aa3dfece06e39b
                             </Col>
                         )})
                 }
