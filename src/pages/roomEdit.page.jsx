@@ -123,13 +123,13 @@ export const RoomEdit = () => {
               pos="col-md-6"
             />
 
-              <Button variant="outline-success" className="mt-3" type="submit">
+              <Button variant="outline-success" className="mt-3 me-3" type="submit">
                 Lưu thay đổi
               </Button>
-              <Button variant="outline-danger" className="mt-3 ms-3" type="button" onClick={onDelete}>
+              <Button variant="outline-danger" className="mt-3 me-3" type="button" onClick={onDelete}>
                 Xoá phòng
               </Button>
-              <Button variant="outline-danger" className="mt-3 ms-3" type="reset">
+              <Button variant="outline-danger" className="mt-3" type="reset">
                 Huỷ thay đổi
               </Button>
 

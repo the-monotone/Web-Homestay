@@ -17,7 +17,7 @@ export const RoomCard = ({onClick, isEditable, room}) => {
             <Card md="6" className="my-card">
                 <Row className="g-0">
                     <Col md="4">
-                        <Carousel fade>
+                        <Carousel>
                         {
                             room.image.map((imageSrc, index) => {
                                 return(

@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import {ErrorMessage, useField } from "formik";
+import "./input.css";
 
 export const NumField = ({label, ...props}) => {
 
     const [field, meta, helper] = useField(props);
 
     var [count, setCount] = useState(field.value);
+
+    const isPositive = () => {
+        return count >= 1
+    }
 
     const increase = e => {
         e.preventDefault();
@@ -15,8 +20,9 @@ export const NumField = ({label, ...props}) => {
         setCount(count);
     }
 
-    const descrease = e => {
+    const decrease = e => {
         e.preventDefault();
+        if (!isPositive()) return;
         count = field.value;
         count--;
         helper.setValue(count);
@@ -25,7 +31,7 @@ export const NumField = ({label, ...props}) => {
 
 
     return(
-        <div className={"mb-2 me-2 " + props.pos}>
+        <div className={props.pos}>
             <label htmlFor={field.name}>{label}</label>
             <div className="dis-flex number-input">
                 <i className="bi bi-plus-circle-fill" onClick={increase}></i>
@@ -35,7 +41,7 @@ export const NumField = ({label, ...props}) => {
                 {...props}
                 autoComplete="off"
                 />
-                <i className="bi bi-dash-circle-fill" onClick={descrease}></i>
+                <i className="bi bi-dash-circle-fill" onClick={decrease} style={!isPositive() ? {color: 'gray'} : {}}></i>
             </div>
             <ErrorMessage name={field.name} />
         </div>

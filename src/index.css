@@ -37,26 +37,23 @@ code {
   background-color: rgba(74, 240, 102, 0.808);
 }
 
-.facility-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
 
 .myCard:hover {
   background-color: rgba(129, 199, 231, 0.541);
   cursor: pointer;
 }
 
-.field-inline-2 {
-  display: flex;
-}
-
 .dis-flex {
   display: flex;
   justify-content: center;
   text-align: center;
+  display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    align-content: center;
 }
+
 
 .dis-flex span {
   margin: 5px 5px;
@@ -73,27 +70,6 @@ i:hover {
   cursor: pointer;
 }
 
-.number-input input {
-  border-radius: 30px;
-  text-align: center;
-}
-
-input {
-  align-self: center;
-  height: 40px;
-}
-
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
--webkit-appearance: none;
-margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
--moz-appearance: textfield;
-}
 
 /* Room manager */
 
