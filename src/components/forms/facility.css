@@ -19,3 +19,10 @@
   gap: 10px;
   justify-content: center;
 }
+
+
+.modal-title {
+  width: 100%;
+  text-align: center;
+}
+

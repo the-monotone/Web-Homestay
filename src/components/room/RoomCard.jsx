@@ -1,8 +1,8 @@
 import React, { useContext }  from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Badge, Carousel, Col, Row } from 'react-bootstrap';
-import { Card, Button } from 'react-bootstrap';
-import { FacilityBadgeList } from './FacilityBadgeList';
+import { Card } from 'react-bootstrap';
+import { FacilityBadgeList } from '../forms/FacilityBadgeList';
 import { MyButton } from '../shared/myButton';
 import './roomCard.css';
 import { ManagerRoomContext } from '../../context/managerRoomContext';
@@ -23,7 +23,7 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                                 return(
                                     <Carousel.Item key = {index}>
                                         <img
-                                        className="d-block w-100"
+                                        className="d-block w-100 carousel-img"
                                         src={imageSrc}
                                         alt={`Slide ${index}`}
                                         />

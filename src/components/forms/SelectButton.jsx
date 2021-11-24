@@ -6,7 +6,7 @@ export const SelectButton = ({label, ...props}) => {
 
 
     return(
-        <div className={props.pos}>
+        <div className={props.pos + ' mb-2'}>
             <label htmlFor={field.name}>{label}</label>
             <div>
                 <select id={field.name} name = {field.name} value={field.value} className="form-select" {...field}>
@@ -18,9 +18,7 @@ export const SelectButton = ({label, ...props}) => {
                     
                 </select>
             <ErrorMessage name = {field.name}/>
-            </div>
-            
-            
+            </div>    
         </div>
     )
 

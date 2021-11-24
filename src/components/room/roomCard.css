@@ -119,6 +119,6 @@
 .my-card .card-body:hover {
   cursor: pointer;
 }
-img {
-  max-height: 150px; 
+.carousel-img {
+  object-fit: cover;
 }

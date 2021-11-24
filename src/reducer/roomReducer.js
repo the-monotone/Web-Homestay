@@ -4,7 +4,9 @@ import {
     UPDATE_ROOM,
     GET_ROOM,
     SAVE_ROOM
-} from './actionTypes'
+} from './actionTypes';
+import axios from 'axios';
+
 
 
 const RANDOM_RANGE = 100000;
@@ -26,7 +28,7 @@ export const roomReducer = (state, action) => {
             let tempRoomList = [];
             const rooms = localStorage.getItem('roomlist');
             if (rooms) tempRoomList = JSON.parse(rooms);
-            if (tempRoomList.length > 0) state = tempRoomList;
+            state = tempRoomList;
             return state;
         }
         case SAVE_ROOM:
@@ -57,6 +59,7 @@ export const roomReducer = (state, action) => {
             for (let i in tempRoomList) {
                 if (tempRoomList[i].id === payload.id) {
                     tempRoomList[i] = {...payload};
+                    break;
                 }
             }
             console.log('Updated');

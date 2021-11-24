@@ -4,7 +4,7 @@ import {ErrorMessage, FastField, useField } from "formik";
 export const RadioButton = ({label, ...props}) => {
     const [field] = useField(props);
     return (
-        <div>
+        <div className = 'mb-3'>
             <label >{label}</label>
             <div>
                 <FastField  name={field.name}>

@@ -3,7 +3,7 @@ import Map from '../components/MapComponent';
 import useSearch from '../hook/useSearch';
 import '@goongmaps/goong-js/dist/goong-js.css';
 import { RoomList } from '../Fake Data API/roomData';
-import { RoomCard } from '../components/forms/RoomCard';
+import { RoomCard } from '../components/room/RoomCard';
 import { useNavigate } from 'react-router';
 const SearchResultPage = () => {
     const {place} = useSearch();

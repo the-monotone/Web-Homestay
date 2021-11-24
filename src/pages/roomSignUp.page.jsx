@@ -36,6 +36,7 @@ export const RoomSignUp = () => {
     room_type: 0,
     room_facility: [],
     image: [],
+    rule: '',
     address: "",
     num_guest: 0,
     num_bed: 0,
@@ -47,21 +48,14 @@ export const RoomSignUp = () => {
   return (
     <FormikStepper initialValues={initialValue} onSubmit={onSubmit}>
       <Form>
-        <FormikStep>
-          <ImageForm 
-            label="Ảnh"
-            name="image"
-            type="file"
-            pos="col-md-12 image-field"
-          />
-        </FormikStep>
+        
         <FormikStep
           validationSchema={Yup.object({
             name: Yup.string().required("Bắt buộc"),
           })}
           className="room-name-field"
         >
-          <TextField name="name" type="text" pos="col-8" />
+          <TextField label = "Tên phòng" name="name" type="text" pos="col-8" />
         </FormikStep>
         <FormikStep
           validationSchema={Yup.object({
@@ -129,6 +123,24 @@ export const RoomSignUp = () => {
           <MultiSelect
             name="room_facility"
             options={roomFacility}
+          />
+        </FormikStep>
+        <FormikStep
+          validationSchema={Yup.object({
+            name: Yup.string().required("Bắt buộc"),
+          })}
+          className="room-rule-field"
+        >
+          <TextField label = "Quy tắc" name="rule" type="textarea" pos="col-8" style={{ height: '100px' }}/>
+        </FormikStep>
+        <FormikStep
+          className="room-images"
+        >
+          <ImageForm 
+            label="Ảnh"
+            name="image"
+            type="file"
+            pos="col-md-12 image-field"
           />
         </FormikStep>
         
@@ -200,6 +212,10 @@ export const FormikStepper = ({ children, ...props }) => {
         return 'Cho khách biết chỗ ở của bạn có những gì'
       case 'room-price-field':
         return 'Bây giờ đến phần thú vị rồi – đặt giá cho thuê'
+      case 'room-images':
+        return 'Hãy đăng một số ảnh để khách tham quan có thể tham khảo nào'
+      case 'room-rule-field':
+        return 'Những điều bạn muốn khách hàng của mình tuân thủ là gì?'
       default:
         return "Đăng ký phòng";
     }

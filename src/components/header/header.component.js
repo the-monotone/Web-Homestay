@@ -4,10 +4,13 @@ import React, {useState} from 'react';
 import {Button, Container, Dropdown, Modal, Nav, Navbar, NavItem} from 'react-bootstrap';
 import SearchModal from './search.component';
 import  './header.component.css';
+import { RoomSignUp } from '../../pages/roomSignUp.page';
+import { Signup } from '../../pages/signUp.page';
 
 function Header() {
     const [isLoginModal, setLoginModal] = useState(false);
     const [isSearchModal, setSearchModal] = useState(false);
+    const [isSignupModal, setSignupModal] = useState(false);
 
     return (
         <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky top-0">
@@ -39,7 +42,7 @@ function Header() {
                                     <Dropdown.Item onClick={() => setLoginModal(true)}>
                                         Đăng nhập
                                     </Dropdown.Item>
-                                    <Dropdown.Item>
+                                    <Dropdown.Item onClick={() => setSignupModal(true)}>
                                         Đăng ký
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
@@ -52,6 +55,7 @@ function Header() {
                     <Modal.Body>
                     </Modal.Body>
                 </Modal>
+                <Signup show={isSignupModal} onHide={() => setSignupModal(false)}/>
                 <SearchModal show={isSearchModal} onHide={() => setSearchModal(false)}/>
             </Container>
         </Navbar>

@@ -59,7 +59,7 @@ export const ImageForm = ({label, ...props}) => {
                 imageList.map((image,i) => {
                     return (
                     <Col xs={12} md={6} key={i}>
-                        <ImageCard imgUrl={image} setValue = {setImageList} />
+                        <ImageCard imgUrl={image} setValue = {setImageList} className = "room-image" />
                     </Col>)
                 })
             }
