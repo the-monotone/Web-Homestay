@@ -5,6 +5,7 @@ import { Signup } from '../pages/signUp.page';
 import { RoomSignUp } from '../pages/roomSignUp.page';
 import { RoomEdit } from '../pages/roomEdit.page';
 import { RoomManager } from '../pages/roomManager.page';
+import { AccountSettings } from '../pages/accountSetting.page';
 import SearchResultPage from '../pages/searchResult.page';
 import RoomViewPage from '../pages/roomViewPage';
 import {
@@ -25,10 +26,10 @@ function Root() {
                     <Route path="/" element={<HomePage/>} />
                     <Route path="/host" element={<HostPage/>} />
                     <Route path="/search" element={<SearchResultPage />} />
-                    <Route path='/signup' element = {<Signup/>} />
                     <Route path='/roomsignup' element = {<RoomSignUp/>} />
                     <Route path='/roomedit' element = {<RoomEdit/>} />
                     <Route path='/roommanager' element = {<RoomManager/>} />
+                    <Route path='/accountsettings' element = {<AccountSettings/>} />
                     <Route path="/room">
                         <Route path=":roomId" element={<RoomViewPage />} />
                     </Route>

@@ -5,7 +5,6 @@ import {
     GET_ROOM,
     SAVE_ROOM
 } from './actionTypes';
-import axios from 'axios';
 
 
 
