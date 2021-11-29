@@ -1,20 +1,36 @@
-import { CHANGE_PASSWORD, GET_USER, LOG_OUT, SIGN_IN, SIGN_UP, USER_UPDATE, USER_UPDATE_INFO, WEB_API } from "./actionTypes";
+import { CHANGE_PASSWORD, GET_USER, LOG_OUT, SIGN_IN, SIGN_UP, USER_UPDATE, USER_UPDATE_INFO } from "./actionTypes";
+import { WEB_API } from "../config";
 import axios from "axios";
 
 
-export const userReducer = (state, action) => {
+const userReducer = (state, action) => {
     const {type, payload} = action
-
-
 
     switch(type) {
         case SIGN_IN:
+            console.log(payload.username);
+            axios.post(`${WEB_API}/api/user/login`, payload)
+                .then(res => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        var newState = {
+                            ...state,
+                            username: payload.username,
+                            token: res.data.token
+                        }
+                        localStorage.setItem("user-state", JSON.stringify(newState));
+                        window.location.reload();
+                        return newState;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
             return state;
         case SIGN_UP:
         {
             let cloneUser = state;
             const user = {
-                userID: 0,
                 name: payload.firstName + ' ' + payload.lastName,
                 phone: payload.phone,
                 email: payload.email,
@@ -54,3 +70,5 @@ export const userReducer = (state, action) => {
             return state;
     }
 }
+
+export default userReducer;

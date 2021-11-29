@@ -1,29 +1,28 @@
 import React from 'react';
 import HomePage from '../pages/home.page';
 import HostPage from '../pages/host.page';
-import { Signup } from '../pages/signUp.page';
 import { RoomSignUp } from '../pages/roomSignUp.page';
 import { RoomEdit } from '../pages/roomEdit.page';
 import { RoomManager } from '../pages/roomManager.page';
 import { AccountSettings } from '../pages/accountSetting.page';
 import SearchResultPage from '../pages/searchResult.page';
-import RoomViewPage from '../pages/roomViewPage';
+import RoomViewPage from '../pages/roomView.page';
+import RentalViewPage from '../pages/rentalView.page';
+
 import {
     BrowserRouter as Router,
     Route,
     Routes
 } from "react-router-dom";
 import Layout from '../components/layout.component';
-
-
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Root() {
     return (
         <Router>
-            <Layout>
-                <Routes>
-                    <Route path="/" element={<HomePage/>} />
+            <Routes>
+                <Route path="/" element={<Layout/>}>
+                    <Route index element={<HomePage/>} />
                     <Route path="/host" element={<HostPage/>} />
                     <Route path="/search" element={<SearchResultPage />} />
                     <Route path='/roomsignup' element = {<RoomSignUp/>} />
@@ -33,9 +32,9 @@ function Root() {
                     <Route path="/room">
                         <Route path=":roomId" element={<RoomViewPage />} />
                     </Route>
-                   
-                </Routes>
-            </Layout>
+                    <Route path="/rental" element={<RentalViewPage/>} />
+                </Route>
+            </Routes>
         </Router>   
     )
 }

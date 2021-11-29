@@ -16,7 +16,8 @@ export const USER_UPDATE_INFO = 'USER_UPDATE_INFO'
 export const GET_USER = 'GET_USER'
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 
-export const WEB_API = 'http://wehome-env.eba-ujwahtza.ap-southeast-1.elasticbeanstalk.com/'
 
 
 
+export const GET_RENTAL = 'GET_RENTAL';
+export const POST_RENTAL = 'POST_RENTAL';

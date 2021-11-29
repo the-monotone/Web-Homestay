@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation, useParams } from 'react-router';
 import { Carousel, Badge, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { RoomList, RoomFacility, RoomFeedback } from '../Fake Data API/roomData';
-import './roomViewPage.css';
+import './roomView.page.css';
 import BillingCard from '../components/BillingCard';
 import FeedbackCard from '../components/FeedbackCard';
 
@@ -11,7 +11,7 @@ const RoomViewPage = () => {
     var room = state;
     var {roomId} = useParams();
     roomId = parseInt(roomId);
-    if (room === undefined) {    
+    if (room === null) {    
         room = RoomList.find((room) => room.id === roomId);
     }    
     const roomFeedbacks = RoomFeedback.filter((feedback) => feedback.roomId === roomId);

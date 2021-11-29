@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { Form, ListGroup, ListGroupItem, Modal} from 'react-bootstrap';
-import "react-datepicker/dist/react-datepicker.css";
-import './search.css';
 import { autocompleteApi, placeDetailApi } from '../../api/goong.api';
 import useSearch from '../../hook/useSearch';
 import { useNavigate } from 'react-router-dom';
+import "react-datepicker/dist/react-datepicker.css";
+import './search.css';
 
 const SearchModal = ({show, onHide}) => {
     const [isSearchPlace, setSearchPlace] = useState(false);
@@ -53,11 +53,13 @@ const SearchModal = ({show, onHide}) => {
             guest
         }
         console.log(JSON.stringify(body));
-        navigate("/search");
+        navigate("/search", {state: body});
     }
     return (
-        <Modal show={show} onHide={onHide} size="lg">
-            <Modal.Header closeButton>Tìm kiếm địa điểm</Modal.Header>
+        <Modal show={show} onHide={onHide} dialogClassName="modal-80w">
+            <Modal.Header closeButton>
+                <Modal.Title>Tìm kiếm địa điểm</Modal.Title>
+            </Modal.Header>
             <Modal.Body>
                 <Form 
                     id="search-form" 
@@ -68,7 +70,7 @@ const SearchModal = ({show, onHide}) => {
                         <div className="row align-items-center">
                             <div 
                                 onClick={() => setSearchPlace(state => !state)} 
-                                className="col-12 col-md-3 gray-border-right btn-place"
+                                className="fixed-height d-flex flex-column justify-content-between col-12 col-md-3 gray-border-right btn-place "
                             >
                                 <strong>Địa điểm</strong>
                                 <input
@@ -76,43 +78,48 @@ const SearchModal = ({show, onHide}) => {
                                     value={inputValue} 
                                     placeholder="Bạn muốn đi đâu?" 
                                     onChange={(e) => searchPlace(e.target.value)} 
-                                    className="input"
+                                    className="input-w100"
                                 />
                             </div>
-                            <div onClick={() => setSearchPlace(false)} className="col-12 col-md-3 gray-border-right btn-start">
+                            <div 
+                                onClick={() => setSearchPlace(false)} 
+                                className="fixed-height d-flex flex-column justify-content-between col-12 col-md-3 gray-border-right"
+                            >
                                 <strong>Nhận phòng</strong>
                                 <DatePicker 
                                     selected={startDate} 
+                                    placeholderText="dd/MM/yyyy"
                                     onChange={date => {changeStartDate(date)}} 
                                     dateFormat="dd/MM/yyyy" 
                                     minDate={new Date()} 
                                     maxDate={endDate} 
                                     monthsShown={2}
                                     customInput={<input />}
-                                    className="input"
+                                    className="input-w100"
                                     />
                             </div>
-                            <div onClick={() => setSearchPlace(false)} className="col-12 col-md-3 gray-border-right btn-end">
+                            <div 
+                                onClick={() => setSearchPlace(false)} 
+                                className="fixed-height d-flex flex-column justify-content-between col-12 col-md-3 gray-border-right"
+                            >
                                 <strong>Trả phòng</strong>
                                 <DatePicker 
                                     selected={endDate} 
+                                    placeholderText="dd/MM/yyyy"
                                     onChange={date => {changeEndDate(date)}} 
                                     dateFormat="dd/MM/yyyy" 
                                     minDate={startDate == null? new Date() : startDate} 
                                     monthsShown={2}
                                     customInput={<input />}
-                                    className="input"
+                                    className="input-w100"
                                     />
                             </div>
-                            <div onClick={() => setSearchPlace(false)} className="col-12 col-md-3 btn-guest">
+                            <div 
+                                onClick={() => setSearchPlace(false)}
+                                className="fixed-height d-flex flex-column justify-content-between col-12 col-md-3 btn-guest"
+                            >
                                 <strong>Khách</strong>
-                                <input 
-                                    type="number" 
-                                    value={guest} 
-                                    onChange={event => changeGuest(event.target.value)} 
-                                    placeholder="Thêm khách"
-                                    className="input"
-                                />
+                                <GuestPicker guest={guest} changeGuest={changeGuest}/>
                             </div>
                         </div>
                     </div>
@@ -123,11 +130,11 @@ const SearchModal = ({show, onHide}) => {
                             setSelectedPlace={setSelectedPlace} 
                         />
                     }
-                    <input type="submit" id="submit-button" hidden />
+                    <input type="submit" id="submit-button-search" hidden />
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <label htmlFor="submit-button" className="btn btn-danger">Tìm kiếm</label>
+                <label htmlFor="submit-button-search" className="btn btn-danger">Tìm kiếm</label>
             </Modal.Footer>
         </Modal>
     )
@@ -145,6 +152,30 @@ const PlacePicker = (props) => {
                         </ListGroupItem>
                 )}
             </ListGroup>
+        </div>
+    )
+}
+
+const GuestPicker = ({guest, changeGuest}) => {
+    const increase = () => {
+        changeGuest(guest + 1);
+    }
+    const decrease = () => {
+        if (guest > 0) changeGuest(guest - 1);
+    }
+    return (
+        <div className="d-flex align-items-center">
+            <i className="bi bi-dash-circle-fill small-icon" onClick={decrease}></i>
+            <input
+                type="number"
+                disabled
+                autoComplete="off"
+                placeholder="Thêm khách"
+                value={guest}
+                min="0"
+                className="text-center input-w100 input-h0"
+            />
+            <i className="bi bi-plus-circle-fill small-icon" onClick={increase}></i>
         </div>
     )
 }

@@ -6,4 +6,17 @@
     display: flex;
     width: 300px;
     justify-content: space-between;
+    align-items: center;
+}
+
+.white-icon {
+    color: white;
+}
+
+.black-icon {
+    color: black;
+}
+
+.small-icon {
+    font-size: 1em;
 }

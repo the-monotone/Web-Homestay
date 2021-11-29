@@ -1,10 +1,15 @@
 import React, { createContext, useReducer } from 'react';
-
+import userReducer from '../reducer/userReducer';
 export const UserContext = createContext();
 
-const UserContextProvider = ({children}) => {
+const initialState = {
+    username: null,
+    token: null
+}
 
-    const [user, dispatch] = useReducer(useReducer, null)
+
+const UserContextProvider = ({children}) => {
+    const [user, dispatch] = useReducer(userReducer, initialState)
 
     const userContextData = {
         user,
@@ -17,3 +22,5 @@ const UserContextProvider = ({children}) => {
         </UserContext.Provider>
     )
 }
+
+export default UserContextProvider;

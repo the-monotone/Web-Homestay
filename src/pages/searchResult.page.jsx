@@ -1,13 +1,13 @@
 import React from 'react';
 import Map from '../components/MapComponent';
-import useSearch from '../hook/useSearch';
 import '@goongmaps/goong-js/dist/goong-js.css';
 import { RoomList } from '../Fake Data API/roomData';
 import { RoomCard } from '../components/room/RoomCard';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 const SearchResultPage = () => {
-    const {place} = useSearch();
-    console.log(place);
+    // const {state} = useLocation();
+    // const place = state.place;
+    
     const navigate = useNavigate();
     const handleClick = (room) => {
         navigate(`/room/${room.id}`, {state: room} );

@@ -104,33 +104,83 @@ export const RoomFeedback = [
   {
     id: 1,
     roomId: 4527,
+    userId: 1,
     username: "Linh Vy",
+    rating: 5.0,
     description: "Phòng hơi nhỏ nhưng cực kỳ ấm cúng và sạch sẽ\nĐiều thích nhất của căn phòng này là chăn ga đc xả cực kỳ thơm, cảm giác như ở nhà vậy\nTv có đủ các ứng dụng đang hot: netflix, youtube, vie on, xịn nhất trong số những chỗ từng ở qua\nHighly recommend!",
-    createdDate: "01/10/2021"
+    createdDate: "10/01/2021"
   },
   {
     id: 2,
     roomId: 4527,
     userId: 2,
     username: "Ngoc",
+    rating: 5.0,
     description: "Căn hộ rất sạch sẽ, có view đẹp nhìn ra hồ, Host hỗ trợ rất nhanh khi mình có thắc mắc",
-    createdDate: "01/07/2020"
+    createdDate: "07/01/2020"
   },
   {
     id: 3,
     roomId: 4527,
     userId: 3,
     username: "Phuc",
+    rating: 5.0,
     description: "Very nice",
-    createdDate: "01/02/2021"
+    createdDate: "02/01/2021"
   },
   {
     id: 4,
     roomId: 4527,
     userId: 4,
     username: "Quản Trọng",
+    rating: 5.0,
     description: "The apartment is clean, morden and well-equipped. The host is quick to respond and helpful. Will definitely come back again if I have a chance.",
     createdDate: "06/09/2021"
+  }
+]
+
+export const Rental = [
+  {
+    id: 1,
+    roomId: 4527,
+    userId: 1,
+    status: 0,
+    startDate: "11/27/2021",
+    endDate: "11/30/2021",
+    price: 3,
+    room: {
+      roomId: 4527,
+      name: "Room 1",
+      image: ["https://picsum.photos/id/237/200/200", "https://picsum.photos/id/238/200/200", "https://picsum.photos/id/239/200/200"],
+    }
+  },
+  {
+    id: 2,
+    roomId: 4528,
+    userId: 1,
+    status: 1,
+    startDate: "12/25/2021",
+    endDate: "1/1/2022",
+    price: 5,
+    room: {
+      roomId: 4528,
+      name: "Room 2",
+      image: ["https://picsum.photos/id/237/200/200", "https://picsum.photos/id/238/200/200", "https://picsum.photos/id/239/200/200"],
+    }
+  },
+  {
+    id: 3,
+    roomId: 4528,
+    userId: 1,
+    status: 2,
+    startDate: "09/23/2021",
+    endDate: "09/30/2021",
+    price: 10,
+    room: {
+      roomId: 4529,
+      name: "Room 3",
+      image: ["https://picsum.photos/id/237/200/200", "https://picsum.photos/id/238/200/200", "https://picsum.photos/id/239/200/200"],
+    }
   }
 ]
 
