@@ -47,11 +47,8 @@ code {
   display: flex;
   justify-content: center;
   text-align: center;
-  display: flex;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-    align-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 
@@ -90,4 +87,13 @@ i:hover {
 
 a {
   text-decoration: none;
+}
+
+.mt-container {
+  margin-top: 60px;
+}
+
+div.main-div {
+  position: relative;
+  top: 60px;
 }

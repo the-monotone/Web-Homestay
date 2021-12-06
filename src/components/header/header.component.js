@@ -15,8 +15,8 @@ function Header() {
     const userState = JSON.parse(localStorage.getItem("user-state"));
 
     return (
-        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky top-0">
-            <Container>
+        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-fixed vw-100">
+            <Container fluid="md">
                 <Navbar.Toggle />
                 <Navbar.Brand href="/" className="order-0 me-auto">Homestay</Navbar.Brand>
                 <Navbar.Collapse className="order-last">
@@ -40,7 +40,7 @@ function Header() {
                 
                 <Nav className="order-1 order-md-last flex-row ms-auto">
                     {
-                        userState != null && userState.username != null &&
+                        userState != null && userState.token != null &&
                         <NavItem className="me-1">
                             <Dropdown>
                                 <Dropdown.Toggle>
@@ -56,8 +56,8 @@ function Header() {
                     }
                     <NavItem>
                         {
-                            userState != null && userState.username != null ? 
-                                <LoggedInDropdown username={userState.username} /> :
+                            userState != null && userState.token != null ? 
+                                <LoggedInDropdown name={userState.name} /> :
                                 <UnLoggedInDropdown 
                                     handleLogin={() => setLoginModal(true)}
                                     handleSignup={() => setSignupModal(true)} />

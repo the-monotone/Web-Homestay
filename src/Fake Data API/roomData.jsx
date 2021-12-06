@@ -181,6 +181,20 @@ export const Rental = [
       name: "Room 3",
       image: ["https://picsum.photos/id/237/200/200", "https://picsum.photos/id/238/200/200", "https://picsum.photos/id/239/200/200"],
     }
+  },
+  {
+    id: 4,
+    roomId: 4528,
+    userId: 1,
+    status: 2,
+    startDate: "09/23/2021",
+    endDate: "11/30/2021",
+    price: 10,
+    room: {
+      roomId: 4529,
+      name: "Room 3",
+      image: ["https://picsum.photos/id/237/200/200", "https://picsum.photos/id/238/200/200", "https://picsum.photos/id/239/200/200"],
+    }
   }
 ]
 

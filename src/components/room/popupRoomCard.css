@@ -1,0 +1,8 @@
+.popup-room-card {
+  width: 200px;
+  height: 180px;
+}
+
+.popup-room-card .carousel {
+  height: 60%;
+}

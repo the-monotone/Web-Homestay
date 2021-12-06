@@ -18,6 +18,7 @@ const SearchModal = ({show, onHide}) => {
             changeStartDate, 
             changeEndDate, 
             changeGuest,
+            searchPlaceApi,
             place,
             startDate,
             endDate,
@@ -47,13 +48,15 @@ const SearchModal = ({show, onHide}) => {
         event.preventDefault();
         onHide();
         const body = {
-            place,
-            startDate,
-            endDate,
-            guest
+            latitude: place.lat,
+            longitude: place.lng,
+            radius: 10
         }
         console.log(JSON.stringify(body));
-        navigate("/search", {state: body});
+        searchPlaceApi(body)
+            .then(() => {
+                navigate("/search");
+            })
     }
     return (
         <Modal show={show} onHide={onHide} dialogClassName="modal-80w">
