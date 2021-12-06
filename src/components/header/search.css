@@ -20,6 +20,15 @@
     background-color: lightgrey;
 }
 
-.input {
+.input-w100 {
     width: 100%;
+}
+
+.modal-80w {
+    width: 80vw !important;
+    max-width: 80vw !important;
+}
+
+.fixed-height {
+    height: 70px;
 }

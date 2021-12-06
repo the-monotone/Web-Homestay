@@ -1,20 +1,16 @@
-import { CHANGE_PASSWORD, GET_USER, LOG_OUT, SIGN_IN, SIGN_UP, USER_UPDATE, USER_UPDATE_INFO, WEB_API } from "./actionTypes";
+import { CHANGE_PASSWORD, GET_USER, SIGN_UP, USER_UPDATE, USER_UPDATE_INFO } from "./actionTypes";
+import { WEB_API } from "../config";
 import axios from "axios";
 
 
-export const userReducer = (state, action) => {
+const userReducer = (state, action) => {
     const {type, payload} = action
 
-
-
     switch(type) {
-        case SIGN_IN:
-            return state;
         case SIGN_UP:
         {
             let cloneUser = state;
             const user = {
-                userID: 0,
                 name: payload.firstName + ' ' + payload.lastName,
                 phone: payload.phone,
                 email: payload.email,
@@ -30,8 +26,6 @@ export const userReducer = (state, action) => {
                 .catch(err => console.log(err))
             return cloneUser;
         }
-        case LOG_OUT:
-            return state;
         case GET_USER:
             return state;
         case USER_UPDATE_INFO:
@@ -54,3 +48,5 @@ export const userReducer = (state, action) => {
             return state;
     }
 }
+
+export default userReducer;

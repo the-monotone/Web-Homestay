@@ -6,18 +6,23 @@ import reportWebVitals from './reportWebVitals';
 import SearchContextProvider from './context/searchContext';
 import RoomContextProvider from './context/roomContext';
 import RoomListProvider from './context/managerRoomContext';
-
+import RentalContextProvider from './context/rentalContext';
+import UserContextProvider from './context/userContext';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 ReactDOM.render(
-    <RoomListProvider>
-        <RoomContextProvider>
-            <SearchContextProvider>
-                <Root />
-            </SearchContextProvider>
-        </RoomContextProvider>
-    </RoomListProvider>,
+    <UserContextProvider>
+        <RentalContextProvider>
+            <RoomListProvider>
+                <RoomContextProvider>
+                    <SearchContextProvider>
+                        <Root />
+                    </SearchContextProvider>
+                </RoomContextProvider>
+            </RoomListProvider>
+        </RentalContextProvider>
+    </UserContextProvider>,
     document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function

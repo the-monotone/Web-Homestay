@@ -1,8 +1,39 @@
-.my-card {
-  height: fit-content;
+@media only screen and (min-width: 768px) {
+  .row-body {
+    height: 150px
+  }
+  .row-body > div {
+    height: 100%
+  }
+  .carousel {
+    height: 100%
+  }
+  .carousel > .carousel-inner {
+    height: 100%
+  }
 }
 
+@media only screen and (max-width: 768px) {
+  .row-body {
+    height: 600px
+  }
+  .row-body > div {
+    height: 80%
+  }
+  .carousel {
+    height: 100%
+  }
+  .carousel > .carousel-inner {
+    height: 100%
+  }
+}
 
+.carousel-img {
+  object-fit: cover;
+  display: block;
+  height: 100%;
+  width: 100%; 
+}
 .edit-card-button {
   position: absolute;
   right: 0;
@@ -118,7 +149,4 @@
 
 .my-card .card-body:hover {
   cursor: pointer;
-}
-.carousel-img {
-  object-fit: cover;
 }

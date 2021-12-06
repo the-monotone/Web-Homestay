@@ -7,8 +7,8 @@ import { MultiSelect } from "../components/forms/MultiSelect";
 import { NumField } from "../components/forms/NumField";
 import { RoomContext } from "../context/roomContext";
 import { ManagerRoomContext } from "../context/managerRoomContext";
-import { ADD_ROOM } from "../reducer/actionTypes";
-import { useNavigate } from "react-router";
+import { ADD_ROOM, UPDATE_ROOM } from "../reducer/actionTypes";
+import { useNavigate, useLocation } from "react-router";
 import { Button, Row, ProgressBar } from "react-bootstrap";
 import './roomSignup.page.css';
 import { useSpring, animated } from 'react-spring'
@@ -18,26 +18,41 @@ export const RoomSignUp = () => {
   const { roomType, roomFacility } = useContext(RoomContext);
   const { dispatch } = useContext(ManagerRoomContext);
 
+  console.log(roomType);
+
   const navigate = useNavigate();
+
+  const location = useLocation();
+  var stateRoom;
+  if (location.state) {
+    stateRoom = location.state.stateRoom;
+  }
 
 
   const onSubmit = async (room) => {
     console.log(room)
-    await dispatch({
-      type: ADD_ROOM,
-      payload: room,
-    });
+    if (!stateRoom) {
+      await dispatch({
+        type: ADD_ROOM,
+        payload: room,
+      });
+    } else {
+      await dispatch({
+        type: UPDATE_ROOM,
+        payload: room,
+      })
+    }
     navigate("/roommanager");
   };
 
-  const initialValue = {
-    id: -1,
-    name: "",
+
+  const initialValue = stateRoom ? stateRoom : {
+    room_name: "",
     room_type: 0,
-    room_facility: [],
-    image: [],
+    facilities: [],
+    images: [],
     rule: '',
-    address: "",
+    address_id: "",
     num_guest: 0,
     num_bed: 0,
     num_bedroom: 0,
@@ -48,14 +63,13 @@ export const RoomSignUp = () => {
   return (
     <FormikStepper initialValues={initialValue} onSubmit={onSubmit}>
       <Form>
-        
         <FormikStep
           validationSchema={Yup.object({
-            name: Yup.string().required("Bắt buộc"),
+            room_name: Yup.string().required("Bắt buộc"),
           })}
           className="room-name-field"
         >
-          <TextField label = "Tên phòng" name="name" type="text" pos="col-8" />
+          <TextField label = "Tên phòng" name="room_name" type="text" pos="col-8" />
         </FormikStep>
         <FormikStep
           validationSchema={Yup.object({
@@ -121,14 +135,13 @@ export const RoomSignUp = () => {
         </FormikStep>
         <FormikStep className="room-facility-field">
           <MultiSelect
-            name="room_facility"
+            name="facilities"
             options={roomFacility}
           />
         </FormikStep>
+        { // TODO:  Them dia chi
+        }
         <FormikStep
-          validationSchema={Yup.object({
-            name: Yup.string().required("Bắt buộc"),
-          })}
           className="room-rule-field"
         >
           <TextField label = "Quy tắc" name="rule" type="textarea" pos="col-8" style={{ height: '100px' }}/>
@@ -138,7 +151,7 @@ export const RoomSignUp = () => {
         >
           <ImageForm 
             label="Ảnh"
-            name="image"
+            name="images"
             type="file"
             pos="col-md-12 image-field"
           />
@@ -216,6 +229,7 @@ export const FormikStepper = ({ children, ...props }) => {
         return 'Hãy đăng một số ảnh để khách tham quan có thể tham khảo nào'
       case 'room-rule-field':
         return 'Những điều bạn muốn khách hàng của mình tuân thủ là gì?'
+      // TODO: Them label cho dia chi
       default:
         return "Đăng ký phòng";
     }
