@@ -1,11 +1,12 @@
 import React from 'react';
+import Layout from '../components/layout.component';
 function HomePage() {
     const userState = JSON.parse(localStorage.getItem("user-state"));
     return (
-        <main>
+        <Layout>
             <h1>Home</h1>
-            {userState != null && userState.username != null ? <h2>{`Chào mừng bạn, ${userState.username}`}</h2> : null}
-        </main>
+            {userState != null && userState.name != null ? <h2>{`Chào mừng bạn, ${userState.name}`}</h2> : null}
+        </Layout>
     )
 }
 

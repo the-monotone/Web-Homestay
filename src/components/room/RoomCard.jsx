@@ -15,31 +15,31 @@ export const RoomCard = ({onClick, isEditable, room}) => {
 
     return(
             <Card md="6" className="my-card">
-                <Row className="g-0">
-                    <Col md="4">
-                        <Carousel>
+                <Row className="g-0 row-body">
+                    <Col sm="12" md="4">
+                        <Carousel fade variant="dark">
                         {
-                            room.image.map((imageSrc, index) => {
+                            room.image.map((imageItem) => {
                                 return(
-                                    <Carousel.Item key = {index}>
-                                        <img
-                                        className="d-block w-100 carousel-img"
-                                        src={imageSrc}
-                                        alt={`Slide ${index}`}
-                                        />
-                                    </Carousel.Item>
+                                    <Carousel.Item key={imageItem.image_id} className="h-100">
+                                <img
+                                className="carousel-img"
+                                src={imageItem.url}
+                                alt={`Slide ${imageItem.image_id}`}
+                                />
+                            </Carousel.Item>
                                 )
                             })
                         }
                         </Carousel>
                     </Col>
-                    <Col md="8">
+                    <Col sm="12" md="8">
                         <Card.Body onClick={onClick}>
-                            <Card.Title>{room.name}</Card.Title>
-                            <Badge pill>{`${room.num_guest} khách`}</Badge>{' '}
-                            <Badge pill>{`${room.num_bed} giường`}</Badge>{' '}
-                            <Badge pill>{`${room.num_bedroom} phòng tắm`}</Badge>{' '}
-                            <FacilityBadgeList facList={room.room_facility} />
+                            <Card.Title>{room.room_name}</Card.Title>
+                            <Badge pill>{`${room.numGuest} khách`}</Badge>{' '}
+                            <Badge pill>{`${room.numBed} giường`}</Badge>{' '}
+                            <Badge pill>{`${room.numBedroom} phòng tắm`}</Badge>{' '}
+                            {/* <FacilityBadgeList facList={room.room_facility} /> */}
                             { isEditable &&
                                 <div className="room-edit-option">
                                     <Link to="/roomedit" state={{room}}>
@@ -48,7 +48,7 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                                     <div onClick={() => {
                                         dispatch({
                                             type: DELETE_ROOM,
-                                            payload: room.id
+                                            payload: room.room_id
                                         })
                                     }}>
                                         <MyButton text="Xoá" classNam = "remove-card-button"/>
@@ -58,8 +58,15 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                         </Card.Body>
                     </Col>
                 </Row>
-
+                <Card.Footer className="d-flex justify-content-between">
+                    <div>
+                        <i className="bi bi-star-fill small-icon"></i>
+                        {room.rate != null? room.rate.toFixed(1) : "Chưa có đánh giá"}
+                    </div>
+                    <div>
+                        <strong>{`${room.price}₫`}</strong>{"/đêm"}
+                    </div>
+                </Card.Footer>
             </Card>
-        
     );
 }

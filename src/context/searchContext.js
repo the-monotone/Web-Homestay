@@ -1,6 +1,8 @@
 import React, {createContext, useReducer} from 'react';
 import SearchReducer from '../reducer/searchReducer';
 import * as ActionTypes from '../reducer/actionTypes';
+import axios from 'axios';
+import { WEB_API } from '../config';
 
 export const SearchContext = createContext();
 
@@ -12,7 +14,9 @@ const initialState = {
     },
     startDate: null,
     endDate: null,
-    guest: 0
+    guest: 0,
+    results: [],
+    error: null
 };
 
 const SearchContextProvider = ({children}) => {
@@ -29,11 +33,25 @@ const SearchContextProvider = ({children}) => {
     const changeGuest = payload => {
         dispatch({type: ActionTypes.CHANGE_GUEST, payload});
     }
+
+    const searchPlaceApi = payload => {
+        return axios
+            .post(`${WEB_API}/api/room/search`, payload)
+            .then(res => {
+                console.log(res.data);
+                dispatch({type: ActionTypes.ADD_RESULTS, payload: res.data});
+            })
+            .catch(error => {
+                dispatch({type: ActionTypes.ADD_ERROR, payload: error});
+            })
+    }
+
     const contextValue = {
         changePlace,
         changeStartDate,
         changeEndDate,
         changeGuest,
+        searchPlaceApi,
         ...state
     }
 

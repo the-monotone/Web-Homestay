@@ -4,10 +4,9 @@ import { Modal } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { TextField } from '../forms/TextField';
 import { UserContext } from '../../context/userContext';
-import { SIGN_IN } from '../../reducer/actionTypes';
 
 const LoginModal = (props) => {
-    const { dispatch } = useContext(UserContext); 
+    const { login } = useContext(UserContext); 
     const validate = Yup.object({
         username: Yup.string()
             .required("Bắt buộc"),
@@ -15,9 +14,16 @@ const LoginModal = (props) => {
             .required("Bắt buộc")
     })
     const handleSubmit = (event) => {
-        props.onHide();
         console.log(event); 
-        dispatch({type: SIGN_IN, payload: event})
+        login(event)
+            .then(res => {
+                props.onHide();
+                localStorage.setItem("user-state", JSON.stringify(res));
+                alert("Đăng nhập thành công");
+            })
+            .catch(err => {
+                alert(err.message);
+            })
     }
 
     return (

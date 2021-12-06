@@ -12,27 +12,29 @@ import RentalViewPage from '../pages/rentalView.page';
 import {
     BrowserRouter as Router,
     Route,
-    Routes
+    Routes,
 } from "react-router-dom";
-import Layout from '../components/layout.component';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Root() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Layout/>}>
-                    <Route index element={<HomePage/>} />
-                    <Route path="/host" element={<HostPage/>} />
-                    <Route path="/search" element={<SearchResultPage />} />
-                    <Route path='/roomsignup' element = {<RoomSignUp/>} />
-                    <Route path='/roomedit' element = {<RoomEdit/>} />
-                    <Route path='/roommanager' element = {<RoomManager/>} />
-                    <Route path='/accountsettings' element = {<AccountSettings/>} />
-                    <Route path="/room">
-                        <Route path=":roomId" element={<RoomViewPage />} />
+                <Route path="/" element={<HomePage/>} />
+                <Route path="/home" element={<HomePage/>} />
+                <Route path="/host" element={<HostPage/>} />
+                <Route path="/search" element={<SearchResultPage />} />
+                <Route path='/roomsignup' element = {<RoomSignUp/>} />
+                <Route path='/roomedit' element = {<RoomEdit/>} />
+                <Route path='/roommanager' element = {<RoomManager/>} />
+                <Route path='/accountsettings' element = {<AccountSettings/>} />
+                <Route path="/room">
+                    <Route path=":roomId" element={<RoomViewPage />} />
+                </Route>
+                <Route path="/rental">
+                    <Route path="/rental/user">
+                        <Route path=":userId" element={<RentalViewPage />} />
                     </Route>
-                    <Route path="/rental" element={<RentalViewPage/>} />
                 </Route>
             </Routes>
         </Router>   
