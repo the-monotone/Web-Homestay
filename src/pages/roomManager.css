@@ -60,3 +60,20 @@
   font-size: 14px;
   line-height: 18px;
 }
+
+.banner {
+  height: 250px;
+  background-color: coral;
+}
+
+.banner-text {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 70px;
+  margin-left: 30px;
+}
+
+.signup-more {
+  margin-top: 70px;
+  margin-left: 90px;
+}

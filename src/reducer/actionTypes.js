@@ -7,7 +7,6 @@ export const ADD_ROOM = 'ADD_ROOM'
 export const DELETE_ROOM = 'DELETE_ROOM'
 export const UPDATE_ROOM = 'UPDATE_ROOM'
 export const GET_ROOM = 'GET_ROOM'
-export const SAVE_ROOM = 'SAVE_ROOM'
 
 export const SIGN_UP = 'SIGN_UP'
 export const SIGN_IN = 'SIGN_IN'
@@ -21,3 +20,9 @@ export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 
 export const GET_RENTAL = 'GET_RENTAL';
 export const POST_RENTAL = 'POST_RENTAL';
+
+export const GET_ARRIVING_ROOMS = 'GET_ARRIVING_ROOMS';
+export const GET_CHECKING_OUT_ROOMS = 'GET_CHECKING_OUT_ROOMS';
+export const GET_CURRENTLY_HOSTING_ROOMS = 'GET_CURRENTLY_HOSTING_ROOMS';
+export const GET_EMPTY_ROOMS = 'GET_EMPTY_ROOMS';
+

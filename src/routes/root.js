@@ -2,7 +2,6 @@ import React from 'react';
 import HomePage from '../pages/home.page';
 import HostPage from '../pages/host.page';
 import { RoomSignUp } from '../pages/roomSignUp.page';
-import { RoomEdit } from '../pages/roomEdit.page';
 import { RoomManager } from '../pages/roomManager.page';
 import { AccountSettings } from '../pages/accountSetting.page';
 import SearchResultPage from '../pages/searchResult.page';
@@ -26,7 +25,6 @@ function Root() {
                     <Route path="/host" element={<HostPage/>} />
                     <Route path="/search" element={<SearchResultPage />} />
                     <Route path='/roomsignup' element = {<RoomSignUp/>} />
-                    <Route path='/roomedit' element = {<RoomEdit/>} />
                     <Route path='/roommanager' element = {<RoomManager/>} />
                     <Route path='/accountsettings' element = {<AccountSettings/>} />
                     <Route path="/room">

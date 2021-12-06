@@ -19,7 +19,7 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                     <Col md="4">
                         <Carousel>
                         {
-                            room.image.map((imageSrc, index) => {
+                            room.images.map((imageSrc, index) => {
                                 return(
                                     <Carousel.Item key = {index}>
                                         <img
@@ -35,20 +35,22 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                     </Col>
                     <Col md="8">
                         <Card.Body onClick={onClick}>
-                            <Card.Title>{room.name}</Card.Title>
+                            <Card.Title>{room.room_name}</Card.Title>
                             <Badge pill>{`${room.num_guest} khách`}</Badge>{' '}
                             <Badge pill>{`${room.num_bed} giường`}</Badge>{' '}
-                            <Badge pill>{`${room.num_bedroom} phòng tắm`}</Badge>{' '}
-                            <FacilityBadgeList facList={room.room_facility} />
+                            <Badge pill>{`${room.num_bedroom} phòng ngủ`}</Badge>{' '}
+                            <Badge pill>{`${room.num_bathroom} phòng tắm`}</Badge>{' '}
+                            <FacilityBadgeList facList={room.facilities} />
                             { isEditable &&
                                 <div className="room-edit-option">
-                                    <Link to="/roomedit" state={{room}}>
+                                    <Link to="/roomsignup" state={{stateRoom: room}}>
                                         <MyButton text="Chỉnh sửa" classNam = "edit-card-button"/>
                                     </Link>
                                     <div onClick={() => {
+                                        //TODO
                                         dispatch({
                                             type: DELETE_ROOM,
-                                            payload: room.id
+                                            payload: room
                                         })
                                     }}>
                                         <MyButton text="Xoá" classNam = "remove-card-button"/>
