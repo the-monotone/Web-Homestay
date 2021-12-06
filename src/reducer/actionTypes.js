@@ -21,8 +21,8 @@ export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 export const GET_RENTAL = 'GET_RENTAL';
 export const POST_RENTAL = 'POST_RENTAL';
 
-export const GET_ARRIVING_ROOMS = 'GET_ARRIVING_ROOMS';
-export const GET_CHECKING_OUT_ROOMS = 'GET_CHECKING_OUT_ROOMS';
-export const GET_CURRENTLY_HOSTING_ROOMS = 'GET_CURRENTLY_HOSTING_ROOMS';
-export const GET_EMPTY_ROOMS = 'GET_EMPTY_ROOMS';
+export const GET_ARRIVING_ROOMS = 'Arriving soon';
+export const GET_CHECKING_OUT_ROOMS = 'Checking out';
+export const GET_CURRENTLY_HOSTING_ROOMS = 'Currently hosting';
+export const GET_EMPTY_ROOMS = 'Empty';
 

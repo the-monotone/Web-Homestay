@@ -1,7 +1,7 @@
 import { createContext, React, useEffect, useReducer, useState}   from 'react';
 import { roomListReducer } from '../reducer/roomListReducer';
 import { RoomList } from '../Fake Data API/roomData'
-import { GET_CHECKING_OUT_ROOMS, GET_EMPTY_ROOMS } from '../reducer/actionTypes';
+import { GET_CHECKING_OUT_ROOMS, GET_CURRENTLY_HOSTING_ROOMS, GET_EMPTY_ROOMS } from '../reducer/actionTypes';
 import axios from 'axios';
 import { WEB_API } from '../config';
 
@@ -9,24 +9,30 @@ export const ManagerRoomContext = createContext();
 
 const RoomListProvider = ({children}) => {
 
+    const userState = JSON.parse(localStorage.getItem("user-state"));
+
     const [roomList, setRoomList] = useState([]);
 
     useEffect(() => {
-        getRoomList();
     },[])
 
-    const getRoomList = (type = "Currently hosting") => {
+    const getRoomList = (type = GET_CURRENTLY_HOSTING_ROOMS) => {
         const request = {
-            hostId: 4,
+            hostId: userState.userId,
             filter: type
         }
-        axios.post(`${WEB_API}/api/room/filter`, request)
+        return axios.post(`${WEB_API}/api/room/filter`, request, {
+            headers: {
+                "Authorization": `Bearer ${userState.token}`
+            }
+        })
             .then(res => {
                 console.log(res);
-                setRoomList([...res.data]);
+                return res.data;
             })
             .catch(err => {
                 console.log(err);
+                throw(err);
             })  
     }
 

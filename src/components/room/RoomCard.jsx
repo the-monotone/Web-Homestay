@@ -19,13 +19,13 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                     <Col sm="12" md="4">
                         <Carousel fade variant="dark">
                         {
-                            room.image.map((imageItem) => {
+                            room.images.map((imageItem, index) => {
                                 return(
-                                    <Carousel.Item key={imageItem.image_id} className="h-100">
+                                    <Carousel.Item key={index} className="h-100">
                                 <img
                                 className="carousel-img"
-                                src={imageItem.url}
-                                alt={`Slide ${imageItem.image_id}`}
+                                src={imageItem}
+                                alt={`Slide ${index}`}
                                 />
                             </Carousel.Item>
                                 )

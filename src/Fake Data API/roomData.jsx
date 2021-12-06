@@ -23,7 +23,7 @@ export const genderOptions = [
 export const RoomList = [{
     address: "",
     id: 4527,
-    image: ["https://picsum.photos/id/237/600/600", "https://picsum.photos/id/238/600/600", "https://picsum.photos/id/239/600/600"],
+    images: ["https://picsum.photos/id/237/600/600", "https://picsum.photos/id/238/600/600", "https://picsum.photos/id/239/600/600"],
     name: "Room 1",
     num_bed: 2,
     num_bedroom: 1,

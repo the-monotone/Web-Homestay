@@ -15,49 +15,54 @@ import { useSpring, animated } from 'react-spring'
 import { ImageForm } from "../components/forms/ImageForm";
 
 export const RoomSignUp = () => {
-  const { roomType, roomFacility } = useContext(RoomContext);
+  const { roomType, roomFacility, createRoom } = useContext(RoomContext);
   const { dispatch } = useContext(ManagerRoomContext);
 
-  console.log(roomType);
 
   const navigate = useNavigate();
 
   const location = useLocation();
   var stateRoom;
+
   if (location.state) {
     stateRoom = location.state.stateRoom;
   }
 
 
   const onSubmit = async (room) => {
-    console.log(room)
-    if (!stateRoom) {
-      await dispatch({
-        type: ADD_ROOM,
-        payload: room,
-      });
-    } else {
-      await dispatch({
-        type: UPDATE_ROOM,
-        payload: room,
-      })
+    let cloneRoom = {
+      ...room,
+      room_type_id: parseInt(room.room_type_id)
     }
+    console.log(cloneRoom);
+    const requestCreateRoom = async () => {
+      if (!stateRoom) {
+        await createRoom(cloneRoom)
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
+      } else {
+        /*update*/
+      }
+    }
+    
+    requestCreateRoom();
     navigate("/roommanager");
   };
 
 
   const initialValue = stateRoom ? stateRoom : {
     room_name: "",
-    room_type: 0,
+    room_type_id: 0,
     facilities: [],
     images: [],
     rule: '',
-    address_id: "",
     num_guest: 0,
     num_bed: 0,
     num_bedroom: 0,
     num_bathroom: 0,
     price: 23012.13,
+    latitude: -1,
+    longitude: -1
   };
 
   return (
@@ -73,12 +78,12 @@ export const RoomSignUp = () => {
         </FormikStep>
         <FormikStep
           validationSchema={Yup.object({
-            room_type: Yup.number().min(1, "Bạn chưa chọn loại phòng"),
+            room_type_id: Yup.number().min(1, "Bạn chưa chọn loại phòng"),
           })}
           className = "room-type-field"
         >
           <SelectButton
-            name="room_type"
+            name="room_type_id"
             options={roomType}
             pos="col-8"
           />

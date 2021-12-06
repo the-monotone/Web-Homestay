@@ -16,7 +16,7 @@ export const roomListReducer = (state, action) => {
         {
             const request = {
                 hostID: 4,
-                filter: "Checking out"
+                filter: GET_CHECKING_OUT_ROOMS
             }
             axios.post(`${WEB_API}/api/room/filter`, request)
                 .then(res => {

@@ -11,12 +11,13 @@ const RoomContextProvider = ({children}) => {
     const [roomType, setRoomType] = useState(RoomType);
     const [roomFacility, setRoomFacility] = useState(RoomFacility);
     const [isGetting, setGetting] = useState(false);
+
+    const userState = JSON.parse(localStorage.getItem("user-state"));
     
     useEffect(() => {
         axios.get(`${WEB_API}/api/room/room-type`)
             .then(res => {
-                console.log("RoomType API: ",res.data);
-                const clone = res.data.map(roomType => {
+                const clone = res.data.roomTypes.map(roomType => {
                     return {
                         key: roomType.room_type_id,
                         value: roomType.room_type
@@ -28,8 +29,7 @@ const RoomContextProvider = ({children}) => {
 
         axios.get(`${WEB_API}/api/facility`)
             .then(res => {
-                console.log("RoomFacility API: ",res.data);
-                const clone = res.data.map(facility => {
+                const clone = res.data.facilities.map(facility => {
                     return {
                         id : facility.facility_id,
                         facility: facility.facility,
@@ -42,19 +42,24 @@ const RoomContextProvider = ({children}) => {
     }, [])
 
     const createRoom = (room) => {
-        axios.post(`${WEB_API}/api/room/create`, room)
-            .then(res => {
-                console.log(res)
+        return axios.post(`${WEB_API}/api/room/create`, room, {
+                headers: {
+                    "Authorization": `Bearer ${userState.token}`
+                }
             })
-            .catch(err => {
-                console.log(err)
-            })
+                .then(res => {
+                    return "Success";
+                })
+                .catch(err => {
+                    throw(err);
+                })
     }
 
     //data
     const roomContextData = {
         roomType,
-        roomFacility
+        roomFacility,
+        createRoom
     }
 
     //Return provider
