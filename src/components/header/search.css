@@ -32,3 +32,7 @@
 .fixed-height {
     height: 70px;
 }
+
+#search-bar {
+    border-radius: 20px;
+}

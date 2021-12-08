@@ -6,8 +6,6 @@ import { TextField } from "../components/forms/TextField";
 import { MultiSelect } from "../components/forms/MultiSelect";
 import { NumField } from "../components/forms/NumField";
 import { RoomContext } from "../context/roomContext";
-import { ManagerRoomContext } from "../context/managerRoomContext";
-import { ADD_ROOM, UPDATE_ROOM } from "../reducer/actionTypes";
 import { useNavigate, useLocation } from "react-router";
 import { Button, Row, ProgressBar } from "react-bootstrap";
 import './roomSignup.page.css';
@@ -15,8 +13,10 @@ import { useSpring, animated } from 'react-spring'
 import { ImageForm } from "../components/forms/ImageForm";
 
 export const RoomSignUp = () => {
-  const { roomType, roomFacility, createRoom } = useContext(RoomContext);
-  const { dispatch } = useContext(ManagerRoomContext);
+  const { roomType, roomFacility, createRoom, updateRoom } = useContext(RoomContext);
+
+  console.log(roomType);
+  console.log(roomFacility);
 
 
   const navigate = useNavigate();
@@ -28,11 +28,15 @@ export const RoomSignUp = () => {
     stateRoom = location.state.stateRoom;
   }
 
+  console.log(stateRoom);
+
 
   const onSubmit = async (room) => {
+    let {image_upload, ...tempRoom} = room;
     let cloneRoom = {
-      ...room,
-      room_type_id: parseInt(room.room_type_id)
+      ...tempRoom,
+      room_type_id: parseInt(tempRoom.room_type_id),
+      confirmed: 1
     }
     console.log(cloneRoom);
     const requestCreateRoom = async () => {
@@ -41,7 +45,9 @@ export const RoomSignUp = () => {
           .then(res => console.log(res))
           .catch(err => console.log(err))
       } else {
-        /*update*/
+        await updateRoom(cloneRoom)
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
       }
     }
     
@@ -52,7 +58,7 @@ export const RoomSignUp = () => {
 
   const initialValue = stateRoom ? stateRoom : {
     room_name: "",
-    room_type_id: 0,
+    room_type_id: 1,
     facilities: [],
     images: [],
     rule: '',

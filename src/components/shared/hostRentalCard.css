@@ -1,0 +1,27 @@
+.host-rental-cost {
+    width: fit-content;
+    background-color: coral;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 20px 8px 20px;
+    border-radius: 25px;
+    margin: auto;
+    
+}
+.host-rental-date {
+    width: fit-content;
+    font-size: 16px;
+    font-weight: 500;
+}
+.rental-date-container {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.rental-card-title {
+    text-align: center;
+}
+.host-rental-card {
+}

@@ -8,15 +8,11 @@ export const RoomList = ({roomList, isEditable, isGetting}) => {
     
     const navigate = useNavigate();
     const handleView = (room) => {
-        navigate(`/room/${room.id}`, {state: room} );
-    }
-
-    const handleEdit = (room) => {
-        navigate(`/roomsignup/${room.id}`, {state: room});
+        navigate(`/room/${room.id}`);
     }
 
     return(
-        <Container className="roomlist-container mb-3 mt-5">
+        <Container className="roomlist-container mb-3 mt-3">
         {
             roomList.length <= 0 ? <p className="no-room-text"><i className="bi bi-journal"></i>Hiện không có phòng nào</p> :
             <Row id="room-list-block" xs={1} md={2} xl= {3} className="g-4">

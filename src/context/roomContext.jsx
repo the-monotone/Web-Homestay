@@ -10,7 +10,6 @@ const RoomContextProvider = ({children}) => {
     //State
     const [roomType, setRoomType] = useState(RoomType);
     const [roomFacility, setRoomFacility] = useState(RoomFacility);
-    const [isGetting, setGetting] = useState(false);
 
     const userState = JSON.parse(localStorage.getItem("user-state"));
     
@@ -48,18 +47,55 @@ const RoomContextProvider = ({children}) => {
                 }
             })
                 .then(res => {
+                    console.log("Room register res: ", res);
                     return "Success";
                 })
                 .catch(err => {
+                    console.log("Room register Err: ", err);
                     throw(err);
                 })
+    }
+
+    const updateRoom = (room) => {
+        return axios.put(`${WEB_API}/api/room/${room.room_id}`, room, {
+                headers: {
+                    "Authorization": `Bearer ${userState.token}`
+                }
+        })
+            .then(res => {
+                console.log(res);
+                return "Update success";
+            })
+            .catch(err => {
+                console.log(err);
+                throw(err);
+            })
+    }
+
+    const deleteRoom = (id) => {
+        console.log(id);
+        return axios.delete(`${WEB_API}/api/room/${id}`,{
+            headers: {
+                "Authorization": `Bearer ${userState.token}`
+            }
+        })
+            .then(res => {
+                console.log(res);
+                return "Delete Success";
+            })
+            .catch(err => {
+                console.log(err);
+                throw(err);
+            })
     }
 
     //data
     const roomContextData = {
         roomType,
         roomFacility,
-        createRoom
+        updateRoom,
+        createRoom,
+        deleteRoom
     }
 
     //Return provider

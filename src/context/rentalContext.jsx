@@ -48,11 +48,34 @@ const RentalContextProvider = ({children}) => {
             })
     }
 
+    const getRentalByHost = (token, hostId) => {
+        if (token == null || hostId == null) {
+            return null;
+        }
+        return axios
+            .get(`${WEB_API}/api/rental/host/${hostId}`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            .then(res => {
+                console.log(res.data);
+                return (res.data);
+            })
+            .catch(err => {
+                console.error(err);
+                throw(err);
+            })
+    }
+
     const value = {
         getRental,
         postRental,
+        getRentalByHost,
         ...state
     }
+
+
 
     return (
         <RentalContext.Provider value={value}>

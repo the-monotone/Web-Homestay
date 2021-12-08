@@ -34,14 +34,14 @@ export const NumField = ({label, ...props}) => {
         <div className={props.pos}>
             <label htmlFor={field.name}>{label}</label>
             <div className="dis-flex number-input">
-                <i className="bi bi-plus-circle-fill" onClick={increase}></i>
+                <i className="bi bi-dash-circle-fill" onClick={decrease} style={!isPositive() ? {color: 'gray'} : {}}></i>
                 <input 
                 className={`form-control shadow-none ${meta.touched && meta.error&& 'is-invalid'}`}
                 {...field}
                 {...props}
                 autoComplete="off"
                 />
-                <i className="bi bi-dash-circle-fill" onClick={decrease} style={!isPositive() ? {color: 'gray'} : {}}></i>
+                <i className="bi bi-plus-circle-fill" onClick={increase}></i>
             </div>
             <ErrorMessage name={field.name} />
         </div>

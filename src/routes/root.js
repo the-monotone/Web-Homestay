@@ -14,6 +14,7 @@ import {
     Routes,
 } from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { RentalManagement } from '../pages/rentalManagement.page';
 
 function Root() {
     return (
@@ -22,9 +23,10 @@ function Root() {
                 <Route path="/" element={<HomePage/>} />
                 <Route path="/home" element={<HomePage/>} />
                 <Route path="/host" element={<HostPage/>} />
-                <Route path="/search" element={<SearchResultPage />} />
                 <Route path='/roomsignup' element = {<RoomSignUp/>} />
                 <Route path='/roommanager' element = {<RoomManager/>} />
+                <Route path='/rentalmanagement' element = {<RentalManagement/>} />
+                <Route path="/search" element={<SearchResultPage />} />
                 <Route path='/accountsettings' element = {<AccountSettings/>} />
                 <Route path="/room">
                     <Route path=":roomId" element={<RoomViewPage />} />
