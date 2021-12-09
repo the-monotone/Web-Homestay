@@ -6,8 +6,6 @@ import { TextField } from "../components/forms/TextField";
 import { MultiSelect } from "../components/forms/MultiSelect";
 import { NumField } from "../components/forms/NumField";
 import { RoomContext } from "../context/roomContext";
-import { ManagerRoomContext } from "../context/managerRoomContext";
-import { ADD_ROOM, UPDATE_ROOM } from "../reducer/actionTypes";
 import { useNavigate, useLocation } from "react-router";
 import { Button, Row, ProgressBar } from "react-bootstrap";
 import './roomSignup.page.css';
@@ -16,59 +14,57 @@ import { ImageForm } from "../components/forms/ImageForm";
 import MapField from "../components/forms/MapField";
 
 export const RoomSignUp = () => {
-  const { roomType, roomFacility } = useContext(RoomContext);
-  const { dispatch } = useContext(ManagerRoomContext);
+  const { roomType, roomFacility, createRoom, updateRoom } = useContext(RoomContext);
 
   console.log(roomType);
+  console.log(roomFacility);
+
 
   const navigate = useNavigate();
 
   const location = useLocation();
   var stateRoom;
+
   if (location.state) {
     stateRoom = location.state.stateRoom;
   }
 
+  console.log(stateRoom);
+
 
   const onSubmit = async (room) => {
-    console.log(room)
-    const body = {
-      room_name: room.room_name,
-      room_type: room.room_type,
-      facilities: room.facilities,
-      images: room.images,
-      rule: room.rule,
-      address_id: room.address_id,
-      num_guest: room.num_guest,
-      num_bed: room.num_bed,
-      num_bedroom: room.num_bedroom,
-      num_bathroom: room.num_bathroom,
-      price: room.price,
-      latitude: room.location.latitude,
-      longitude: room.location.longitude
+    let {image_upload, location, ...tempRoom} = room;
+    let cloneRoom = {
+      ...tempRoom,
+      room_type_id: parseInt(tempRoom.room_type_id),
+      confirmed: 1,
+      latitude: location.latitude,
+      longitude: location.longitude
     }
-    if (!stateRoom) {
-      await dispatch({
-        type: ADD_ROOM,
-        payload: body,
-      });
-    } else {
-      await dispatch({
-        type: UPDATE_ROOM,
-        payload: body,
-      })
+    console.log(cloneRoom);
+    const requestCreateRoom = async () => {
+      if (!stateRoom) {
+        await createRoom(cloneRoom)
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
+      } else {
+        await updateRoom(cloneRoom)
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
+      }
     }
+    
+    requestCreateRoom();
     navigate("/roommanager");
   };
 
 
   const initialValue = stateRoom ? stateRoom : {
     room_name: "",
-    room_type: 0,
+    room_type_id: 1,
     facilities: [],
     images: [],
     rule: '',
-    address_id: "",
     num_guest: 0,
     num_bed: 0,
     num_bedroom: 0,
@@ -90,12 +86,12 @@ export const RoomSignUp = () => {
         </FormikStep>
         <FormikStep
           validationSchema={Yup.object({
-            room_type: Yup.number().min(1, "Bạn chưa chọn loại phòng"),
+            room_type_id: Yup.number().min(1, "Bạn chưa chọn loại phòng"),
           })}
           className = "room-type-field"
         >
           <SelectButton
-            name="room_type"
+            name="room_type_id"
             options={roomType}
             pos="col-8"
           />
@@ -242,7 +238,7 @@ export const FormikStepper = ({ children, ...props }) => {
       case 'room-facility-field':
         return 'Cho khách biết chỗ ở của bạn có những gì'
       case 'room-price-field':
-        return 'Bây giờ đến phần thú vị rồi – đặt giá cho thuê'
+        return 'Bây giờ đến phần thú vị rồi - đặt giá cho thuê'
       case 'room-images':
         return 'Hãy đăng một số ảnh để khách tham quan có thể tham khảo nào'
       case 'room-rule-field':

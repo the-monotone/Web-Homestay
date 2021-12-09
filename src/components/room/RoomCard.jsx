@@ -7,11 +7,14 @@ import { MyButton } from '../shared/myButton';
 import './roomCard.css';
 import { ManagerRoomContext } from '../../context/managerRoomContext';
 import { DELETE_ROOM } from '../../reducer/actionTypes';
+import { RoomContext } from '../../context/roomContext';
 
 
 export const RoomCard = ({onClick, isEditable, room}) => {
 
-    const {dispatch} = useContext(ManagerRoomContext);
+    const {deleteRoom} = useContext(RoomContext);
+
+    console.log((room));
 
     return(
             <Card md="6" className="my-card">
@@ -19,12 +22,12 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                     <Col sm="12" md="4">
                         <Carousel fade variant="dark">
                         {
-                            room.images.map((imageUrl, index) => {
+                            room.images.map((imageItem, index) => {
                                 return(
                                     <Carousel.Item key={index} className="h-100">
                                 <img
                                 className="carousel-img"
-                                src={imageUrl}
+                                src={imageItem}
                                 alt={`Slide ${index}`}
                                 />
                             </Carousel.Item>
@@ -48,10 +51,12 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                                     </Link>
                                     <div onClick={() => {
                                         //TODO
-                                        dispatch({
-                                            type: DELETE_ROOM,
-                                            payload: room
-                                        })
+                                        deleteRoom(room.room_id)
+                                            .then(res => {
+                                                console.log(res);
+                                                window.location.reload();
+                                            })
+                                            .catch(err => console.log(err))
                                     }}>
                                         <MyButton text="Xoá" classNam = "remove-card-button"/>
                                     </div>

@@ -48,7 +48,7 @@ export const ImageForm = ({label, ...props}) => {
             <label htmlFor="image-upload-id" className="upload-image-label mb-3">Chọn ảnh</label>
             <input 
                 type="file"
-                name = "image-upload"
+                name = "image_upload"
                 id = "image-upload-id"
                 autoComplete="off"
                 onChange = {onChange}
