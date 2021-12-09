@@ -5,7 +5,8 @@ import './facility.css'
 
 export const MultiSelect = ({label, ...props}) => {
     const [field, ,helper] = useField(props);
-        
+    console.log(field);
+    console.log(helper);    
     const [facilities, setFacilities] = useState(field.value);
 
     

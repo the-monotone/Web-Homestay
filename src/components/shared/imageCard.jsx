@@ -9,7 +9,7 @@ export const ImageCard = (props) => {
     function deleteHandle(e) {
         setValue(prev => {
             let clone = [...prev];
-            clone = clone.filter(_url => _url != imgUrl);
+            clone = clone.filter(_url => _url !== imgUrl);
             return clone;
         })
     }

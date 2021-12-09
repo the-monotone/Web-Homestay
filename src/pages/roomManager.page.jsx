@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { ManagerRoomContext } from "../context/managerRoomContext";
+import "./roomManager.css";
 import { GET_ARRIVING_ROOMS, GET_CHECKING_OUT_ROOMS, GET_CURRENTLY_HOSTING_ROOMS, GET_EMPTY_ROOMS } from "../reducer/actionTypes";
 import { RoomList } from "../components/room/roomList";
 import { ARRIVING_SOON_INDEX,CHECKING_OUT_INDEX, CURRENTLY_HOSTING_INDEX, EMPTY_INDEX } from "../reducer/roomViewTypes";

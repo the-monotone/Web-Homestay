@@ -7,13 +7,13 @@ const PopupRoomCard = ({room}) => {
         <div className="popup-room-card">
             <Carousel fade variant="dark">
             {
-                room.image.map((imageItem) => {
+                room.images.map((imageUrl, index) => {
                     return(
-                        <Carousel.Item key={imageItem.image_id} className="h-100">
+                        <Carousel.Item key={index} className="h-100">
                             <img
                             className="carousel-img"
-                            src={imageItem.url}
-                            alt={`Slide ${imageItem.image_id}`}
+                            src={imageUrl}
+                            alt={`Slide ${index}`}
                             />
                         </Carousel.Item>
                     )

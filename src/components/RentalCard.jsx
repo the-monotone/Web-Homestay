@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Carousel, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Card, Row, Col, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
 const renderTooltip = (props) => {

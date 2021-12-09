@@ -1,7 +1,7 @@
 import { useField } from 'formik';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {Row, Col, Image, Button} from 'react-bootstrap';
+import {Row, Col} from 'react-bootstrap';
 import './formik.css'
 import { ImageCard } from '../shared/imageCard';
 
@@ -14,7 +14,7 @@ export const ImageForm = ({label, ...props}) => {
 
     useEffect(() => {
         helper.setValue([...imageList]);
-    },[imageList])
+    }, [imageList])
 
     console.log("img list:", imageList);
     console.log("Field:", field);

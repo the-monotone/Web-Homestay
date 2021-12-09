@@ -11,6 +11,7 @@ import { Button, Row, ProgressBar } from "react-bootstrap";
 import './roomSignup.page.css';
 import { useSpring, animated } from 'react-spring'
 import { ImageForm } from "../components/forms/ImageForm";
+import MapField from "../components/forms/MapField";
 
 export const RoomSignUp = () => {
   const { roomType, roomFacility, createRoom, updateRoom } = useContext(RoomContext);
@@ -32,11 +33,13 @@ export const RoomSignUp = () => {
 
 
   const onSubmit = async (room) => {
-    let {image_upload, ...tempRoom} = room;
+    let {image_upload, location, ...tempRoom} = room;
     let cloneRoom = {
       ...tempRoom,
       room_type_id: parseInt(tempRoom.room_type_id),
-      confirmed: 1
+      confirmed: 1,
+      latitude: location.latitude,
+      longitude: location.longitude
     }
     console.log(cloneRoom);
     const requestCreateRoom = async () => {
@@ -67,8 +70,7 @@ export const RoomSignUp = () => {
     num_bedroom: 0,
     num_bathroom: 0,
     price: 23012.13,
-    latitude: -1,
-    longitude: -1
+    location: null
   };
 
   return (
@@ -150,8 +152,9 @@ export const RoomSignUp = () => {
             options={roomFacility}
           />
         </FormikStep>
-        { // TODO:  Them dia chi
-        }
+        <FormikStep className="room-location">
+          <MapField name="location" />
+        </FormikStep>
         <FormikStep
           className="room-rule-field"
         >
@@ -235,12 +238,13 @@ export const FormikStepper = ({ children, ...props }) => {
       case 'room-facility-field':
         return 'Cho khách biết chỗ ở của bạn có những gì'
       case 'room-price-field':
-        return 'Bây giờ đến phần thú vị rồi – đặt giá cho thuê'
+        return 'Bây giờ đến phần thú vị rồi - đặt giá cho thuê'
       case 'room-images':
         return 'Hãy đăng một số ảnh để khách tham quan có thể tham khảo nào'
       case 'room-rule-field':
         return 'Những điều bạn muốn khách hàng của mình tuân thủ là gì?'
-      // TODO: Them label cho dia chi
+      case 'room-location':
+        return "Thêm vị trí bằng cách tìm kiếm thành phố và điều chỉnh Marker"
       default:
         return "Đăng ký phòng";
     }

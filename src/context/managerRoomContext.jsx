@@ -1,4 +1,4 @@
-import { createContext, React, useEffect, useReducer, useState}   from 'react';
+import { createContext, React, useState}   from 'react';
 import {GET_CURRENTLY_HOSTING_ROOMS } from '../reducer/actionTypes';
 import axios from 'axios';
 import { WEB_API } from '../config';
