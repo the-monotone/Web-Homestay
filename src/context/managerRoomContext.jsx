@@ -1,7 +1,4 @@
-import { createContext, React, useEffect, useReducer, useState}   from 'react';
-import { roomListReducer } from '../reducer/roomListReducer';
-import { RoomList } from '../Fake Data API/roomData'
-import { GET_CHECKING_OUT_ROOMS, GET_EMPTY_ROOMS } from '../reducer/actionTypes';
+import { createContext, React, useEffect, useState}   from 'react';
 import axios from 'axios';
 import { WEB_API } from '../config';
 

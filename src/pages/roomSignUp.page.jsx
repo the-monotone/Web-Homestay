@@ -13,6 +13,7 @@ import { Button, Row, ProgressBar } from "react-bootstrap";
 import './roomSignup.page.css';
 import { useSpring, animated } from 'react-spring'
 import { ImageForm } from "../components/forms/ImageForm";
+import MapField from "../components/forms/MapField";
 
 export const RoomSignUp = () => {
   const { roomType, roomFacility } = useContext(RoomContext);
@@ -31,15 +32,30 @@ export const RoomSignUp = () => {
 
   const onSubmit = async (room) => {
     console.log(room)
+    const body = {
+      room_name: room.room_name,
+      room_type: room.room_type,
+      facilities: room.facilities,
+      images: room.images,
+      rule: room.rule,
+      address_id: room.address_id,
+      num_guest: room.num_guest,
+      num_bed: room.num_bed,
+      num_bedroom: room.num_bedroom,
+      num_bathroom: room.num_bathroom,
+      price: room.price,
+      latitude: room.location.latitude,
+      longitude: room.location.longitude
+    }
     if (!stateRoom) {
       await dispatch({
         type: ADD_ROOM,
-        payload: room,
+        payload: body,
       });
     } else {
       await dispatch({
         type: UPDATE_ROOM,
-        payload: room,
+        payload: body,
       })
     }
     navigate("/roommanager");
@@ -58,6 +74,7 @@ export const RoomSignUp = () => {
     num_bedroom: 0,
     num_bathroom: 0,
     price: 23012.13,
+    location: null
   };
 
   return (
@@ -139,8 +156,9 @@ export const RoomSignUp = () => {
             options={roomFacility}
           />
         </FormikStep>
-        { // TODO:  Them dia chi
-        }
+        <FormikStep className="room-location">
+          <MapField name="location" />
+        </FormikStep>
         <FormikStep
           className="room-rule-field"
         >
@@ -229,7 +247,8 @@ export const FormikStepper = ({ children, ...props }) => {
         return 'Hãy đăng một số ảnh để khách tham quan có thể tham khảo nào'
       case 'room-rule-field':
         return 'Những điều bạn muốn khách hàng của mình tuân thủ là gì?'
-      // TODO: Them label cho dia chi
+      case 'room-location':
+        return "Thêm vị trí bằng cách tìm kiếm thành phố và điều chỉnh Marker"
       default:
         return "Đăng ký phòng";
     }

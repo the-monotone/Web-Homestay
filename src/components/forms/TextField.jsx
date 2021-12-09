@@ -7,7 +7,7 @@ export const TextField = ({label, ...props}) => {
     const [field, meta] = useField(props);
 
     return(
-        <Form.Group className={props.pos ?  props.pos : "" + " mb-3"}>
+        <Form.Group className={props.pos ?  props.pos : "mb-3"}>
             {label && <Form.Label>{label}</Form.Label>}
             <Form.Control 
                 className={`form-control shadow-none ${meta.touched && meta.error && 'is-invalid'}`}

@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { ManagerRoomContext } from "../context/managerRoomContext";
-import { GET_EMPTY_ROOMS, GET_ROOM } from "../reducer/actionTypes";
 import "./roomManager.css";
 import { RoomList } from "../components/room/roomList";
 import {
@@ -23,7 +22,7 @@ export const RoomManager = () => {
     else if (checkingArray[2]) getRoomList("Checking out");
     else if (checkingArray[3]) getRoomList("Empty");
     else getRoomList("Currently hosting");
-  },[checkingArray])
+  },[getRoomList, checkingArray])
 
   const handleClick = (e) => {
     let tempChecking = [false, false, false, false];
