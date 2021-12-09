@@ -52,7 +52,7 @@ export const RoomSignUp = () => {
     }
     
     requestCreateRoom();
-    navigate("/roommanager");
+    navigate("/host/roommanager");
   };
 
 

@@ -10,9 +10,8 @@ export const RentalManagement = () => {
 
     const {getRentalByHost} = useContext(RentalContext);
     const userState = JSON.parse(localStorage.getItem("user-state"));
-    console.log(userState);
 
-    const [rentalList, setRentalList] = useState(rentalListResponse.rentals);
+    const [rentalList, setRentalList] = useState([]);
     const [isUnconfirmedList, setUnconfirmedList] = useState(true);
     const [isGetting, setGetting] = useState(false);
 
@@ -37,11 +36,19 @@ export const RentalManagement = () => {
             let temp = await getRentalByHost(userState.token, userState.userId)
                 .then(res => {
                     console.log(res);
+                    let tempRentalList;
+                    if (isUnconfirmedList) {
+                        tempRentalList = res.rentals.filter(rental => rental.status === "UNCONFIRMED");
+                        
+                    } else {
+                        tempRentalList = res.rentals.filter(rental => rental.status !== "UNCONFIRMED");
+                    }
+                    setRentalList([...tempRentalList]);
+                    setTotalRental(tempRentalList.length)
                 })
                 .catch(err => {
                     console.log(err);
                 })
-
             setGetting(false);
         }
         getData();

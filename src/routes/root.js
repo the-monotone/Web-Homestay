@@ -22,10 +22,12 @@ function Root() {
             <Routes>
                 <Route path="/" element={<HomePage/>} />
                 <Route path="/home" element={<HomePage/>} />
-                <Route path="/host" element={<HostPage/>} />
-                <Route path='/roomsignup' element = {<RoomSignUp/>} />
-                <Route path='/roommanager' element = {<RoomManager/>} />
-                <Route path='/rentalmanagement' element = {<RentalManagement/>} />
+                <Route path="/host" element={<HostPage/>} >
+
+                </Route>
+                <Route path='/host/roomsignup' element = {<RoomSignUp/>} />
+                <Route path='/host/roommanager' element = {<RoomManager/>} />
+                <Route path='/host/rentalmanagement' element = {<RentalManagement/>} />
                 <Route path="/search" element={<SearchResultPage />} />
                 <Route path='/accountsettings' element = {<AccountSettings/>} />
                 <Route path="/room">
