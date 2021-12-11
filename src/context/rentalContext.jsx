@@ -28,7 +28,7 @@ const RentalContextProvider = ({children}) => {
                 dispatch({type: GET_RENTAL, payload: res.data});
             })
             .catch(err => {
-                console.error(err);
+                throw(err.response);
             })
     }
 
@@ -44,8 +44,7 @@ const RentalContextProvider = ({children}) => {
                 return res.data;
             })
             .catch(err => {
-                console.error(err);
-                throw(err);
+                throw(err.response);
             })
     }
 
@@ -63,12 +62,10 @@ const RentalContextProvider = ({children}) => {
                 }
             })
             .then(res => {
-                console.log(res.data);
                 return (res.data);
             })
             .catch(err => {
-                console.error(err);
-                throw(err);
+                throw(err.response);
             })
     }
 
@@ -85,12 +82,10 @@ const RentalContextProvider = ({children}) => {
                 }
             })
             .then(res => {
-                console.log(res);
                 return res;
             })
             .catch(err => {
-                console.log(err);
-                throw(err);
+                throw(err.response);
             })
     }
 

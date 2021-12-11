@@ -8,6 +8,7 @@ import LoggedInDropdown from './loggedInDropdown';
 import  './header.component.css';
 import { HeaderContext } from '../../context/headerContext';
 import { RENTALMAGSATE, ROOMMAGSTATE } from '../../reducer/actionTypes';
+import { WeLogo } from '../../logo/logo';
 
 function HostHeader() {
     const [isLoginModal, setLoginModal] = useState(false);
@@ -23,7 +24,7 @@ function HostHeader() {
         <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-fixed vw-100">
             <Container fluid="md">
                 <Navbar.Toggle />
-                <Navbar.Brand href="/" className="order-0 me-auto">Homestay</Navbar.Brand>
+                <Navbar.Brand href="/" className="order-0 me-auto"><WeLogo roundedCircle style={{ height: 60, width: 60 }} /></Navbar.Brand>
                 <Navbar.Collapse className="order-last justify-content-center">
                     <Nav navbar>
                         <Nav.Link 

@@ -1,5 +1,5 @@
-import {React, useWindowDimensions} from 'react';
-import { Pagination, Row } from 'react-bootstrap';
+import {React} from 'react';
+import { Pagination } from 'react-bootstrap';
 
 
 export const WePagnigation = (props) => {

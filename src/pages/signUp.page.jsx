@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "../components/forms/TextField";
 import * as Yup from 'yup';
 import { Modal } from "react-bootstrap";
 import { SelectButton } from "../components/forms/SelectButton";
 import '../components/forms/formik.css'
+import { UserContext } from "../context/userContext";
+import { WeToast } from "../components/shared/weToast";
 
 export const Signup = (props) => {
     const userTypes = [
         {key : 2, value: 'Người đi thuê phòng'},
         {key : 3, value: 'Người cho thuê phòng'}
     ]
+
+    const {signUp, login} = useContext(UserContext);
+    const [isPosting, setPosting] = useState(false);
+    const [isToast, setToast] = useState(false);
 
     const validate = Yup.object({
         name: Yup.string()
@@ -34,7 +40,46 @@ export const Signup = (props) => {
             .required('Bắt buộc'),
     });
 
-    const handleSubmit = values => console.log('Form data: ', values);
+    const handleSubmit = value => {
+        if (isPosting) return;
+        const doSignUp = async () => {
+            setPosting(true);
+            const {userType, confirmPassword, ...account} = value;
+            await signUp({...account, role: userType === 2 ? "client" : "host"})
+                .then(res => {
+                    setToast(true);
+                    const logInAccount = {
+                        username: account.username,
+                        password: account.password
+                    }
+                    login(logInAccount)
+                        .then(res => {
+                            localStorage.setItem("user-state", JSON.stringify(res));
+                            window.location.replace("/home");
+                        })
+                        .catch(err => {
+                            alert("Lỗi hệ thống, vui lòng thử lại sau.");
+                        });
+                })
+                .catch(err => {
+                    console.log(err);
+                    if (err.status === 400) {
+                        switch(err.data.message) {
+                            case 'Failed! Phone number is already in use!':
+                                alert('Số điện thoại đã được đăng ký');
+                                break;
+                            case 'Failed! Username is already in use!':
+                                alert('Tên đăng nhập đã tồn tại');
+                                break;
+                            default:
+                                alert("Đăng ký không thành công, vui lòng kiểm tra lại thông tin đăng nhập.")
+                        }
+                    }
+                })
+            setPosting(false);
+        }
+        doSignUp();
+    }
     return (
         <Modal
             {...props}
@@ -53,7 +98,7 @@ export const Signup = (props) => {
                     confirmPassword: '',
                     email: '',
                     phone: '',
-                    userType: 0
+                    userType: 2
                 }}
                 validationSchema={validate}
                 onSubmit = {handleSubmit}
@@ -77,6 +122,7 @@ export const Signup = (props) => {
                 )}
             </Formik>
             </Modal.Body>
+            <WeToast show={isToast} onClose={() => setToast(false)}>Đăng ký thành công</WeToast>
         </Modal>
     )
 }

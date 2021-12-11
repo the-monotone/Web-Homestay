@@ -11,7 +11,7 @@ import { RENTALMAGSATE } from '../reducer/actionTypes';
 
 export const RentalManagement = () => {
 
-    const {getRentalByHost, postRental} = useContext(RentalContext);
+    const {getRentalByHost} = useContext(RentalContext);
     const userState = JSON.parse(localStorage.getItem("user-state"));
     const [pageChange, setPageChange] = useState(false);
 

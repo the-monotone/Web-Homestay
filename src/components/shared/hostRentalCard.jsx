@@ -1,6 +1,5 @@
 import {React, useContext} from 'react';
-import { fakeRental } from '../../Fake Data API/rentalData';
-import { Card, Row, Col, Button, Badge } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import './hostRentalCard.css'
 import { RentalContext } from '../../context/rentalContext';
 export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
@@ -8,10 +7,6 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
     const userState = JSON.parse(localStorage.getItem("user-state"));
 
     const {updateRental} = useContext(RentalContext);
-
-    const viewRoom = () => {
-
-    }
 
     const hostUpdateRental = () => {
         const update = async () => {

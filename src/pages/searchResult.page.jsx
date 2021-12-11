@@ -4,7 +4,6 @@ import '@goongmaps/goong-js/dist/goong-js.css';
 import { RoomCard } from '../components/room/RoomCard';
 import { useNavigate } from 'react-router';
 import Layout from '../components/layout.component';
-import useSearch from '../hook/useSearch';
 const SearchResultPage = () => {
     // const {place, results} = useSearch();
     const navigate = useNavigate();

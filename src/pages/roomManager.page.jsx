@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
-import { Container, Row, Col, Button, Image } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { ManagerRoomContext } from "../context/managerRoomContext";
 import "./roomManager.css";
@@ -44,16 +44,16 @@ export const RoomManager = () => {
     if (isGetting) return;
     const getData = async (type) => {
       setGetting(true);
-      let temp = await getRoomList(type, roomPerPage, currentPage)
-                .then(res => {
-                  console.log(res);
-                  if (res.message === "No room") setRoomList([]);
-                  else {
-                    setRoomList([...res.rooms]);
-                    setTotalRoom(res.total);
-                  }
-                })
-                .catch(err => console.log(err))
+      await getRoomList(type, roomPerPage, currentPage)
+        .then(res => {
+          console.log(res);
+          if (res.message === "No room") setRoomList([]);
+          else {
+            setRoomList([...res.rooms]);
+            setTotalRoom(res.total);
+          }
+        })
+        .catch(err => console.log(err))
   
       setGetting(false);
     }
