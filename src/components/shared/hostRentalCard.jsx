@@ -1,20 +1,40 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import { fakeRental } from '../../Fake Data API/rentalData';
 import { Card, Row, Col, Button, Badge } from 'react-bootstrap';
 import './hostRentalCard.css'
-export const HostRentalCard = ({rental}) => {
+import { RentalContext } from '../../context/rentalContext';
+export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
 
-    const isUnconfirmed = () => {
-        return rental.status === "UNCONFIRMED";
-    }
+    const userState = JSON.parse(localStorage.getItem("user-state"));
+
+    const {updateRental} = useContext(RentalContext);
 
     const viewRoom = () => {
 
     }
 
+    const hostUpdateRental = () => {
+        const update = async () => {
+            const {images, last_update, ...cloneRental} = rental;
+            const rentalAfter = {
+                ...cloneRental,
+                status: isUnconfirmed ? "CONFIRMED" : "RETURNED"
+            }
+            await updateRental(userState.token, rentalAfter)
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            // window.location.reload();
+        }
+        update();
+    }
+
 
     return(
-        <Card className="host-rental-card">
+        <Card className="host-rental-card mb-2">
             {/* <Card.Img variant="top" src = {rental.images[0]} style={{height: "200px"}}></Card.Img> */}
             <Card.Title className="rental-card-title mt-3">{rental.room_name}</Card.Title>
             <Card.Body>
@@ -26,9 +46,12 @@ export const HostRentalCard = ({rental}) => {
                 </div>
             </Card.Body>
             <Card.Footer>
-                <Button variant={isUnconfirmed() ? "primary" : "success"} style = {{width: "100%"}}>
+                {/* <Button variant={isUnconfirmed() ? "primary" : "success"} style = {{width: "100%"}} onClick={hostUpdateRental}>
                     {isUnconfirmed() ? "Cho thuê" : "Đã trả phòng"}
-                </Button>
+                </Button> */}
+                <div onClick={hostUpdateRental}>
+                    {children}
+                </div>
             </Card.Footer>
         </Card>
     )

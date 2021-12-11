@@ -8,21 +8,24 @@ import RoomContextProvider from './context/roomContext';
 import RoomListProvider from './context/managerRoomContext';
 import RentalContextProvider from './context/rentalContext';
 import UserContextProvider from './context/userContext';
+import HeaderContextProvider from './context/headerContext';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 ReactDOM.render(
-    <UserContextProvider>
-        <RentalContextProvider>
-            <RoomListProvider>
-                <RoomContextProvider>
-                    <SearchContextProvider>
-                        <Root />
-                    </SearchContextProvider>
-                </RoomContextProvider>
-            </RoomListProvider>
-        </RentalContextProvider>
-    </UserContextProvider>,
+    <HeaderContextProvider>
+        <UserContextProvider>
+            <RentalContextProvider>
+                <RoomListProvider>
+                    <RoomContextProvider>
+                        <SearchContextProvider>
+                            <Root />
+                        </SearchContextProvider>
+                    </RoomContextProvider>
+                </RoomListProvider>
+            </RentalContextProvider>
+        </UserContextProvider>
+    </HeaderContextProvider>,
     document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Container, Dropdown, Nav, Navbar, NavItem} from 'react-bootstrap';
 import SearchModal from './search.component';
 import { Signup } from '../../pages/signUp.page';
@@ -6,35 +6,42 @@ import LoginModal from './login.component';
 import UnLoggedInDropdown from './unLoggedInDropdown';
 import LoggedInDropdown from './loggedInDropdown'; 
 import  './header.component.css';
+import { HeaderContext } from '../../context/headerContext';
+import { RENTALMAGSATE, ROOMMAGSTATE } from '../../reducer/actionTypes';
 
-function Header() {
+function HostHeader() {
     const [isLoginModal, setLoginModal] = useState(false);
     const [isSearchModal, setSearchModal] = useState(false);
     const [isSignupModal, setSignupModal] = useState(false);
 
     const userState = JSON.parse(localStorage.getItem("user-state"));
 
+    const {navState} = useContext(HeaderContext);
+
+
     return (
         <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-fixed vw-100">
             <Container fluid="md">
                 <Navbar.Toggle />
                 <Navbar.Brand href="/" className="order-0 me-auto">Homestay</Navbar.Brand>
-                <Navbar.Collapse className="order-last">
+                <Navbar.Collapse className="order-last justify-content-center">
                     <Nav navbar>
-                        <Nav.Link href="/" className="d-flex align-items-center">
-                            <span className="me-1 bi bi-house-fill white-icon small-icon" />
-                            {' '}Trang chủ
-                        </Nav.Link>
-                        <Nav.Link href="/host/roommanager" className="d-flex align-items-center">
-                            <span className="me-1 bi bi-person-badge white-icon small-icon" />
-                            {' '}Trở thành chủ nhà
+                        <Nav.Link 
+                            href="/host/roommanager" 
+                            className="d-flex align-items-center my-nav-link" 
+                            active = { navState === ROOMMAGSTATE}
+                        >
+                            Quản lý phòng
                         </Nav.Link>
                     </Nav>
-                    <Nav navbar className="m-auto">
-                        <Button id="search-bar" className="m-1 gray-border shadow round-radius" variant="light" onClick={() => setSearchModal(true)}>
-                            <div>Bắt đầu tìm kiếm</div>
-                            <span className="bi bi-search black-icon small-icon" />
-                        </Button>
+                    <Nav navbar>
+                        <Nav.Link
+                            href="/host/rentalmanagement" 
+                            className="d-flex align-items-center my-nav-link" 
+                            active = { navState === RENTALMAGSATE}
+                        >
+                            Quản lý cho thuê
+                        </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 
@@ -73,4 +80,4 @@ function Header() {
     )
 }
 
-export default Header;
+export default HostHeader;

@@ -1,15 +1,19 @@
 import {React, useContext, useEffect, useState} from 'react';
 import { HostRentalCard } from '../components/shared/hostRentalCard';
-import {rentalListResponse} from '../Fake Data API/rentalData'
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 import './rentalManagement.css'
 import { WePagnigation } from '../components/shared/wePagnigation';
 import { RentalContext } from '../context/rentalContext';
+import { LoadingCard } from '../components/shared/loadingCard';
+import HostLayout from '../components/hostlayout.component';
+import { HeaderContext } from '../context/headerContext';
+import { RENTALMAGSATE } from '../reducer/actionTypes';
 
 export const RentalManagement = () => {
 
-    const {getRentalByHost} = useContext(RentalContext);
+    const {getRentalByHost, postRental} = useContext(RentalContext);
     const userState = JSON.parse(localStorage.getItem("user-state"));
+    const [pageChange, setPageChange] = useState(false);
 
     const [rentalList, setRentalList] = useState([]);
     const [isUnconfirmedList, setUnconfirmedList] = useState(true);
@@ -18,6 +22,12 @@ export const RentalManagement = () => {
     const [rentalPerPage] = useState(12);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalRental, setTotalRental] = useState(0);
+
+    const {setPage} = useContext(HeaderContext);
+
+    useEffect(() => {
+        setPage(RENTALMAGSATE);
+    },[])
 
     const handleClick = (e) => {
         if(e.target.id === '1') {
@@ -29,32 +39,48 @@ export const RentalManagement = () => {
 
     const handlePageNumber = (number) => setCurrentPage(number);
 
+
+    useEffect(() => {
+        setCurrentPage(1);
+        setPageChange(!pageChange);
+    }, [isUnconfirmedList])
+
+    useEffect(() => {
+        setPageChange(!pageChange);
+    }, [currentPage])
+
     useEffect(() => {
         if(isGetting) return;
         const getData = async () => {
             setGetting(true);
-            let temp = await getRentalByHost(userState.token, userState.userId)
-                .then(res => {
-                    console.log(res);
-                    let tempRentalList;
-                    if (isUnconfirmedList) {
-                        tempRentalList = res.rentals.filter(rental => rental.status === "UNCONFIRMED");
-                        
-                    } else {
-                        tempRentalList = res.rentals.filter(rental => rental.status !== "UNCONFIRMED");
-                    }
-                    setRentalList([...tempRentalList]);
-                    setTotalRental(tempRentalList.length)
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+            if (isUnconfirmedList) {
+                await getRentalByHost(userState.token, userState.userId, "UNCONFIRMED", currentPage, rentalPerPage)
+                    .then(res => {
+                        console.log(res);
+                        setRentalList([...res.rentals]);
+                        setTotalRental(res.total);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            } else {
+                await getRentalByHost(userState.token, userState.userId, "CONFIRMED", currentPage, rentalPerPage)
+                    .then(res => {
+                        console.log(res);
+                        setRentalList([...res.rentals]);
+                        setTotalRental(res.total);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
             setGetting(false);
         }
         getData();
-    },[isUnconfirmedList])
+    },[pageChange])
 
     return(
+        <HostLayout>
         <Container >
             <Row className='mb-5 banner'>
                 <Col md='12'>
@@ -76,26 +102,39 @@ export const RentalManagement = () => {
                 >{`Xác nhận trả phòng`}</button>
             </div>
             {
-                rentalList.length <= 0 ? <p className="no-rental-text"><i className="bi bi-journal"></i>Hiện không có bản thuê nào</p> :
+                
                 <div>
                 <Row className = "host-rental-container mt-3 mb-3 g-4" >
                 {
-                    rentalList.map((rental, index) => {
-                        return(
-                            <Col md = "3" key={index}>
-                                <HostRentalCard rental={rental} />
-                            </Col>
-                        )
-                    })
+                    isGetting ? <LoadingCard/> : 
+                    rentalList.length <= 0 ? <p className="no-rental-text"><i className="bi bi-journal"></i>Hiện không có bản thuê nào</p> :
+                    <Row className='mt-3'>
+                    {
+                        rentalList.map((rental, index) => {
+                            return(
+                                <Col md = "3" key={index}>
+                                    <HostRentalCard rental={rental} isUnconfirmed={isUnconfirmedList}>
+                                        <Button variant={isUnconfirmedList ? "primary" : "success"} style = {{width: "100%"}}>
+                                            {isUnconfirmedList ? "Cho thuê" : "Đã trả phòng"}
+                                        </Button>
+                                    </HostRentalCard>
+                                </Col>
+                            )
+                        })
+                    }
+                    </Row>
                 }
                 </Row>
                 <WePagnigation 
                     total = {totalRental}  
                     currentPage = {currentPage} 
                     itemPerPage = {rentalPerPage} 
-                    setCurrentPage = {handlePageNumber}/>
+                    setCurrentPage = {handlePageNumber}
+                    isGetting = {isGetting}
+                    />
                 </div>
             }
         </Container>
+        </HostLayout>
     )
 }

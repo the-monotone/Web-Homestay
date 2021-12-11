@@ -4,12 +4,14 @@ import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { ManagerRoomContext } from "../context/managerRoomContext";
 import "./roomManager.css";
-import { GET_ARRIVING_ROOMS, GET_CHECKING_OUT_ROOMS, GET_CURRENTLY_HOSTING_ROOMS, GET_EMPTY_ROOMS } from "../reducer/actionTypes";
+import { GET_ARRIVING_ROOMS, GET_CHECKING_OUT_ROOMS, GET_CURRENTLY_HOSTING_ROOMS, GET_EMPTY_ROOMS, ROOMMAGSTATE } from "../reducer/actionTypes";
 import { RoomList } from "../components/room/roomList";
 import { ARRIVING_SOON_INDEX,CHECKING_OUT_INDEX, CURRENTLY_HOSTING_INDEX, EMPTY_INDEX } from "../reducer/roomViewTypes";
-import { LoadingCard } from '../components/room/loadingCard';
+import { LoadingCard } from '../components/shared/loadingCard';
 import { WePagnigation } from "../components/shared/wePagnigation";
+import HostLayout from '../components/hostlayout.component'
 import "./roomManager.css";
+import { HeaderContext } from "../context/headerContext";
 
 
 export const RoomManager = () => {
@@ -22,6 +24,21 @@ export const RoomManager = () => {
   const [totalRoom, setTotalRoom] = useState(0);
   
   const [checkingArray, setCheckingArray] = useState([true, false, false, false]);
+
+  const [pageChange, setPageChange] = useState(false);
+
+  const {setPage} = useContext(HeaderContext);
+  
+  useEffect(() => setPage(ROOMMAGSTATE),[]);
+
+  useEffect(()=> {
+    setCurrentPage(1);
+    setPageChange(!pageChange);
+  }, [checkingArray])
+
+  useEffect(() => {
+    setPageChange(!pageChange);
+  }, [currentPage])
 
   useEffect(() => {
     if (isGetting) return;
@@ -44,7 +61,7 @@ export const RoomManager = () => {
     else if (checkingArray[2]) getData(GET_CHECKING_OUT_ROOMS);
     else if (checkingArray[3]) getData(GET_EMPTY_ROOMS);
     else getData(GET_CURRENTLY_HOSTING_ROOMS);
-  },[checkingArray, currentPage])
+  },[pageChange])
 
   const handleClick = (e) => {
     let tempChecking = [false, false, false, false];
@@ -55,6 +72,7 @@ export const RoomManager = () => {
   const handlePageNumber = (number) => setCurrentPage(number);
 
   return (
+    <HostLayout>
     <Container>
         <Row className='mb-5 banner'>
           <Col md='8'>
@@ -63,7 +81,7 @@ export const RoomManager = () => {
               </div>
           </Col>
           <Col md='4'>
-              <Link to='/roomsignup'><Button className='signup-more' variant='success'>Đăng ký thêm</Button></Link>
+              <Link to='/host/roomsignup'><Button className='signup-more' variant='success'>Đăng ký thêm</Button></Link>
           </Col>
         </Row>
       <div className={`room-view-choose ${isGetting ? "isGetting" : ""}`}>
@@ -96,10 +114,13 @@ export const RoomManager = () => {
           total = {totalRoom}  
           currentPage = {currentPage} 
           itemPerPage = {roomPerPage} 
-          setCurrentPage = {handlePageNumber}/>
+          setCurrentPage = {handlePageNumber}
+          isGetting = {isGetting}
+          />
         </div>
       }
     </Container>
+    </HostLayout>
 
   );
 };

@@ -21,3 +21,11 @@
 .small-icon {
     font-size: 1em;
 }
+
+.my-nav-link {
+    border-radius: 20px;
+}
+
+.my-nav-link:hover {
+    background-color:#858c89;
+}

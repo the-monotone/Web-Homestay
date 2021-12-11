@@ -12,6 +12,7 @@ const initialState = {
 
 const RentalContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(RentalReducer, initialState);
+
     const getRental = (token, userId) => {
         if (token == null || userId == null) {
             return null;
@@ -48,12 +49,15 @@ const RentalContextProvider = ({children}) => {
             })
     }
 
-    const getRentalByHost = (token, hostId) => {
+    const getRentalByHost = (token, hostId, status, currentPage, rentalPerPage) => {
         if (token == null || hostId == null) {
             return null;
         }
+        const request = {
+            status
+        }
         return axios
-            .get(`${WEB_API}/api/rental/host/${hostId}`, {
+            .post(`${WEB_API}/api/rental/host/filter?limit=${rentalPerPage}&page=${currentPage}`, request, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -68,10 +72,33 @@ const RentalContextProvider = ({children}) => {
             })
     }
 
+    const updateRental = (token, payload) => {
+        if (token == null) {
+            return null;
+        }
+        const {rental_id, ...request} = payload;
+        console.log(rental_id, request);
+        return axios
+            .put(`${WEB_API}/api/rental/${rental_id}`, request, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            .then(res => {
+                console.log(res);
+                return res;
+            })
+            .catch(err => {
+                console.log(err);
+                throw(err);
+            })
+    }
+
     const value = {
         getRental,
         postRental,
         getRentalByHost,
+        updateRental,
         ...state
     }
 

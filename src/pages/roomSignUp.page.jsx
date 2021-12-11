@@ -12,7 +12,7 @@ import './roomSignup.page.css';
 import { useSpring, animated } from 'react-spring'
 import { ImageForm } from "../components/forms/ImageForm";
 import MapField from "../components/forms/MapField";
-
+import HostLayout from "../components/hostlayout.component";
 export const RoomSignUp = () => {
   const { roomType, roomFacility, createRoom, updateRoom } = useContext(RoomContext);
 
@@ -74,133 +74,135 @@ export const RoomSignUp = () => {
   };
 
   return (
-    <FormikStepper initialValues={initialValue} onSubmit={onSubmit}>
-      <Form>
-        <FormikStep
-          validationSchema={Yup.object({
-            room_name: Yup.string().required("Bắt buộc"),
-          })}
-          className="room-name-field"
-        >
-          <TextField label = "Tên phòng" name="room_name" type="text" pos="col-8" />
-        </FormikStep>
-        <FormikStep
-          validationSchema={Yup.object({
-            room_type_id: Yup.number().min(1, "Bạn chưa chọn loại phòng"),
-          })}
-          className = "room-type-field"
-        >
-          <SelectButton
-            name="room_type_id"
-            options={roomType}
-            pos="col-8"
-          />
-        </FormikStep>
-        <FormikStep
-          validationSchema={Yup.object({
-            num_guest: Yup.number()
-              .typeError("Bắt buộc phải là số")
-              .positive("Số khách phải lớn hơn 0")
-              .integer("Số khách chỉ bao gồm các chữ số")
-              .required("Bắt buộc"),
-            num_bed: Yup.number()
-              .typeError("Bắt buộc phải là số")
-              .positive("Số giường phải lớn hơn 0")
-              .integer("Số giường chỉ bao gồm các chữ số")
-              .required("Bắt buộc"),
-            num_bedroom: Yup.number()
-              .typeError("Bắt buộc phải là số")
-              .positive("Số phòng ngủ phải lớn hơn 0")
-              .integer("Số phòng ngủ chỉ bao gồm các chữ số")
-              .required("Bắt buộc"),
-            num_bathroom: Yup.number()
-              .typeError("Bắt buộc phải là số")
-              .positive("Số phòng tắm phải lớn hơn 0")
-              .integer("Số phòng tắm chỉ bao gồm các chữ số")
-              .required("Bắt buộc"),
-          })}
-          className="number-contain-field"
-        >
-          <NumField
-            label="Số khách"
-            name="num_guest"
-            type="number"
-            pos="col-md-6 num-field"
-          />
-          <NumField
-            label="Số giường"
-            name="num_bed"
-            type="number"
-            pos="col-md-6 num-field"
-          />
-          <NumField
-            label="Số phòng ngủ"
-            name="num_bedroom"
-            type="number"
-            pos="col-md-6 num-field"
-          />
-          <NumField
-            label="Số phòng tắm"
-            name="num_bathroom"
-            type="number"
-            pos="col-md-6 num-field"
-          />
-        </FormikStep>
-        <FormikStep className="room-facility-field">
-          <MultiSelect
-            name="facilities"
-            options={roomFacility}
-          />
-        </FormikStep>
-        <FormikStep className="room-location">
-          <MapField name="location" />
-        </FormikStep>
-        <FormikStep
-          className="room-rule-field"
-        >
-          <TextField label = "Quy tắc" name="rule" type="textarea" pos="col-8" style={{ height: '100px' }}/>
-        </FormikStep>
-        <FormikStep
-          className="room-images"
-        >
-          <ImageForm 
-            label="Ảnh"
-            name="images"
-            type="file"
-            pos="col-md-12 image-field"
-          />
-        </FormikStep>
-        
-        <FormikStep
-          validationSchema={Yup.object({
-            price: Yup.number()
-              .typeError("Chưa đúng định dạng (VD: 20.03)")
-              .positive("Giá phòng phải lớn hơn 0")
-              .required("Bắt buộc")
-              .test(
-                "is-decimal",
-                "Chưa đúng định dạng (VD: 20.03)",
-                (value) => {
-                  return (
-                    (value + "").match(/^\d*\.{1}\d*$/) ||
-                    (value + "").match(/^\d*$/)
-                  );
-                }
-              ),
-          })}
-          className = "room-price-field"
-        >
-          <div className = "price-group">
-          <NumField
-            name="price"
-            type="number"
-            pos="col-md-12 price-input"
-          />
-          <div className="price-description"><span>đ</span> mỗi đêm</div>
-          </div>
-        </FormikStep>
-      </Form>
-    </FormikStepper>
+    <HostLayout>
+      <FormikStepper initialValues={initialValue} onSubmit={onSubmit}>
+        <Form>
+          <FormikStep
+            validationSchema={Yup.object({
+              room_name: Yup.string().required("Bắt buộc"),
+            })}
+            className="room-name-field"
+          >
+            <TextField label = "Tên phòng" name="room_name" type="text" pos="col-8" />
+          </FormikStep>
+          <FormikStep
+            validationSchema={Yup.object({
+              room_type_id: Yup.number().min(1, "Bạn chưa chọn loại phòng"),
+            })}
+            className = "room-type-field"
+          >
+            <SelectButton
+              name="room_type_id"
+              options={roomType}
+              pos="col-8"
+            />
+          </FormikStep>
+          <FormikStep
+            validationSchema={Yup.object({
+              num_guest: Yup.number()
+                .typeError("Bắt buộc phải là số")
+                .positive("Số khách phải lớn hơn 0")
+                .integer("Số khách chỉ bao gồm các chữ số")
+                .required("Bắt buộc"),
+              num_bed: Yup.number()
+                .typeError("Bắt buộc phải là số")
+                .positive("Số giường phải lớn hơn 0")
+                .integer("Số giường chỉ bao gồm các chữ số")
+                .required("Bắt buộc"),
+              num_bedroom: Yup.number()
+                .typeError("Bắt buộc phải là số")
+                .positive("Số phòng ngủ phải lớn hơn 0")
+                .integer("Số phòng ngủ chỉ bao gồm các chữ số")
+                .required("Bắt buộc"),
+              num_bathroom: Yup.number()
+                .typeError("Bắt buộc phải là số")
+                .positive("Số phòng tắm phải lớn hơn 0")
+                .integer("Số phòng tắm chỉ bao gồm các chữ số")
+                .required("Bắt buộc"),
+            })}
+            className="number-contain-field"
+          >
+            <NumField
+              label="Số khách"
+              name="num_guest"
+              type="number"
+              pos="col-md-6 num-field"
+            />
+            <NumField
+              label="Số giường"
+              name="num_bed"
+              type="number"
+              pos="col-md-6 num-field"
+            />
+            <NumField
+              label="Số phòng ngủ"
+              name="num_bedroom"
+              type="number"
+              pos="col-md-6 num-field"
+            />
+            <NumField
+              label="Số phòng tắm"
+              name="num_bathroom"
+              type="number"
+              pos="col-md-6 num-field"
+            />
+          </FormikStep>
+          <FormikStep className="room-facility-field">
+            <MultiSelect
+              name="facilities"
+              options={roomFacility}
+            />
+          </FormikStep>
+          <FormikStep className="room-location">
+            <MapField name="location" />
+          </FormikStep>
+          <FormikStep
+            className="room-rule-field"
+          >
+            <TextField label = "Quy tắc" name="rule" type="textarea" pos="col-8" style={{ height: '100px' }}/>
+          </FormikStep>
+          <FormikStep
+            className="room-images"
+          >
+            <ImageForm 
+              label="Ảnh"
+              name="images"
+              type="file"
+              pos="col-md-12 image-field"
+            />
+          </FormikStep>
+          
+          <FormikStep
+            validationSchema={Yup.object({
+              price: Yup.number()
+                .typeError("Chưa đúng định dạng (VD: 20.03)")
+                .positive("Giá phòng phải lớn hơn 0")
+                .required("Bắt buộc")
+                .test(
+                  "is-decimal",
+                  "Chưa đúng định dạng (VD: 20.03)",
+                  (value) => {
+                    return (
+                      (value + "").match(/^\d*\.{1}\d*$/) ||
+                      (value + "").match(/^\d*$/)
+                    );
+                  }
+                ),
+            })}
+            className = "room-price-field"
+          >
+            <div className = "price-group">
+            <NumField
+              name="price"
+              type="number"
+              pos="col-md-12 price-input"
+            />
+            <div className="price-description"><span>đ</span> mỗi đêm</div>
+            </div>
+          </FormikStep>
+        </Form>
+      </FormikStepper>
+    </HostLayout>
   );
 };
 

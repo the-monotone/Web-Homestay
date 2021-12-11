@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Col, Row, Container} from 'react-bootstrap'
 import { PasswordChange } from '../components/user/passwordChange';
 import { EditAccount } from '../components/user/editAccount';
+import Layout from '../components/layout.component';
 import './accountSetting.css'
 
 export const AccountSettings = () => {
@@ -26,7 +27,8 @@ export const AccountSettings = () => {
     }
 
     return (
-        <Container>
+        <Layout>
+        <Container className='justify-content-center'>
             <Row className = 'mb-2'><div>Tài khoản</div></Row>
             <Row  className = 'mb-3'>
                 <Col md={3} className = 'setting-mode' >
@@ -48,5 +50,6 @@ export const AccountSettings = () => {
                 </Col>
             </Row>
         </Container>
+        </Layout>
     )
 }

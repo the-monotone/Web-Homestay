@@ -46,7 +46,7 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                             <FacilityBadgeList facList={room.facilities} />
                             { isEditable &&
                                 <div className="room-edit-option">
-                                    <Link to="/roomsignup" state={{stateRoom: room}}>
+                                    <Link to="/host/roomsignup" state={{stateRoom: room}}>
                                         <MyButton text="Chỉnh sửa" classNam = "edit-card-button"/>
                                     </Link>
                                     <div onClick={() => {
