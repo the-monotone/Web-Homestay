@@ -1,0 +1,39 @@
+#footer {
+    display: inline-flex;
+    bottom: 0;
+    background-color: #0C0E27;
+    align-items: flex-start;
+    height: 200px;
+  }
+  #footer #footer-banner{
+    width: 100%;
+    height: 200px;
+  }
+  #footer .text-team {
+    color: white;
+    display: flex;
+    justify-content: center;
+  }
+  .footer-title {
+    font-size: 20px;
+    font-weight: bold;
+
+  }
+  .text-name {
+      display: flex;
+      font-size: 14px;
+      align-items: center;
+  }
+
+  .text-container {
+    width: fit-content;
+  }
+  .footer-icon {
+    color: white;
+    font-size: 11px;
+  }
+
+  #report-div:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }

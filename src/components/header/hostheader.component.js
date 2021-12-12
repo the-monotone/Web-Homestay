@@ -21,7 +21,7 @@ function HostHeader() {
 
 
     return (
-        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-fixed vw-100">
+        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky">
             <Container fluid="md">
                 <Navbar.Toggle />
                 <Navbar.Brand href="/" className="order-0 me-auto"><WeLogo roundedCircle style={{ height: 60, width: 60 }} /></Navbar.Brand>
@@ -32,7 +32,7 @@ function HostHeader() {
                             className="d-flex align-items-center my-nav-link" 
                             active = { navState === ROOMMAGSTATE}
                         >
-                            Quản lý phòng
+                            <NavItem>Quản lý phòng</NavItem>
                         </Nav.Link>
                     </Nav>
                     <Nav navbar>
@@ -41,7 +41,7 @@ function HostHeader() {
                             className="d-flex align-items-center my-nav-link" 
                             active = { navState === RENTALMAGSATE}
                         >
-                            Quản lý cho thuê
+                            <NavItem>Quản lý cho thuê</NavItem>
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
@@ -51,7 +51,7 @@ function HostHeader() {
                         userState != null && userState.token != null &&
                         <NavItem className="me-1">
                             <Dropdown>
-                                <Dropdown.Toggle>
+                                <Dropdown.Toggle className='rounded-pill'>
                                     <span className="bi bi-bell-fill white-icon"></span>
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className="position-absolute dropdown-menu-end">
@@ -62,10 +62,10 @@ function HostHeader() {
                             </Dropdown>
                         </NavItem>
                     }
-                    <NavItem>
+                    <NavItem >
                         {
                             userState != null && userState.token != null ? 
-                                <LoggedInDropdown name={userState.name} /> :
+                                <LoggedInDropdown name={userState.name}  /> :
                                 <UnLoggedInDropdown 
                                     handleLogin={() => setLoginModal(true)}
                                     handleSignup={() => setSignupModal(true)} />

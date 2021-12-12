@@ -2,7 +2,11 @@
   background-color: #f7f7f7;
   border-radius: 10px;
   padding-bottom: 10px;
-  min-height: 180px;
+  min-height: 250px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  min-height: 300px;
 }
 .roomlist-container .no-room-text {
   padding-top: 10px;
@@ -66,19 +70,24 @@
 }
 
 .banner {
-  height: 250px;
-  background-color: coral;
-}
+  height: 230px;
+  
+  background: rgb(189,26,145);
+  background: linear-gradient(90deg, rgba(185,0,135,1) 0%, rgba(219,32,77,1) 33%, rgba(228,127,27,1) 100%);
+}   
 
 .banner-text {
-  font-size: 22px;
+  font-size: 25px;
   font-weight: bold;
-  margin-top: 70px;
-  margin-left: 30px;
+  color: #ffffff;
 }
 
 .signup-more {
-  margin-top: 70px;
-  margin-left: 90px;
+
+}
+
+.bi-journal {
+  font-size: 32px;
+  color: coral;
 }
 

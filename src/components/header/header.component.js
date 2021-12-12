@@ -9,6 +9,7 @@ import  './header.component.css';
 import {UserContext} from '../../context/userContext'
 import { WeToast } from '../shared/weToast';
 import { useNavigate } from 'react-router-dom';
+import { WeLogoBranch } from '../../logo/logo';
 
 function Header() {
     const [isLoginModal, setLoginModal] = useState(false);
@@ -20,6 +21,7 @@ function Header() {
     const {getInfo, updateInfo} = useContext(UserContext);
     const [isGetting, setGetting] = useState(false);
     const [isHost, setIsHost] = useState(false);
+    const [userData , setUserData] = useState({});
 
     const naviagate = useNavigate();
 
@@ -41,37 +43,41 @@ function Header() {
         getData();
     },[])
 
-    const becomeHost = async () => {
+    const hostNavigate = () => {
         if (isGetting) return;
-        setGetting(true);
-        await updateInfo(userState.token, {role: "host", user_id: userState.userId})
-            .then(res => {
-                console.log(res);
-                naviagate('/host/roommanager');
-            })
-            .catch(err => {
-                console.log(err);
-                if(err.status == 401) {
-                } else {
-                    alert("Lỗi hệ thống, vui lòng thử lại sau!!!");
-                }
-            })
-        setGetting(false);
+
+        const becomeHost = async () => {
+            if (isHost) return;
+            setGetting(true);
+            await updateInfo(userState.token, {role: "host", user_id: userState.userId})
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => {
+                    console.log(err);
+                    if(err.status === 401) {
+                    } else {
+                        alert("Lỗi hệ thống, vui lòng thử lại sau!!!");
+                    }
+                })
+            setGetting(false);
+        }
+        becomeHost();
+        naviagate('/host/roommanager');
     }
+    
 
     return (
-        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-fixed vw-100">
+        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky">
             <Container fluid="md">
                 <Navbar.Toggle />
-                <Navbar.Brand href="/" className="order-0 me-auto">Homestay</Navbar.Brand>
                 <Navbar.Collapse className="order-last">
                     <Nav navbar>
                         <Nav.Link href="/" className="d-flex align-items-center">
-                            <span className="me-1 bi bi-house-fill white-icon small-icon" />
-                            {' '}Trang chủ
+                            <WeLogoBranch roundedCircle style={{ height: 60 }} />
                         </Nav.Link>
                         { userState != null && userState.token != null &&
-                        <Nav.Link href="" className="d-flex align-items-center" onClick={becomeHost}>
+                        <Nav.Link href="" className="d-flex align-items-center" onClick={hostNavigate}>
                             <span className="me-1 bi bi-person-badge white-icon small-icon" />
                             {' '}{isHost ? 'Quản lý phòng' : 'Trở thành chủ nhà'}
                         </Nav.Link>
@@ -90,7 +96,7 @@ function Header() {
                         userState != null && userState.token != null &&
                         <NavItem className="me-1">
                             <Dropdown>
-                                <Dropdown.Toggle>
+                                <Dropdown.Toggle className='rounded-pill'>
                                     <span className="bi bi-bell-fill white-icon"></span>
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className="position-absolute dropdown-menu-end">

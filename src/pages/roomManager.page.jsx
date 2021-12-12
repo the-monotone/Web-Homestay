@@ -7,7 +7,6 @@ import "./roomManager.css";
 import { GET_ARRIVING_ROOMS, GET_CHECKING_OUT_ROOMS, GET_CURRENTLY_HOSTING_ROOMS, GET_EMPTY_ROOMS, ROOMMAGSTATE } from "../reducer/actionTypes";
 import { RoomList } from "../components/room/roomList";
 import { ARRIVING_SOON_INDEX,CHECKING_OUT_INDEX, CURRENTLY_HOSTING_INDEX, EMPTY_INDEX } from "../reducer/roomViewTypes";
-import { LoadingCard } from '../components/shared/loadingCard';
 import { WePagnigation } from "../components/shared/wePagnigation";
 import HostLayout from '../components/hostlayout.component'
 import "./roomManager.css";
@@ -74,17 +73,17 @@ export const RoomManager = () => {
   return (
     <HostLayout>
     <Container>
-        <Row className='mb-5 banner'>
-          <Col md='8'>
-              <div className='banner-text'>
+        <Row className='mb-5 banner gx-0'>
+          <Col md='8' className="d-flex align-items-center">
+              <span className='banner-text ms-5'>
                 Cùng nhau quản lý phòng thật hiệu quả
-              </div>
+              </span>
           </Col>
-          <Col md='4'>
-              <Link to='/host/roomsignup'><Button className='signup-more' variant='success'>Đăng ký thêm</Button></Link>
+          <Col md='4' className="d-flex align-items-center justify-content-center">
+              <Link to='/host/roomsignup'><Button className='signup-more' variant='light'>Đăng ký thêm</Button></Link>
           </Col>
         </Row>
-      <div className={`room-view-choose ${isGetting ? "isGetting" : ""}`}>
+      <Container className={`room-view-choose ${isGetting ? "isGetting" : ""}`}>
         <button
           className={`view-type-btn${(checkingArray[CURRENTLY_HOSTING_INDEX] ? "-choosen" : "")} ${isGetting ? "isGetting" : ""}`}
           onClick={handleClick}
@@ -105,11 +104,10 @@ export const RoomManager = () => {
           onClick={handleClick}
           id={EMPTY_INDEX}
         >{`Trống`}</button>
-      </div>
+      </Container>
       {
-        isGetting ? <LoadingCard/> :
         <div>
-        <RoomList roomList={roomList} isEditable={checkingArray[EMPTY_INDEX]}/>
+        <RoomList roomList={roomList} isEditable={checkingArray[EMPTY_INDEX]} isGetting={isGetting}/>
         <WePagnigation 
           total = {totalRoom}  
           currentPage = {currentPage} 

@@ -265,9 +265,9 @@ export const FormikStepper = ({ children, ...props }) => {
         }}
       >
         <Form>
-          <Row className="input-step">
+          <Row className="input-step w-100 mt-4">
             <div className="label-field">
-              <animated.div style={styleAnimate}><div className="title">{getTitle(currentChild.props.className)}</div></animated.div>
+              <animated.div style={styleAnimate}><div className="title ps-4">{getTitle(currentChild.props.className)}</div></animated.div>
             </div>
             <div className="input-field">
               <div className = "input-row">{currentChild}</div>

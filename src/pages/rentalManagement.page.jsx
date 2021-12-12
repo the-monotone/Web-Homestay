@@ -4,7 +4,7 @@ import { Row, Col, Container, Button } from 'react-bootstrap';
 import './rentalManagement.css'
 import { WePagnigation } from '../components/shared/wePagnigation';
 import { RentalContext } from '../context/rentalContext';
-import { LoadingCard } from '../components/shared/loadingCard';
+import { LoadingCardList } from '../components/shared/loadingCard';
 import HostLayout from '../components/hostlayout.component';
 import { HeaderContext } from '../context/headerContext';
 import { RENTALMAGSATE } from '../reducer/actionTypes';
@@ -82,14 +82,14 @@ export const RentalManagement = () => {
     return(
         <HostLayout>
         <Container >
-            <Row className='mb-5 banner'>
-                <Col md='12'>
-                    <div className='banner-text'>
-                        Cùng nhau quản lý danh mục cho thuê thật hiệu quả
+            <Row className='mb-5 banner gx-0 pb-5'>
+                <Col md='12' className="d-flex align-items-center">
+                    <div className='ms-5 banner-text'>
+                        Cùng nhau quản lý danh mục cho thuê
                     </div>
                 </Col>
-        </Row>
-            <div className={`rental-view-choose ${isGetting ? "isGetting" : ""}`}>
+            </Row>
+            <Container className={`rental-view-choose ${isGetting ? "isGetting" : ""}`}>
                 <button
                 className={`rental-type-btn${(isUnconfirmedList ? "-choosen" : "")} ${isGetting ? "isGetting" : ""}`}
                 onClick={handleClick}
@@ -100,14 +100,14 @@ export const RentalManagement = () => {
                 onClick={handleClick}
                 id="1"
                 >{`Xác nhận trả phòng`}</button>
-            </div>
+            </Container>
             {
                 
                 <div>
-                <Row className = "host-rental-container mt-3 mb-3 g-4" >
+                <Container className = "host-rental-container mt-3 mb-3 g-4" >
                 {
-                    isGetting ? <LoadingCard/> : 
-                    rentalList.length <= 0 ? <p className="no-rental-text"><i className="bi bi-journal"></i>Hiện không có bản thuê nào</p> :
+                    isGetting ? <LoadingCardList number = {4}/> : 
+                    rentalList.length <= 0 ? <div className="no-rental-text"><div className="bi bi-journal"></div>Hiện không có bản thuê nào</div> :
                     <Row className='mt-3'>
                     {
                         rentalList.map((rental, index) => {
@@ -124,7 +124,7 @@ export const RentalManagement = () => {
                     }
                     </Row>
                 }
-                </Row>
+                </Container>
                 <WePagnigation 
                     total = {totalRental}  
                     currentPage = {currentPage} 

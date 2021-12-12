@@ -15,7 +15,7 @@ const LoggedInDropdown = () => {
     }
     return (
         <Dropdown>
-            <Dropdown.Toggle variant="outline-info">
+            <Dropdown.Toggle variant="outline-info" className='rounded-pill'>
                 <span className="bi bi-gear"></span>
             </Dropdown.Toggle>
             <Dropdown.Menu className="position-absolute dropdown-menu-end">

@@ -2,7 +2,10 @@
     background-color: #f7f7f7;
     border-radius: 10px;
     padding-bottom: 10px;
-    min-height: 180px;
+    min-height: 350px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
 
 .rental-view-choose {
@@ -62,3 +65,9 @@
     padding-bottom: 10px;
     text-align: center;
   }
+
+.bi-journal {
+  font-size: 32px;
+  color: coral;
+}
+  

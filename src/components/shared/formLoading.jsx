@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {Container, Image, Row, Col} from 'react-bootstrap';
+import {Card, Placeholder, Row, Container, Form} from 'react-bootstrap';
 import "./loadingCard.css";
 
 export const LoadingForm = () => {
@@ -9,10 +9,15 @@ export const LoadingForm = () => {
     const url = "https://i.ibb.co/2MDV6nN/form-loading.gif";
 
     return(
-        <Container className = "mb-3 mt-5">
-            <Row>
-                <Col md = "8" sm ="8"><Image className = "loading-card-col" src={url} alt="Loading"/></Col>
-            </Row>
-        </Container>
+        <Row style={{ height: '300px' }} className='ms-1'>
+            <Placeholder as='p' xs={6} className='mb-2' bg='secondary'/>
+            <Placeholder xs={12} style={{ height: '30px' }} bg='secondary' className='mb-3'/>
+            <Placeholder as='p' xs={6} className='mb-2' bg='secondary'/>
+            <Placeholder xs={12} style={{ height: '30px' }} bg='secondary' className='mb-3'/>
+            <Placeholder as='p' xs={6} className='mb-2' bg='secondary'/>
+            <Placeholder xs={12} style={{ height: '30px' }} bg='secondary' className='mb-3'/>
+            <Placeholder.Button variant='danger' style={{ width: '50px' }} className='me-2'/>
+            <Placeholder.Button variant='secondary' style={{ width: '50px' }}/>
+        </Row>
     )
 }

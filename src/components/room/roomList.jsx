@@ -2,7 +2,7 @@ import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import { RoomCard } from './RoomCard'
 import { useNavigate } from 'react-router-dom';
-
+import { LoadingCardList } from '../shared/loadingCard';
 
 export const RoomList = ({roomList, isEditable, isGetting}) => {
     
@@ -12,9 +12,11 @@ export const RoomList = ({roomList, isEditable, isGetting}) => {
     }
 
     return(
-        <Container className="roomlist-container mb-3 mt-5">
+        <Container className="roomlist-container mb-3 mt-5">{
+        isGetting ? <LoadingCardList number={4}/> :
+        <div>
         {
-            roomList.length <= 0 ? <p className="no-room-text"><i className="bi bi-journal"></i>Hiện không có phòng nào</p> :
+            roomList.length <= 0 ? <div className="no-room-text"><div className="bi bi-journal"></div>Hiện không có phòng nào</div> :
             <Row id="room-list-block" xs={1} md={2} xl= {3} className="g-4">
                 {
                     roomList.map(room => {
@@ -26,6 +28,7 @@ export const RoomList = ({roomList, isEditable, isGetting}) => {
                 }
             </Row>
         }
-        </Container>
+        </div>
+        }</Container>
     )
 }
