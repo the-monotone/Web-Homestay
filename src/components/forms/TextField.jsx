@@ -2,7 +2,7 @@ import React from "react";
 import {ErrorMessage, useField } from "formik";
 import {Form} from "react-bootstrap";
 
-export const TextField = ({label, ...props}) => {
+export const TextField = ({label, errStyle , ...props}) => {
 
     const [field, meta] = useField(props);
 
@@ -16,7 +16,7 @@ export const TextField = ({label, ...props}) => {
                 as={(props.type === "textarea") ? "textarea" : "input"}
                 autoComplete="off"
             />
-            <ErrorMessage name={field.name}/>
+            <ErrorMessage name={field.name} component='div' style={!errStyle ? {color:'red'} : errStyle}/>
         </Form.Group>
     )
 }

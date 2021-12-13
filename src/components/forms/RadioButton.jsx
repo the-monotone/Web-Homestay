@@ -30,7 +30,7 @@ export const RadioButton = ({label, ...props}) => {
                         }
                     }
                 </FastField>
-                <ErrorMessage name = {field.name}/>
+                <ErrorMessage name = {field.name} component='div' style={{color:'red'}}/>
             </div>
         </div>
     );

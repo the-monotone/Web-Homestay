@@ -1,18 +1,19 @@
-import React, { useContext }  from 'react';
+import React, { useContext, useState }  from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Carousel, Col, Row } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { FacilityBadgeList } from '../forms/FacilityBadgeList';
 import { MyButton } from '../shared/myButton';
 import './roomCard.css';
-import { ManagerRoomContext } from '../../context/managerRoomContext';
-import { DELETE_ROOM } from '../../reducer/actionTypes';
 import { RoomContext } from '../../context/roomContext';
+import { WeToast } from '../shared/weToast';
 
 
 export const RoomCard = ({onClick, isEditable, room}) => {
 
     const {deleteRoom} = useContext(RoomContext);
+    const userState = JSON.parse(localStorage.getItem('user-state'));
+    const [isToast, setToast] = useState(false);
 
     console.log((room));
 
@@ -50,11 +51,10 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                                         <MyButton text="Chỉnh sửa" classNam = "edit-card-button"/>
                                     </Link>
                                     <div onClick={() => {
-                                        //TODO
-                                        deleteRoom(room.room_id)
+                                        deleteRoom(userState.token, room.room_id)
                                             .then(res => {
-                                                console.log(res);
                                                 window.location.reload();
+                                                setToast(true);
                                             })
                                             .catch(err => console.log(err))
                                     }}>
@@ -74,6 +74,7 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                         <strong>{`${room.price}₫`}</strong>{"/đêm"}
                     </div>
                 </Card.Footer>
+                <WeToast show={isToast} onClose={() => setToast(false)}/>
             </Card>
     );
 }

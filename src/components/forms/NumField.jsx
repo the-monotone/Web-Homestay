@@ -43,7 +43,7 @@ export const NumField = ({label, ...props}) => {
                 />
                 <i className="bi bi-plus-circle-fill" onClick={increase}></i>
             </div>
-            <ErrorMessage name={field.name} />
+            <ErrorMessage name={field.name} component='div' style={{color:'red'}}/>
         </div>
     )
 }

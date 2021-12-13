@@ -19,6 +19,8 @@ export const RoomSignUp = () => {
   console.log(roomType);
   console.log(roomFacility);
 
+  const userState = JSON.parse(localStorage.getItem('user-state'));
+
 
   const navigate = useNavigate();
 
@@ -37,18 +39,17 @@ export const RoomSignUp = () => {
     let cloneRoom = {
       ...tempRoom,
       room_type_id: parseInt(tempRoom.room_type_id),
-      confirmed: 1,
       latitude: location.latitude,
       longitude: location.longitude
     }
     console.log(cloneRoom);
     const requestCreateRoom = async () => {
       if (!stateRoom) {
-        await createRoom(cloneRoom)
+        await createRoom(userState.token, cloneRoom)
           .then(res => console.log(res))
           .catch(err => console.log(err))
       } else {
-        await updateRoom(cloneRoom)
+        await updateRoom(userState.token, cloneRoom)
           .then(res => console.log(res))
           .catch(err => console.log(err))
       }

@@ -31,7 +31,7 @@ export const MultiSelect = ({label, ...props}) => {
                         )
                     })} 
             </div>
-            <ErrorMessage name = {field.name}/>
+            <ErrorMessage name = {field.name} component='div' style={{color:'red'}}/>
         </div>
     )
 

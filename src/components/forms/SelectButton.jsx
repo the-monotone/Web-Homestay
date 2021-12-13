@@ -17,7 +17,7 @@ export const SelectButton = ({label, ...props}) => {
                         })}
                     
                 </select>
-            <ErrorMessage name = {field.name}/>
+            <ErrorMessage name = {field.name} component='div' style={{color:'red'}}/>
             </div>    
         </div>
     )

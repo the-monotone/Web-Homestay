@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { RentalManagement } from '../pages/rentalManagement.page';
+import { AdminPage } from '../admin/admin.page';
 
 function Root() {
     return (
@@ -38,6 +39,7 @@ function Root() {
                         <Route path=":userId" element={<RentalViewPage />} />
                     </Route>
                 </Route>
+                <Route path="/admin" element={<AdminPage/>}/>
             </Routes>
         </Router>   
     )

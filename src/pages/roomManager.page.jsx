@@ -7,7 +7,7 @@ import "./roomManager.css";
 import { GET_ARRIVING_ROOMS, GET_CHECKING_OUT_ROOMS, GET_CURRENTLY_HOSTING_ROOMS, GET_EMPTY_ROOMS, ROOMMAGSTATE } from "../reducer/actionTypes";
 import { RoomList } from "../components/room/roomList";
 import { ARRIVING_SOON_INDEX,CHECKING_OUT_INDEX, CURRENTLY_HOSTING_INDEX, EMPTY_INDEX } from "../reducer/roomViewTypes";
-import { WePagnigation } from "../components/shared/wePagnigation";
+import { WePagination } from "../components/shared/wePagnigation";
 import HostLayout from '../components/hostlayout.component'
 import "./roomManager.css";
 import { HeaderContext } from "../context/headerContext";
@@ -27,6 +27,8 @@ export const RoomManager = () => {
   const [pageChange, setPageChange] = useState(false);
 
   const {setPage} = useContext(HeaderContext);
+
+  const userState = JSON.parse(localStorage.getItem('user-state'))
   
   useEffect(() => setPage(ROOMMAGSTATE),[]);
 
@@ -43,7 +45,7 @@ export const RoomManager = () => {
     if (isGetting) return;
     const getData = async (type) => {
       setGetting(true);
-      await getRoomList(type, roomPerPage, currentPage)
+      await getRoomList(userState, type, roomPerPage, currentPage)
         .then(res => {
           console.log(res);
           if (res.message === "No room") setRoomList([]);
@@ -108,7 +110,7 @@ export const RoomManager = () => {
       {
         <div>
         <RoomList roomList={roomList} isEditable={checkingArray[EMPTY_INDEX]} isGetting={isGetting}/>
-        <WePagnigation 
+        <WePagination 
           total = {totalRoom}  
           currentPage = {currentPage} 
           itemPerPage = {roomPerPage} 

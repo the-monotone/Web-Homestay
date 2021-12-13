@@ -11,8 +11,6 @@ const RoomContextProvider = ({children}) => {
     const [roomType, setRoomType] = useState(RoomType);
     const [roomFacility, setRoomFacility] = useState(RoomFacility);
 
-    const userState = JSON.parse(localStorage.getItem("user-state"));
-    
     useEffect(() => {
         axios.get(`${WEB_API}/api/room/room-type`)
             .then(res => {
@@ -40,26 +38,24 @@ const RoomContextProvider = ({children}) => {
             .catch(err => console.log(err))
     }, [])
 
-    const createRoom = (room) => {
+    const createRoom = (token, room) => {
         return axios.post(`${WEB_API}/api/room/create`, room, {
                 headers: {
-                    "Authorization": `Bearer ${userState.token}`
+                    "Authorization": `Bearer ${token}`
                 }
             })
                 .then(res => {
-                    console.log("Room register res: ", res);
                     return "Success";
                 })
                 .catch(err => {
-                    console.log("Room register Err: ", err);
                     throw(err);
                 })
     }
 
-    const updateRoom = (room) => {
+    const updateRoom = (token, room) => {
         return axios.put(`${WEB_API}/api/room/${room.room_id}`, room, {
                 headers: {
-                    "Authorization": `Bearer ${userState.token}`
+                    "Authorization": `Bearer ${token}`
                 }
         })
             .then(res => {
@@ -67,24 +63,21 @@ const RoomContextProvider = ({children}) => {
                 return "Update success";
             })
             .catch(err => {
-                console.log(err);
                 throw(err);
             })
     }
 
-    const deleteRoom = (id) => {
+    const deleteRoom = (token, id) => {
         console.log(id);
         return axios.delete(`${WEB_API}/api/room/${id}`,{
             headers: {
-                "Authorization": `Bearer ${userState.token}`
+                "Authorization": `Bearer ${token}`
             }
         })
             .then(res => {
-                console.log(res);
                 return "Delete Success";
             })
             .catch(err => {
-                console.log(err);
                 throw(err);
             })
     }

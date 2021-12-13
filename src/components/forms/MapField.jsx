@@ -46,7 +46,7 @@ const MapField = ({label, ...props}) => {
   return (
     <div className="w-100 h-100">
       <div className="w-100 h-100" id="map" />
-      <ErrorMessage name={field.name} />
+      <ErrorMessage name={field.name} component='div' style={{color:'red'}}/>
     </div>
   )
 }

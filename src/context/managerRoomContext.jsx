@@ -7,7 +7,6 @@ export const ManagerRoomContext = createContext();
 
 const RoomListProvider = ({children}) => {
 
-    const userState = JSON.parse(localStorage.getItem("user-state"));
 
     const ROOM_PER_PAGE = 9;
     const PAGE = 1;
@@ -15,23 +14,21 @@ const RoomListProvider = ({children}) => {
     const [roomList] = useState([]);
 
 
-    const getRoomList = (type = GET_CURRENTLY_HOSTING_ROOMS, roomPerPage = ROOM_PER_PAGE, page = PAGE) => {
+    const getRoomList = (user, type = GET_CURRENTLY_HOSTING_ROOMS, roomPerPage = ROOM_PER_PAGE, page = PAGE) => {
         const request = {
-            host_id: userState.userId,
+            host_id: user.userId,
             filter: type,
             confirmed: true
         }
         return axios.post(`${WEB_API}/api/room/filter?limit=${roomPerPage}&page=${page}`, request, {
             headers: {
-                "Authorization": `Bearer ${userState.token}`
+                "Authorization": `Bearer ${user.token}`
             }
         })
             .then(res => {
-                console.log(res);
                 return res.data;
             })
             .catch(err => {
-                console.log(err);
                 throw(err);
             })
     }

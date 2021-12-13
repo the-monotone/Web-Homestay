@@ -2,7 +2,7 @@ import {React, useContext, useEffect, useState} from 'react';
 import { HostRentalCard } from '../components/shared/hostRentalCard';
 import { Row, Col, Container, Button } from 'react-bootstrap';
 import './rentalManagement.css'
-import { WePagnigation } from '../components/shared/wePagnigation';
+import { WePagination } from '../components/shared/wePagnigation';
 import { RentalContext } from '../context/rentalContext';
 import { LoadingCardList } from '../components/shared/loadingCard';
 import HostLayout from '../components/hostlayout.component';
@@ -125,7 +125,7 @@ export const RentalManagement = () => {
                     </Row>
                 }
                 </Container>
-                <WePagnigation 
+                <WePagination 
                     total = {totalRental}  
                     currentPage = {currentPage} 
                     itemPerPage = {rentalPerPage} 
