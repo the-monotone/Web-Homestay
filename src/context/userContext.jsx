@@ -1,15 +1,8 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext } from 'react';
 import { WEB_API } from '../config';
 import axios from 'axios';
 
 export const UserContext = createContext();
-
-const initialState = {
-    userId: null,
-    name: null,
-    token: null
-}
-
 
 const UserContextProvider = ({children}) => {
 
@@ -22,7 +15,6 @@ const UserContextProvider = ({children}) => {
                     window.location.reload();
                     return res.data;
                 } else {
-                    console.log("WTF")
                     const error = new Error("Sai tài khoản hoặc mật khẩu");
                     throw(error);
                 }

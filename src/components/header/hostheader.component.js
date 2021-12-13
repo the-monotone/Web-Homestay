@@ -1,14 +1,19 @@
-import React, {useContext, useState} from 'react';
-import {Button, Container, Dropdown, Nav, Navbar, NavItem} from 'react-bootstrap';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useContext, useEffect, useState} from 'react';
+import {Badge, Container, Dropdown, Nav, Navbar, NavItem, Spinner} from 'react-bootstrap';
 import SearchModal from './search.component';
 import { Signup } from '../../pages/signUp.page';
 import LoginModal from './login.component';
 import UnLoggedInDropdown from './unLoggedInDropdown';
 import LoggedInDropdown from './loggedInDropdown'; 
-import  './header.component.css';
 import { HeaderContext } from '../../context/headerContext';
 import { RENTALMAGSATE, ROOMMAGSTATE } from '../../reducer/actionTypes';
 import { WeLogo } from '../../logo/logo';
+import NotificationItem from './NotificationItem';
+import { NotificationContext } from '../../context/notificationContext';
+import { WeToast } from '../shared/weToast';
+
+import  './header.component.css';
 
 function HostHeader() {
     const [isLoginModal, setLoginModal] = useState(false);
@@ -19,12 +24,62 @@ function HostHeader() {
 
     const {navState} = useContext(HeaderContext);
 
+    const [noti, setNoti] = useState([]);
+    const [isLoadNoti, setLoadNoti] = useState(false);
+
+    const [isToast, setToast] = useState(false);
+    const [toastNoti, setToastNoti] = useState(null);
+    const [newNotiCount, setNewNotiCount] = useState(0);
+    
+    const { getSocket, getNotification } = useContext(NotificationContext);
+
+    useEffect(() => {
+        if (!userState) return;
+        setLoadNoti(true);
+        const client_socket = getSocket(userState.userId);
+        client_socket.on("receive_rental", (content, sendDate) => {
+            console.log(content);
+            setToastNoti({
+                status: "SEEN",
+                content: content,
+                last_update: sendDate
+            })
+            setToast(true);
+            setNewNotiCount((prevCount) => prevCount + 1);
+        })
+        getNotification(userState.token)
+            .then(res => {
+                console.log(res);
+                setNoti(res);
+                setNewNotiCount(res.filter((item) => item.status === "UNREAD").length);
+                setLoadNoti(false);
+            })
+            .catch(err => {
+                alert(err);
+            })
+    }, [])
+
+    const handleViewNotification = () => {
+        setLoadNoti(true);
+        getNotification(userState.token)
+            .then(res => {
+                console.log(res);
+                setNoti(res);
+                setLoadNoti(false);
+                setNewNotiCount(res.filter((item) => item.status === "UNREAD").length);
+            })
+            .catch(err => {
+                alert(err);
+            })
+    }
 
     return (
         <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky">
             <Container fluid="md">
                 <Navbar.Toggle />
-                <Navbar.Brand href="/" className="order-0 me-auto"><WeLogo roundedCircle style={{ height: 60, width: 60 }} /></Navbar.Brand>
+                <Navbar.Brand href="/" className="order-0 me-auto">
+                    <WeLogo roundedCircle style={{ height: 60, width: 60 }} />
+                </Navbar.Brand>
                 <Navbar.Collapse className="order-last justify-content-center">
                     <Nav navbar>
                         <Nav.Link 
@@ -52,11 +107,22 @@ function HostHeader() {
                         <NavItem className="me-1">
                             <Dropdown>
                                 <Dropdown.Toggle className='rounded-pill'>
-                                    <span className="bi bi-bell-fill white-icon"></span>
+                                    <div onClick={handleViewNotification}>
+                                        <span className="bi bi-bell-fill white-icon"></span>
+                                        {newNotiCount > 0 && <Badge pill bg="danger">{newNotiCount}</Badge>}
+                                    </div>
                                 </Dropdown.Toggle>
-                                <Dropdown.Menu className="position-absolute dropdown-menu-end">
+                                <Dropdown.Menu className="notification-menu position-absolute dropdown-menu-end">
                                     <Dropdown.Item>
-                                        Hello
+                                    {   isLoadNoti? <Spinner animation="border" /> : noti.length > 0 ?
+                                        noti.map(notiItem => 
+                                            <Dropdown.Item key={notiItem.id}>
+                                                <NotificationItem noti={notiItem}/>
+                                            </Dropdown.Item>) :
+                                        <div className="container">
+                                            <p>Không có thông báo nào</p>
+                                        </div>
+                                    }
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
@@ -77,6 +143,11 @@ function HostHeader() {
                 <LoginModal show={isLoginModal} onHide={() => setLoginModal(false)} />
                 <SearchModal show={isSearchModal} onHide={() => setSearchModal(false)}/>
             </Container>
+            <div className={isToast? "d-block position-fixed vh-100 vw-100 top-0 start-0" : "d-none"}>
+                <WeToast position="bottom-start" show={isToast} onClose={() => setToast(false)}>
+                    <NotificationItem noti={toastNoti} />
+                </WeToast>
+            </div>
         </Navbar>
     )
 }

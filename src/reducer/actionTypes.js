@@ -15,12 +15,6 @@ export const USER_UPDATE_INFO = 'USER_UPDATE_INFO'
 export const GET_USER = 'GET_USER'
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 
-
-
-
-export const GET_RENTAL = 'GET_RENTAL';
-export const POST_RENTAL = 'POST_RENTAL';
-
 export const GET_ARRIVING_ROOMS = 'Arriving soon';
 export const GET_CHECKING_OUT_ROOMS = 'Checking out';
 export const GET_CURRENTLY_HOSTING_ROOMS = 'Currently hosting';

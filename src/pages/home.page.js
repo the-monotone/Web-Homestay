@@ -6,6 +6,7 @@ function HomePage() {
         <Layout>
             <h1>Home</h1>
             {userState != null && userState.name != null ? <h2>{`Chào mừng bạn, ${userState.name}`}</h2> : null}
+            
         </Layout>
     )
 }

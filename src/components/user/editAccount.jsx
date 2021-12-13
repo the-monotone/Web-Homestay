@@ -15,7 +15,7 @@ export const EditAccount = ({account, isGetting}) => {
     const [isPosting, setPosting] = useState(false);
 
     const {user_id, ...userInfo} = account;
-    const {getInfo, updateInfo} = useContext(UserContext);
+    const {updateInfo} = useContext(UserContext);
     const [isUnauthor, setUnauthor] = useState(false);
     const [isToast, setToast] = useState(false);
 

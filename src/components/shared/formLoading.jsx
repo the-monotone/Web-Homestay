@@ -1,13 +1,9 @@
-
 import React from 'react';
-import {Card, Placeholder, Row, Container, Form} from 'react-bootstrap';
+import { Placeholder, Row } from 'react-bootstrap';
 import "./loadingCard.css";
 
 export const LoadingForm = () => {
-
-
-    const url = "https://i.ibb.co/2MDV6nN/form-loading.gif";
-
+    // const url = "https://i.ibb.co/2MDV6nN/form-loading.gif";
     return(
         <Row style={{ height: '300px' }} className='ms-1'>
             <Placeholder as='p' xs={6} className='mb-2' bg='secondary'/>

@@ -3,7 +3,7 @@ import { Dropdown } from 'react-bootstrap';
 import { UserContext } from '../../context/userContext';
 const LoggedInDropdown = () => {
     const userState = JSON.parse(localStorage.getItem("user-state"));
-    const {logout} = useContext(UserContext);
+    const { logout } = useContext(UserContext);
     const handleLogout = (token) => {
         logout(token)
             .then(res => {

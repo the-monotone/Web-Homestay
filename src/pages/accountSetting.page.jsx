@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import {Col, Row, Container} from 'react-bootstrap'
 import { PasswordChange } from '../components/user/passwordChange';
@@ -5,8 +6,6 @@ import { EditAccount } from '../components/user/editAccount';
 import Layout from '../components/layout.component';
 import './accountSetting.css'
 import { UserContext } from '../context/userContext';
-import { LoadingForm } from '../components/shared/formLoading';
-import { UnauthorizedErrorAlert } from '../components/shared/weModal';
 
 export const AccountSettings = () => {
 
@@ -17,9 +16,6 @@ export const AccountSettings = () => {
 
     const [userInfo, setUserInfo] = useState({});
     const [isGetting, setGetting] = useState(false);
-
-
-
 
     useEffect(() => {
         const getData = async () => {

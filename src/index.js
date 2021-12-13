@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
 import Root from './routes/root';
 import reportWebVitals from './reportWebVitals';
@@ -9,21 +9,30 @@ import RoomListProvider from './context/managerRoomContext';
 import RentalContextProvider from './context/rentalContext';
 import UserContextProvider from './context/userContext';
 import HeaderContextProvider from './context/headerContext';
+import NotificationProvider from "./context/notificationContext";
+
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
+import FeedbackContextProvider from "./context/feedbackContext";
 ReactDOM.render(
     <HeaderContextProvider>
         <UserContextProvider>
+          <NotificationProvider>
             <RentalContextProvider>
+              <FeedbackContextProvider>
                 <RoomListProvider>
                     <RoomContextProvider>
                         <SearchContextProvider>
-                            <Root />
+                          <Root />
                         </SearchContextProvider>
                     </RoomContextProvider>
                 </RoomListProvider>
+              </FeedbackContextProvider>
             </RentalContextProvider>
+          </NotificationProvider>
         </UserContextProvider>
     </HeaderContextProvider>,
     document.getElementById('root'));

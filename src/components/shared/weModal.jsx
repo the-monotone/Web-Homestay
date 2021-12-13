@@ -1,5 +1,7 @@
-import {React, useContext} from 'react';
-import { Modal, Button,  } from 'react-bootstrap';
+import {React, useState, useContext} from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
+import StarRatings from 'react-star-ratings';
+import { FeedbackContext } from '../../context/feedbackContext';
 import { UserContext } from '../../context/userContext';
 
 
@@ -56,6 +58,63 @@ export const rentalConfirmAlert = (props) => {
             <Modal.Footer>
                 <Button onClick={props.onHide}>Đồng ý</Button>
                 <Button onClick={props.onHide}>Thoát</Button>
+            </Modal.Footer>
+        </Modal>
+    )
+}
+
+export const RatingModal = (props) => {
+    const token = JSON.parse(localStorage.getItem("user-state")).token;
+    const { postFeedback } = useContext(FeedbackContext);
+    const [rating, setRating] = useState(5);
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const body = {
+            room_id: props.room_id,
+            client_id: props.client_id,
+            feedback: event.target[0].value,
+            rate: rating
+        }
+        console.log(body);
+        postFeedback(body, token);
+        props.onHide();
+    }
+    return (
+        <Modal
+            show={props.show}
+            onHide={props.onHide}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                Đánh giá phòng
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3 d-flex flex-column">
+                        <Form.Label>Đánh giá chung</Form.Label>
+                        <StarRatings 
+                            rating={rating} 
+                            changeRating={setRating} 
+                            numberOfStars={5} 
+                            starDimension='20px'
+                            starRatedColor='rgb(230, 67, 47)'
+                            name='rating' 
+                        />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Mô tả trải nghiệm của bạn</Form.Label>
+                        <Form.Control as="textarea" rows="5" required/>
+                    </Form.Group>
+                    <button type="submit" id="submit-btn-rating" hidden/>
+                </Form>
+                
+            </Modal.Body>
+            <Modal.Footer>
+                <label className="btn btn-primary" htmlFor="submit-btn-rating">Gửi đánh giá</label>
+                <Button variant="danger" onClick={props.onHide}>Hủy</Button>
             </Modal.Footer>
         </Modal>
     )

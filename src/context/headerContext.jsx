@@ -1,5 +1,4 @@
-import React, { Children, createContext, useState } from 'react';
-import { ROOMMAGSTATE } from '../reducer/actionTypes';
+import React, { createContext, useState } from 'react';
 
 export const HeaderContext = createContext();
 

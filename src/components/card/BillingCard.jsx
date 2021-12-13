@@ -1,8 +1,9 @@
 import React, {useContext, useState} from 'react';
 import { Card, Row, Col, Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
-import { RentalContext } from '../context/rentalContext';
-import useSearch from '../hook/useSearch';
+import { NotificationContext } from '../../context/notificationContext';
+import { RentalContext } from '../../context/rentalContext';
+import { SearchContext } from '../../context/searchContext';
 
 const renderTooltip = (props) => {
     return (
@@ -16,11 +17,11 @@ const dateToString = (date) => {
     return date.toISOString().split('T')[0]
 }
 
-const BillingCard = ({roomId, price, rating}) => {
+const BillingCard = ({roomId, price, rating, hostId}) => {
     const [isLoggedIn, setLoggedIn] = useState(false);
-    const {startDate, endDate, guest, changeStartDate, changeEndDate, changeGuest} = useSearch();
+    const {startDate, endDate, guest, changeStartDate, changeEndDate, changeGuest} = useContext(SearchContext);
     const { postRental } = useContext(RentalContext);
-
+    const { socket } = useContext(NotificationContext);
     let userState = JSON.parse(localStorage.getItem("user-state"));
     
     if (!isLoggedIn && userState != null) {
@@ -55,6 +56,7 @@ const BillingCard = ({roomId, price, rating}) => {
                 const error = new Error(err.message);
                 alert(error);
             })
+        socket.emit("send_rental", hostId, `Khách ${userState.name} đã gửi yêu cầu đặt phòng của bạn`);
     }
     return (
         <Card className="m-1">
@@ -65,7 +67,7 @@ const BillingCard = ({roomId, price, rating}) => {
                 </span>
                 <span>
                     <i className="bi bi-star-fill"></i>
-                    {rating !== null? rating.toFixed(1) : "Chưa có đánh giá"}
+                    {rating != null ? parseFloat(rating).toFixed(1) !== 0.0 ? parseFloat(rating).toFixed(1): "Chưa có đánh giá"  : "Chưa có đánh giá"}
                 </span>
             </Card.Header>
             <Card.Body>

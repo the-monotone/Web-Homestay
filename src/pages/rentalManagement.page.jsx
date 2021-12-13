@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {React, useContext, useEffect, useState} from 'react';
 import { HostRentalCard } from '../components/shared/hostRentalCard';
 import { Row, Col, Container, Button } from 'react-bootstrap';

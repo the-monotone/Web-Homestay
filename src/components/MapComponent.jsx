@@ -15,7 +15,7 @@ const createArrayDisplay = (length) => {
   return res;
 };
 
-const Map = ({ place, results }) => {
+const Map = ({ place, results, handleClickPopup }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [displayPopups, setDisplayPopups] = useState(() =>
     createArrayDisplay(results.length)
@@ -26,20 +26,20 @@ const Map = ({ place, results }) => {
     latitude: place.lat,
     longitude: place.lng,
   });
-
+  
   const markers = useMemo(() => results.rooms.map((item, index) => {
     const setPopupIndex = (index) => {
-        const newDisplayPopups = [...displayPopups];
-        if (index !== selectedIndex) {
-          if (selectedIndex != null) {
-            newDisplayPopups[selectedIndex] = false;
-          }
-          newDisplayPopups[index] = !newDisplayPopups[index];
-        } else {
-          newDisplayPopups[index] = !newDisplayPopups[index];
+      const newDisplayPopups = [...displayPopups];
+      if (index !== selectedIndex) {
+        if (selectedIndex != null) {
+          newDisplayPopups[selectedIndex] = false;
         }
-        setSelectedIndex(index);
-        setDisplayPopups(newDisplayPopups);
+        newDisplayPopups[index] = !newDisplayPopups[index];
+      } else {
+        newDisplayPopups[index] = !newDisplayPopups[index];
+      }
+      setSelectedIndex(index);
+      setDisplayPopups(newDisplayPopups);
     };
     return (
       <div key={item.room_id}>
@@ -62,11 +62,11 @@ const Map = ({ place, results }) => {
             closeButton={false}
             closeOnClick={true}
           >
-            <PopupRoomCard room={item} />
+            <PopupRoomCard room={item} handleClick={() => handleClickPopup(item.room_id)}/>
           </Popup>
         )}
       </div>
-    )}), [results, displayPopups, selectedIndex]);
+    )}), [results, displayPopups, selectedIndex, handleClickPopup]);
 
   return (
     <MapGL

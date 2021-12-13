@@ -1,33 +1,56 @@
-import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { Carousel, Badge, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { RoomList, RoomFeedback } from '../Fake Data API/roomData';
-import './roomView.page.css';
-import BillingCard from '../components/BillingCard';
-import FeedbackCard from '../components/FeedbackCard';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Carousel, Badge, ListGroup, ListGroupItem, Spinner } from 'react-bootstrap';
+import BillingCard from '../components/card/BillingCard';
+import FeedbackCard from '../components/card/FeedbackCard';
 import Layout from '../components/layout.component';
+import { RoomContext } from '../context/roomContext';
+import { FeedbackContext } from '../context/feedbackContext';
+import './roomView.page.css';
 
 const RoomViewPage = () => {
-    const {state} = useLocation();
-    let room = state;
-    let {roomId} = useParams();
-    roomId = parseInt(roomId);
-    if (room === null) {    
-        room = RoomList.find((room) => room.id === roomId);
-    }    
-    const roomFeedbacks = RoomFeedback.filter((feedback) => feedback.roomId === roomId);
+    const {readRoom, roomFacility} = useContext(RoomContext);
+    const {getFeedback} = useContext(FeedbackContext);
+    const [room, setRoom] = useState(null);
+    const [feedback, setFeedback] = useState(null);
+    const { roomId } = useParams();
+    const userState = JSON.parse(localStorage.getItem("user-state"));
+    useEffect(() => {
+        readRoom(roomId)
+            .then(res => {
+                console.log(res);
+                setRoom(res);
+            })
+            .catch(err => {
+                alert(err);
+            });
+        if (!userState) return;
+        getFeedback(roomId, userState.token)
+            .then(res => {
+                console.log(res);
+                setFeedback(res);
+            })
+            .catch(err => {
+                alert(err);
+            })
+    }, [readRoom, getFeedback, roomId])  
     return (
+        room == null? 
+        <Layout>
+            <Spinner animation="border" />
+        </Layout> :
         <Layout>
             <h1>{room.room_name}</h1>
             <Carousel fade variant="dark" className="bg-danger carousel-room gray-border round-radius shadow mb-5">
-                {room.image.map((imageItem) => (
-                    <Carousel.Item key={imageItem.image_id} className="d-flex justify-content-center" >
-                        <img src={imageItem.url} alt={`Slide ${imageItem.image_id}`}/>
+                {room.images.map((imageItem, index) => (
+                    <Carousel.Item key={index} className="d-flex justify-content-center" >
+                        <img src={imageItem} alt={`Slide ${index}`}/>
                     </Carousel.Item>
                 ))}
             </Carousel>
             <div className="billing float-md-end">
-                <BillingCard price={room.price} rating={room.rate} roomId={roomId}/>     
+                <BillingCard price={room.price} rating={room.rate} roomId={roomId} hostId={room.host_id}/>     
             </div>
             <div>
                 <Badge pill>{`${room.num_guest} khách`}</Badge>{' '}
@@ -36,12 +59,11 @@ const RoomViewPage = () => {
             </div>
             <div className="facility m-1">
                 <h2>Tiện nghi</h2>
-                {/* <ListGroup>
-                    {room.roomFacility.map((facility_id) => {
-                        const facility = RoomFacility.find(item => item.id === facility_id);
-                        return <ListGroupItem key={facility.id}>{facility.facility}</ListGroupItem>
-                    })}
-                </ListGroup> */}
+                <ListGroup>
+                    {roomFacility != null? room.facilities.map((facilityId) => {
+                        return <ListGroupItem key={facilityId}>{roomFacility.find(item => item.id === facilityId).facility}</ListGroupItem>
+                    }) : <Spinner animation='border' />}
+                </ListGroup>
             </div>
             <div className="rule m-1">
                 <h2>Quy định chung</h2>
@@ -56,18 +78,15 @@ const RoomViewPage = () => {
             </div>
             <div>
                 <h2>Đánh giá</h2>
+                {userState === null? <p>Đăng nhập để xem đánh giá</p> : feedback === null? 
+                    <Spinner animation="border" /> :
+                    feedback.total === 0? <p>Chưa có đánh giá nào</p> :
                 <ListGroup>
-                    {
-                        roomFeedbacks.map((feedback) => (
-                            <ListGroupItem key={feedback.id}>
-                                <FeedbackCard feedback={feedback} />
-                            </ListGroupItem>
-                        ))
-                    }
+                    {feedback.feedbacks.map(feedbackItem => <FeedbackCard feedback={feedbackItem} />)}
                 </ListGroup>
+                }
             </div>
         </Layout>
-        
     )
 }
 

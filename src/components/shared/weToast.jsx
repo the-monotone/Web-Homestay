@@ -1,13 +1,13 @@
 import {React} from 'react';
-import { Toast, ToastContainer, Image } from 'react-bootstrap';
+import { Toast, ToastContainer } from 'react-bootstrap';
 import {WeLogoBgDark} from '../../logo/logo'
 
-export const WeToast = (props) => {
+export const WeToast = ({position='top-end', ...props}) => {
 
     const {children, ...attribute} = props;
 
     return(
-        <ToastContainer position='top-end' style={{zIndex: 1000}}>
+        <ToastContainer className="p-3" position={position} style={{zIndex: 1000}}>
             <Toast {...attribute} delay={2500} autohide className="d-inline-block m-1" animation>
                 <Toast.Header>
                     <WeLogoBgDark style={{ height: 28, width: 28 }} rounded/>

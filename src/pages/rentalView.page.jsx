@@ -1,50 +1,89 @@
-import React, { useEffect, useState } from 'react';
-import { Tabs, Tab, ListGroup, ListGroupItem } from 'react-bootstrap';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from 'react';
+import { Tabs, Tab, Row, Col, Spinner, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import Layout from '../components/layout.component';
-import RateModal from '../components/RateModal';
-import RentalCard from '../components/RentalCard';
-import useRental from '../hook/useRental';
-
+import { HostRentalCard } from '../components/shared/hostRentalCard';
+import { RentalContext } from '../context/rentalContext';
+import { RatingModal } from '../components/shared/weModal';
 
 const RentalViewPage = () => {
-    const [isRate, setRate] = useState(false);
     const navigate = useNavigate();
-    const {rental, getRental} = useRental();
+    const [isRate, setRate] = useState(false);
+    const [rental, setRental] = useState(null);
+    const [roomId, setRoomId] = useState(null);
+
+    const { getRental } = useContext(RentalContext);
     const userState = JSON.parse(localStorage.getItem("user-state"));
     if (userState == null) {
         alert("Bạn chưa đăng nhập");
         navigate("/home", {replace: true});
     }
-    useEffect(() => getRental(userState.token, userState.userId), [rental]);
+
+    const handleClickRate = (room_id) => {
+        setRoomId(room_id);
+        setRate(true);
+    }
+
+    const handleCancel = () => {
+        setRate(false);
+    }
+
+    useEffect(() => {
+        getRental(userState.token, userState.userId)
+            .then(res => {
+                console.log(res);
+                setRental(res.rentals);
+            })
+    }, []);
 
     return (
         <Layout>
             <h1>Chuyến đi</h1>
+            {
+                rental === null ? 
+            <Spinner animation="border" /> :
             <Tabs defaultActiveKey="renting">
                 <Tab eventKey="request" title="Đang yêu cầu">
-                    <RentTab rentalList={rental.filter((rentalItem) => rentalItem.status === "UNCONFIRMED")} />
+                    <RentTab handleClickRate={handleClickRate} rentalList={rental.filter((rentalItem) => rentalItem.status === "UNCONFIRMED")} />
                 </Tab>
                 <Tab eventKey="renting" title="Đang thuê">
-                    <RentTab rentalList={rental.filter((rentalItem) => rentalItem.status === "CONFIRMED")} />
+                    <RentTab handleClickRate={handleClickRate} rentalList={rental.filter((rentalItem) => rentalItem.status === "CONFIRMED")} />
                 </Tab>
                 <Tab eventKey="rented" title="Đã thuê">
-                    <RentTab canRate onClickRate={() => setRate(true)} rentalList={rental.filter((rentalItem) => rentalItem.status === "RETURNED")} />
+                    <RentTab canRate handleClickRate={handleClickRate} rentalList={rental.filter((rentalItem) => rentalItem.status === "RETURNED")} />
                 </Tab>
             </Tabs>
-            <RateModal show={isRate} onHide={() => setRate(false)} />
+            }
+            <RatingModal show={isRate} onHide={handleCancel} room_id={roomId} client_id={userState.userId} />
         </Layout>
     )
 }
 
-const RentTab = ({rentalList, canRate, onClickRate}) => {
+const RentTab = ({rentalList, canRate, handleClickRate}) => {
     return (
-        <ListGroup>
-            {rentalList.map(rental => 
-                <ListGroupItem key={rental.id} className="m-1">
-                    <RentalCard canRate={canRate} rental={rental} onClickRate={onClickRate}/>
-                </ListGroupItem>)}
-        </ListGroup>
+        rentalList.length <= 0 ? 
+        <p className="no-rental-text"><i className="bi bi-journal"></i>Hiện không có bản thuê nào</p> :
+        <div>
+            <Row className = "host-rental-container mt-3 mb-3 g-4" >
+            {
+                rentalList.map((rental, index) => {
+                    return(
+                        <Col md = "3" key={index}>
+                            <HostRentalCard rental={rental}>
+                                {
+                                    canRate && 
+                                    <Button className="w-100" onClick={() => handleClickRate(rental.room_id)}>
+                                        Đánh giá
+                                    </Button>
+                                }
+                            </HostRentalCard>
+                        </Col>
+                    )
+                })
+            }
+            </Row>
+        </div>
     )
 }
 
