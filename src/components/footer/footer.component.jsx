@@ -1,5 +1,5 @@
-import {React,useState} from 'react';
-import {Row, Col, Image} from 'react-bootstrap';
+import { React, useState } from 'react';
+import { Col, Image } from 'react-bootstrap';
 import Banner from '../../logo/banner.svg';
 import './footer.css';
 import { Report } from '../forms/report';

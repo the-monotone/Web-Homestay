@@ -15,8 +15,6 @@ const initialState = {
     startDate: null,
     endDate: null,
     guest: 0,
-    results: [],
-    error: null
 };
 
 const SearchContextProvider = ({children}) => {
@@ -37,12 +35,10 @@ const SearchContextProvider = ({children}) => {
     const searchPlaceApi = payload => {
         return axios
             .post(`${WEB_API}/api/room/search`, payload)
-            .then(res => {
-                console.log(res.data);
-                dispatch({type: ActionTypes.ADD_RESULTS, payload: res.data});
-            })
+            .then(res => res.data)
             .catch(error => {
-                dispatch({type: ActionTypes.ADD_ERROR, payload: error});
+                console.error(error);
+                throw(error);
             })
     }
 

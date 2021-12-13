@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { RoomFacility, RoomType } from '../Fake Data API/roomData';
 import axios from 'axios';
 import {WEB_API} from '../config';
 
@@ -8,8 +7,8 @@ export const RoomContext = createContext();
 const RoomContextProvider = ({children}) => {
 
     //State
-    const [roomType, setRoomType] = useState(RoomType);
-    const [roomFacility, setRoomFacility] = useState(RoomFacility);
+    const [roomType, setRoomType] = useState(null);
+    const [roomFacility, setRoomFacility] = useState(null);
 
     const userState = JSON.parse(localStorage.getItem("user-state"));
     
@@ -39,6 +38,16 @@ const RoomContextProvider = ({children}) => {
             })
             .catch(err => console.log(err))
     }, [])
+
+    const readRoom = (roomId) => {
+        return axios.get(`${WEB_API}/api/room/${roomId}`)
+            .then(res => res.data)
+            .catch(err => {
+                console.error(err);
+                const error = new Error(err.message);
+                throw(error);
+            })
+    }
 
     const createRoom = (room) => {
         return axios.post(`${WEB_API}/api/room/create`, room, {
@@ -93,8 +102,9 @@ const RoomContextProvider = ({children}) => {
     const roomContextData = {
         roomType,
         roomFacility,
-        updateRoom,
         createRoom,
+        readRoom,
+        updateRoom,
         deleteRoom
     }
 

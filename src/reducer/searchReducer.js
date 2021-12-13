@@ -26,18 +26,6 @@ const SearchReducer = (state, action) => {
                 guest: action.payload
             }
         }
-        case ActionTypes.ADD_RESULTS: {
-            return {
-                ...state,
-                results: action.payload
-            }
-        }
-        case ActionTypes.ADD_ERROR: {
-            return {
-                ...state,
-                error: action.payload
-            }
-        }
         default: {
             return state;
         }

@@ -5,17 +5,11 @@ import { Card } from 'react-bootstrap';
 import { FacilityBadgeList } from '../forms/FacilityBadgeList';
 import { MyButton } from '../shared/myButton';
 import './roomCard.css';
-import { ManagerRoomContext } from '../../context/managerRoomContext';
-import { DELETE_ROOM } from '../../reducer/actionTypes';
 import { RoomContext } from '../../context/roomContext';
 
 
 export const RoomCard = ({onClick, isEditable, room}) => {
-
     const {deleteRoom} = useContext(RoomContext);
-
-    console.log((room));
-
     return(
             <Card md="6" className="my-card">
                 <Row className="g-0 row-body">
@@ -68,7 +62,7 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                 <Card.Footer className="d-flex justify-content-between">
                     <div>
                         <i className="bi bi-star-fill small-icon"></i>
-                        {room.rate != null ? parseFloat(room.rate).toFixed(1) === 0.0 ? parseFloat(room.rate).toFixed(1): "Chưa có đánh giá"  : "Chưa có đánh giá"}
+                        {room.rate !== null ? parseFloat(room.rate).toFixed(1) !== 0.0 ? parseFloat(room.rate).toFixed(1): "Chưa có đánh giá"  : "Chưa có đánh giá"}
                     </div>
                     <div>
                         <strong>{`${room.price}₫`}</strong>{"/đêm"}

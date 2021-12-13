@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { Form, ListGroup, ListGroupItem, Modal} from 'react-bootstrap';
 import { autocompleteApi, placeDetailApi } from '../../api/goong.api';
-import useSearch from '../../hook/useSearch';
 import { useNavigate } from 'react-router-dom';
+import { SearchContext } from '../../context/searchContext';
 import "react-datepicker/dist/react-datepicker.css";
 import './search.css';
 
@@ -18,12 +18,11 @@ const SearchModal = ({show, onHide}) => {
             changeStartDate, 
             changeEndDate, 
             changeGuest,
-            searchPlaceApi,
             place,
             startDate,
             endDate,
             guest
-        } = useSearch();
+        } = useContext(SearchContext);
 
     const searchPlace = (input) => {
         setInputValue(input);
@@ -53,10 +52,9 @@ const SearchModal = ({show, onHide}) => {
             radius: 10
         }
         console.log(JSON.stringify(body));
-        searchPlaceApi(body)
-            .then(() => {
-                navigate("/search");
-            })
+        localStorage.setItem("search-query", JSON.stringify(body));
+        localStorage.setItem("place", JSON.stringify(place));
+        navigate("/search", {state: body});
     }
     return (
         <Modal show={show} onHide={onHide} dialogClassName="modal-80w">

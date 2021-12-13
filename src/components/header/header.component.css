@@ -29,3 +29,12 @@
 .my-nav-link:hover {
     background-color:#858c89;
 }
+
+.dropdown-toggle::after {
+    display: none !important
+}
+
+.notification-menu {
+    max-height: 300px;
+    overflow-y: scroll;
+}

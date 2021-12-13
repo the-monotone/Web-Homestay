@@ -1,32 +1,18 @@
-import { createContext, useReducer } from "react";
-import RentalReducer from "../reducer/rentalReducer";
-import { GET_RENTAL } from "../reducer/actionTypes";
+import { createContext } from "react";
 import { WEB_API } from "../config";
 import axios from "axios";
 
 export const RentalContext = createContext();
 
-const initialState = {
-    rental: [],
-}
-
 const RentalContextProvider = ({children}) => {
-    const [state, dispatch] = useReducer(RentalReducer, initialState);
-
     const getRental = (token, userId) => {
-        if (token == null || userId == null) {
-            return null;
-        }
         return axios
             .get(`${WEB_API}/api/rental/user/${userId}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
             })
-            .then(res => {
-                console.log(res.data);
-                dispatch({type: GET_RENTAL, payload: res.data});
-            })
+            .then(res => res.data)
             .catch(err => {
                 throw(err.response);
             })
@@ -91,10 +77,9 @@ const RentalContextProvider = ({children}) => {
 
     const value = {
         getRental,
+        updateRental,
         postRental,
         getRentalByHost,
-        updateRental,
-        ...state
     }
 
 
