@@ -32,7 +32,8 @@ const NotificationProvider = ({children}) => {
     
     const data = {
         socket,
-        getNotification
+        getNotification,
+        getSocket,
     }
 
     return <NotificationContext.Provider value={data}>
