@@ -113,7 +113,7 @@ export const RentalManagement = () => {
                     {
                         rentalList.map((rental, index) => {
                             return(
-                                <Col md = "3" key={index}>
+                                <Col key={index}>
                                     <HostRentalCard rental={rental} isUnconfirmed={isUnconfirmedList}>
                                         <Button variant={isUnconfirmedList ? "primary" : "success"} style = {{width: "100%"}}>
                                             {isUnconfirmedList ? "Cho thuê" : "Đã trả phòng"}

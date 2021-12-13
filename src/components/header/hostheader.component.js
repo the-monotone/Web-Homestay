@@ -31,7 +31,33 @@ function HostHeader() {
     const [toastNoti, setToastNoti] = useState(null);
     const [newNotiCount, setNewNotiCount] = useState(0);
     
-    const { socket, getNotification } = useContext(NotificationContext);
+    const { getSocket, getNotification } = useContext(NotificationContext);
+
+    useEffect(() => {
+        if (!userState) return;
+        setLoadNoti(true);
+        const client_socket = getSocket(userState.userId);
+        client_socket.on("receive_rental", (content, sendDate) => {
+            console.log(content);
+            setToastNoti({
+                status: "SEEN",
+                content: content,
+                last_update: sendDate
+            })
+            setToast(true);
+            setNewNotiCount((prevCount) => prevCount + 1);
+        })
+        getNotification(userState.token)
+            .then(res => {
+                console.log(res);
+                setNoti(res);
+                setNewNotiCount(res.filter((item) => item.status === "UNREAD").length);
+                setLoadNoti(false);
+            })
+            .catch(err => {
+                alert(err);
+            })
+    }, [])
 
     const handleViewNotification = () => {
         setLoadNoti(true);
@@ -46,23 +72,6 @@ function HostHeader() {
                 alert(err);
             })
     }
-
-    useEffect(() => {
-        if (!userState) return;
-        socket.on("receive_rental", (content, sendDate) => {
-            console.log(content);
-            setToastNoti({
-                status: "SEEN",
-                content: content,
-                last_update: sendDate
-            })
-            setToast(true);
-            setNewNotiCount((prevCount) => prevCount + 1);
-        })
-        handleViewNotification();
-    }, [])
-
-    
 
     return (
         <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky">
@@ -104,7 +113,6 @@ function HostHeader() {
                                     </div>
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className="notification-menu position-absolute dropdown-menu-end">
-                                    <Dropdown.Item>
                                     {   isLoadNoti? <Spinner animation="border" /> : noti.length > 0 ?
                                         noti.map(notiItem => 
                                             <Dropdown.Item key={notiItem.id}>
@@ -114,7 +122,6 @@ function HostHeader() {
                                             <p>Không có thông báo nào</p>
                                         </div>
                                     }
-                                    </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </NavItem>
