@@ -31,12 +31,12 @@ function HostHeader() {
     const [toastNoti, setToastNoti] = useState(null);
     const [newNotiCount, setNewNotiCount] = useState(0);
     
-    const { getSocket, getNotification } = useContext(NotificationContext);
+    const { socket, getNotification } = useContext(NotificationContext);
 
     useEffect(() => {
         if (!userState) return;
         setLoadNoti(true);
-        const client_socket = getSocket(userState.userId);
+        const client_socket = socket;
         client_socket.on("receive_rental", (content, sendDate) => {
             console.log(content);
             setToastNoti({
