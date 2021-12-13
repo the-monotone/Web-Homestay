@@ -94,18 +94,37 @@ function Header() {
 
     useEffect(() => {
         if (!userState) return;
+        let isActive = true;
         console.log(socket);
         socket.on("receive_rental", (content, sendDate) => {
-            console.log(content);
-            setToastNoti({
-                status: "SEEN",
-                content: content,
-                last_update: sendDate
-            })
-            setToast(true);
-            setNewNotiCount((prevCount) => prevCount + 1);
+            if (isActive) {
+                setToastNoti({
+                    status: "SEEN",
+                    content: content,
+                    last_update: sendDate
+                })
+                setToast(true);
+                setNewNotiCount((prevCount) => prevCount + 1);
+            }
+        })
+        socket.on("receive_feedback", (content, sendDate) => {
+            if (isActive) {
+                setToastNoti({
+                    status: "SEEN",
+                    content: content,
+                    last_update: sendDate
+                })
+                setToast(true);
+                setNewNotiCount((prevCount) => prevCount + 1);
+            }
         })
         handleViewNotification();
+
+        return () => {
+            isActive = false;
+            socket.off("receive_rental");
+            socket.off("receive_feedback");
+        }
     }, [])
 
     

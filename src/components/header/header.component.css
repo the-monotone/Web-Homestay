@@ -35,6 +35,6 @@
 
 .notification-menu {
     max-height: 300px;
-    width: 300px;
+    width: 500px;
     overflow-y: scroll;
 }
