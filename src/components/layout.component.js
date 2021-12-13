@@ -2,14 +2,14 @@ import Header from "./header/header.component";
 import React from 'react';
 import { Footer } from "./footer/footer.component";
 
-export default function Layout({styleName, containerStyleName="container-md", children}) {
+export default function Layout({styleName, containerStyleName="container-md", showFooter=true, children}) {
   return(
     <div className={`d-flex flex-column ${styleName}`}>
       <Header />
-      <div className={`${containerStyleName} pb-4`}>
+      <div className={`${containerStyleName} pb-4 main-div`}>
         {children}
       </div>
-      <Footer />
+      <Footer isShow={showFooter}/>
     </div>
   )
 }

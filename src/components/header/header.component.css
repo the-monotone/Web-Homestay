@@ -1,5 +1,4 @@
 #nav-bar {
-    height: 60px;
     z-index: 100;
 }
 
@@ -36,5 +35,6 @@
 
 .notification-menu {
     max-height: 300px;
+    width: 300px;
     overflow-y: scroll;
 }

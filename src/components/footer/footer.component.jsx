@@ -4,12 +4,12 @@ import Banner from '../../logo/banner.svg';
 import './footer.css';
 import { Report } from '../forms/report';
 
-export const Footer = () => {
+export const Footer = ({isShow=true}) => {
 
     const [isReport, setReport] = useState(false);
 
     return(
-        <footer id='footer'>
+        <footer id='footer' hidden={!isShow}>
             <Col md={3} className='text-team p-auto mt-3'>
                 <div className='footer-container'>
                     <div className="footer-title mb-3">Đội ngũ phát triển</div>

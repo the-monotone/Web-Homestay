@@ -49,7 +49,7 @@ const RoomViewPage = () => {
                     </Carousel.Item>
                 ))}
             </Carousel>
-            <div className="billing float-md-end">
+            <div className="billing">
                 <BillingCard price={room.price} rating={room.rate} roomId={roomId} hostId={room.host_id}/>     
             </div>
             <div>
@@ -82,7 +82,7 @@ const RoomViewPage = () => {
                     <Spinner animation="border" /> :
                     feedback.total === 0? <p>Chưa có đánh giá nào</p> :
                 <ListGroup>
-                    {feedback.feedbacks.map(feedbackItem => <FeedbackCard feedback={feedbackItem} />)}
+                    {feedback.feedbacks.map(feedbackItem => <FeedbackCard key={feedbackItem.id} feedback={feedbackItem} />)}
                 </ListGroup>
                 }
             </div>

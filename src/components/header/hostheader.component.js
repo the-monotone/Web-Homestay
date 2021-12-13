@@ -74,7 +74,7 @@ function HostHeader() {
     }
 
     return (
-        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky">
+        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky top-0">
             <Container fluid="md">
                 <Navbar.Toggle />
                 <Navbar.Brand href="/" className="order-0 me-auto">

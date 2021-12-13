@@ -37,9 +37,9 @@ const SearchResultPage = () => {
         navigate(`/room/${roomId}`);
     }
     return (
-        <Layout styleName="vh-100" containerStyleName="container-fluid">
-            <div className="row">
-                <div className="col col-12 col-lg-5">
+        <Layout styleName="vh-100" containerStyleName="container-fluid" showFooter={false}>
+            <div className="row h-100">
+                <div className="col col-12 col-lg-5 h-100">
                     <h2>{`Phòng ở tại ${place.description}`}</h2>
                     {results.rooms.map(room => {
                         return (

@@ -1,0 +1,9 @@
+.card-place {
+    height: 400px;
+    cursor: pointer
+}
+
+.card-place > img {
+    height: 70%;
+    margin: -0.15rem
+}
