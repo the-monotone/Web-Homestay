@@ -38,11 +38,11 @@ export const UserListItem = ({user, isLoading, setLoading, removeUser, setToast}
 
     return(
         <tr>
-            <td>{user.user_id}</td>
+            <td >{user.user_id}</td>
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>{user.phone}</td>
-            <td className='d-flex justify-content-center'><Button variant='danger' onClick={handleDeleteUser} id={user.user_id}>Delete</Button></td>
+            <td className='text-center'><Button variant='danger' onClick={handleDeleteUser} id={user.user_id}>Delete</Button></td>
         </tr>
     )
 }
@@ -162,12 +162,12 @@ export const UserTab = () => {
             <Container>
                 <Table striped bordered hover variant="dark">
                     <thead>
-                        <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th style={{width:'10%'}}></th>
+                        <tr className='text-center'>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th style={{width:'10%'}}></th>
                         </tr>
                     </thead>
                     <tbody>

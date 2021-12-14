@@ -33,7 +33,7 @@ export const ShowFacilities = ({dataChange, setDataChange}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalFacility, setTotalFacility] = useState(0);
 
-    const [isToast, setToast] = useState(false);
+    const [isDeleteToast, setDeleteToast] = useState(false);
 
     const userState = JSON.parse(localStorage.getItem('user-state'));
 
@@ -58,7 +58,7 @@ export const ShowFacilities = ({dataChange, setDataChange}) => {
             })
                 .then(res => {
                     setDataChange(!dataChange);
-                    setToast(true);
+                    setDeleteToast(true);
                     removeFacility(request.facilities[0]);
                 })
                 .catch(err => {
@@ -97,7 +97,7 @@ export const ShowFacilities = ({dataChange, setDataChange}) => {
         {
             <Table striped bordered hover variant="dark">
                 <thead>
-                    <tr>
+                    <tr className='text-center'>
                     <th>Description</th>
                     <th></th>
                     </tr>
@@ -129,11 +129,12 @@ export const ShowFacilities = ({dataChange, setDataChange}) => {
             isGetting = {isLoading}
             />
         <WeToast
-            show={isToast}
-            onClose={()=>setToast(false)}
+            show={isDeleteToast}
+            onClose={()=>setDeleteToast(false)}
         >
             Delete Success
         </WeToast>
+
         </Container>
     )
 }

@@ -18,6 +18,9 @@ export const RoomRow = ({room, isLoading, setLoading, removeRoom, setToast}) => 
         console.log(e.target);
 
     }
+    const handleConfirmRoom = (e) => {
+
+    }
 
     return(
         <tr>
@@ -25,7 +28,10 @@ export const RoomRow = ({room, isLoading, setLoading, removeRoom, setToast}) => 
             <td>{room.host_id}</td>
             <td>{room.room_name}</td>
             <td>{room.confirmed ? 'CONFIRMED' : 'UNCONFIRMED'}</td>
-            <td className='d-flex justify-content-center'><Button variant='danger' onClick={handleDeleteRoom} id={room.room_id}>Delete</Button></td>
+            <td className='text-center'>
+                <Button variant='success' onClick={handleConfirmRoom} id={room.room_id} disabled={room.confirmed}>Confirm</Button>
+            </td>
+            <td className='text-center'><Button variant='danger' onClick={handleDeleteRoom} id={room.room_id}>Delete</Button></td>
         </tr>
     )
 }
@@ -40,7 +46,10 @@ export const RoomTab = () => {
     const [usersPerPage] = useState(8);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalRoom, setTotalRoom] = useState(0);
-    const [isToast, setToast] = useState(false);
+
+    const [isDeleteToast, setDeleteToast] = useState(false);
+    const [isConfirmToast, setConfirmToast] = useState(false);
+
     const [isViewAll, setViewAll] = useState(true);
     const [dataChange, setDataChange] = useState(true);
     const [filterRoom,  setFilterRoom] = useState({});
@@ -61,7 +70,7 @@ export const RoomTab = () => {
         const clone = rooms.filter(room => room.room_id !== id);
         setRooms([...clone]);
     }
-    const getAllUser = async () => {
+    const getAllRoom = async () => {
         setLoading(true);
         await axios.get(`${WEB_API}/api/room?limit=${usersPerPage}&page=${currentPage}`, {
             headers: {
@@ -69,7 +78,7 @@ export const RoomTab = () => {
             }
         })
             .then(res => {
-                setRooms(res.data.rooms);
+                setRooms([...res.data.rooms]);
                 setTotalRoom(res.data.total);
             })
             .catch(err => {
@@ -78,29 +87,18 @@ export const RoomTab = () => {
         setLoading(false);
     }
 
-    const handleFilterUser = async () => {
+    const handleFilterRoom = async () => {
+        console.log('filter called');
+        console.log(filterRoom);
         if (!filterRoom || !(filterRoom.name || filterRoom.phone || filterRoom.email)) return;
-        setLoading(true);
-        await axios.post(`${WEB_API}/api/user/filter?limit=${usersPerPage}&page=${currentPage}`, filterRoom,{
-            headers: {
-                "Authorization": `Bearer ${userState.token}`
-            }
-        })
-            .then(res => {
-                console.log(res);
-                setRooms(res.data.rooms);
-                setTotalRoom(res.data.total);
-            })
-            .catch(err => {
-                console.log(err.response);
-                alert("System Error. Change later")
-            })
-        setLoading(false);
+        const clone = rooms.filter(room => !room.confirmed);
+        setRooms([...clone])
+        setTotalRoom(clone.length);
     }
 
     useEffect(() => {
         if(isLoading) return;
-        isViewAll ? getAllUser() : handleFilterUser(filterRoom);
+        isViewAll ? getAllRoom() : handleFilterRoom(filterRoom);
     },[dataChange, isViewAll])
 
     const handleSubmit = (value) => {
@@ -125,7 +123,7 @@ export const RoomTab = () => {
             <Formik
                 initialValues={{
                     room_id: '',
-                    room_id: '',
+                    host_id: '',
                     latitude: '',
                     longitude: ''
                 }}
@@ -147,12 +145,13 @@ export const RoomTab = () => {
             <Container>
                 <Table striped bordered hover variant="dark">
                     <thead>
-                        <tr>
-                        <th>Room Id</th>
-                        <th>Host Id</th>
-                        <th>Room Name</th>
-                        <th>Status</th>
-                        <th style={{width:'10%'}}></th>
+                        <tr className='text-center'>
+                            <th>Room Id</th>
+                            <th>Host Id</th>
+                            <th>Room Name</th>
+                            <th>Status</th>
+                            <th style={{width:'10%'}}></th>
+                            <th style={{width:'10%'}}></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -164,7 +163,7 @@ export const RoomTab = () => {
                             isLoading={isLoading} 
                             setLoading={setLoading}
                             removeUser={removeRoom}
-                            setToast={setToast}/>
+                            setToast={setDeleteToast}/>
                         ))}
                     </tbody>
                 </Table>
@@ -176,10 +175,16 @@ export const RoomTab = () => {
                     isGetting = {isLoading}
                 />
                 <WeToast
-                    show={isToast}
-                    onClose={() => setToast(false)}
+                    show={isDeleteToast}
+                    onClose={() => setDeleteToast(false)}
                 >
                     Delete Success
+                </WeToast>
+                <WeToast
+                    show={isConfirmToast}
+                    onClose={()=>setConfirmToast(false)}
+                >
+                    Confirm Success
                 </WeToast>
             </Container>
         </Container>
