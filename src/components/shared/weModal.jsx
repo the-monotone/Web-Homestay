@@ -2,6 +2,7 @@ import {React, useState, useContext} from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import StarRatings from 'react-star-ratings';
 import { FeedbackContext } from '../../context/feedbackContext';
+import { NotificationContext } from '../../context/notificationContext';
 import { UserContext } from '../../context/userContext';
 
 
@@ -64,8 +65,9 @@ export const rentalConfirmAlert = (props) => {
 }
 
 export const RatingModal = (props) => {
-    const token = JSON.parse(localStorage.getItem("user-state")).token;
+    const userState = JSON.parse(localStorage.getItem("user-state"));
     const { postFeedback } = useContext(FeedbackContext);
+    const { socket } = useContext(NotificationContext);
     const [rating, setRating] = useState(5);
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -76,7 +78,8 @@ export const RatingModal = (props) => {
             rate: rating
         }
         console.log(body);
-        postFeedback(body, token);
+        postFeedback(body, userState.token);
+        socket.emit("send_feedback", props.room_id, `Khách ${userState.name} đã đánh giá phòng của bạn`);
         props.onHide();
     }
     return (

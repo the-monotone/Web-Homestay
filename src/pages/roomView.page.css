@@ -1,3 +1,10 @@
+@media only screen and (min-width: 768px) {
+    .billing {
+        float: right;
+        width: 30vw;
+    }
+}
+
 .carousel-room .carousel-item {
     height: 75vh;
 }
@@ -8,8 +15,4 @@
 
 .rule {
     width: 40vw;
-}
-
-.billing {
-    width: 30vw;
 }
