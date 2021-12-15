@@ -11,9 +11,10 @@ import NotificationItem from './NotificationItem';
 import {UserContext} from '../../context/userContext'
 import { WeToast } from '../shared/weToast';
 import { useNavigate } from 'react-router-dom';
-import { WeLogoBranch } from '../../logo/logo';
-
+import { WeLogo } from '../../assets/logo';
+import { useSpring, animated } from 'react-spring';
 import  './header.component.css';
+import { SearchContext } from '../../context/searchContext';
 
 
 function Header() {
@@ -131,29 +132,59 @@ function Header() {
         }
     }, [])
 
+    const { searchBarOnViewport } = useContext(SearchContext);
+
+    const searchStyles = useSpring({
+        config: { duration: 80 },
+        from: {
+        opacity: 0,
+        translateY: searchBarOnViewport ? 0 : 30,
+        scale: searchBarOnViewport ? '100%' : '130%'
+        },
+        to: {
+            opacity: searchBarOnViewport ? 0 : 1,
+            translateY: searchBarOnViewport ? 30 : 0,
+            scale: searchBarOnViewport ? '130%' : '100%'
+        }
+    });
+
+    const navbarStyles = useSpring({
+        config: { duration: 200 },
+        from: {
+            backgroundColor: searchBarOnViewport ? 'rgb(33,37,41)' : 'rgb(248,249,250)' 
+        },
+        to: {
+            backgroundColor: !searchBarOnViewport ? 'rgb(33,37,41)' : 'rgb(248,249,250)'
+        }
+    })
+
     
 
     return (
-        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky top-0  w-100">
+        <Navbar id="nav-bar" expand="md" bg={searchBarOnViewport ? 'dark' : 'light'} className="position-sticky top-0  w-100">
             <Container fluid="md" className='w-100'>
                 <Navbar.Toggle />
                 <Navbar.Brand href="/" className="order-0 me-auto">
-                    <WeLogoBranch roundedCircle style={{ height: 60 }} />
+                    <WeLogo style={{ height: '30px'}} />
                 </Navbar.Brand>
                 <Navbar.Collapse className="order-last">
-                    <Nav navbar>
+                    {/* <Nav navbar>
                         { userState != null && userState.token != null &&
                         <Nav.Link href="" className="d-flex align-items-center" onClick={hostNavigate}>
                             <span className="me-1 bi bi-person-badge white-icon small-icon" />
                             {' '}{isHost ? 'Quản lý phòng' : 'Trở thành chủ nhà'}
                         </Nav.Link>
                         }
-                    </Nav>
+                    </Nav> */}
                     <Nav navbar className="m-auto">
-                        <Button id="search-bar" className="m-1 gray-border shadow rounded-pill" variant="light" onClick={() => setSearchModal(true)}>
-                            <div>Bắt đầu tìm kiếm</div>
-                            <span className="bi bi-search black-icon small-icon" />
-                        </Button>
+                        <animated.div
+                            style={{...searchStyles}}
+                        >
+                            <Button id="search-bar" className="m-3 gray-border shadow rounded-pill" variant="light" onClick={() => setSearchModal(true)}>
+                                <div>Bắt đầu tìm kiếm</div>
+                                <span className="bi bi-search black-icon small-icon" />
+                            </Button>
+                        </animated.div>
                     </Nav>
                 </Navbar.Collapse>
                 
@@ -203,6 +234,7 @@ function Header() {
                 </WeToast>
             </div>
         </Navbar>
+
     )
 }
 

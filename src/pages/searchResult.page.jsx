@@ -20,9 +20,6 @@ const SearchResultPage = () => {
     const [results, setResults] = useState({
         total: null,
         rooms: []
-<<<<<<< HEAD
-    },[]);
-=======
     });
     const userState = JSON.parse(localStorage.getItem("user-state"));
     const [favoriteList, setFavoriteList] = useState([]);
@@ -34,7 +31,6 @@ const SearchResultPage = () => {
         setButtonContent(prevState => prevState === "Hiện bản đồ"? "Hiện danh sách phòng" : "Hiện bản đồ");
     }
 
->>>>>>> refs/remotes/origin/main
     useEffect(() => {
         const searchBody = {
             latitude: parseFloat(searchParams.get("latitude")),

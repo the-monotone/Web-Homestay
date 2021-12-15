@@ -6,7 +6,7 @@ export default function Layout({styleName, containerStyleName="container-md", sh
   return(
     <div className={`d-flex flex-column ${styleName}`}>
       <Header />
-      <div className={`${containerStyleName} main-div pb-4`}>
+      <div className={`${containerStyleName} pb-4`}>
         {children}
       </div>
       <Footer isShow={showFooter}/>

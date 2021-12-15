@@ -1,5 +1,4 @@
 #search-form {
-    background-color: white;
 }
 #select-guest {
     background-color: white;
@@ -43,6 +42,10 @@
 }
 
 .bi-search {
+    
+}
+
+.home-search-bar-icon {
     color: white;
     font-weight: 500;
 }
@@ -79,8 +82,6 @@
         border-radius: 1rem !important;
     }
 }
-
-
 
 
 .search-btn-label {

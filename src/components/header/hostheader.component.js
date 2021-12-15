@@ -8,7 +8,7 @@ import UnLoggedInDropdown from './unLoggedInDropdown';
 import LoggedInDropdown from './loggedInDropdown'; 
 import { HeaderContext } from '../../context/headerContext';
 import { RENTALMAGSATE, ROOMMAGSTATE } from '../../reducer/actionTypes';
-import { WeLogo } from '../../logo/logo';
+import { WeLogo } from '../../assets/logo';
 import NotificationItem from './NotificationItem';
 import { NotificationContext } from '../../context/notificationContext';
 import { WeToast } from '../shared/weToast';
