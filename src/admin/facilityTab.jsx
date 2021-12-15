@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 import { Formik, Form } from 'formik';
@@ -144,7 +145,7 @@ export const AddFacility = ({dataChange, setDataChange}) => {
     const[isToast, setToast] = useState(false);
 
     const handleSubmit = (value) => {
-        if(value.facility == '' || !value.facility) return;
+        if(value.facility === '' || !value.facility) return;
         const createFacility = async () => {
             const request = {
                 facilities: [{...value, description: ''}]

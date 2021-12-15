@@ -1,10 +1,8 @@
 import React from 'react';
-import {Container, Row, Col, Card, Placeholder} from 'react-bootstrap';
+import {Row, Col, Card, Placeholder} from 'react-bootstrap';
 import "./loadingCard.css";
 
 export const LoadingCard = ({number}) => {
-
-    const url = "https://i.ibb.co/c14FtPP/card-loading.gif";
     return(
         <Col>
             <Card>

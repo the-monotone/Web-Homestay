@@ -26,15 +26,59 @@ const FeedbackContextProvider = ({children}) => {
             }
         })
             .then(res => {
-                console.log(res);
                 return res.data;
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err);
+                throw(err)
+            });
+    }
+
+    const getFavorite = (token) => {
+        return axios.get(`${WEB_API}/api/favourite`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(res => res.data)
+            .catch(err => {
+                console.error(err);
+                throw(err);
+            })
+    }
+
+    const createFavorite = (body, token) => {
+        return axios.post(`${WEB_API}/api/favourite/create`, body, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(res => res.data)
+            .catch(err => {
+                console.error(err);
+                throw(err);
+            })
+    }
+
+    const deleteFavorite = (body, token) => {
+        return axios.post(`${WEB_API}/api/favourite/delete`, body, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(res => res.data)
+            .catch(err => {
+                console.error(err);
+                throw(err);
+            })
     }
 
     const data = {
         getFeedback,
-        postFeedback
+        postFeedback,
+        getFavorite,
+        createFavorite,
+        deleteFavorite,
     }
     return <FeedbackContext.Provider value={data}>
         {children}

@@ -1,28 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik, Form } from 'formik';
 import { Modal } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { TextField } from '../forms/TextField';
 import { UserContext } from '../../context/userContext';
+import { WeToast } from '../shared/weToast';
 
 const LoginModal = (props) => {
     const { login } = useContext(UserContext); 
+    const [isToast, setToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
     const validate = Yup.object({
         username: Yup.string()
             .required("Bắt buộc"),
         password: Yup.string()
             .required("Bắt buộc")
     })
-    const handleSubmit = (event) => {
-        console.log(event); 
-        login(event)
+    const handleSubmit = (value) => {
+        console.log(value); 
+        const body = {
+            username: value.username.trim(),
+            password: value.password.trim()
+        }
+        login(body)
             .then(res => {
                 props.onHide();
                 localStorage.setItem("user-state", JSON.stringify(res));
-                alert("Đăng nhập thành công");
+                window.location.reload();
             })
             .catch(err => {
-                alert(err.message);
+                switch(err.status) {
+                    case 400:
+                        setToastMessage("Tài khoản hoặc mật khẩu không đúng");
+                        setToast(true);
+                        break;
+                    case 500:
+                        setToastMessage("Lỗi hệ thống. Vui lòng thử lại sau");
+                        setToast(true);
+                        break;
+                    default:
+                        setToastMessage("Lỗi hệ thống. Vui lòng thử lại sau");
+                        setToast(true);
+                        break;
+                }
             })
     }
 
@@ -57,7 +77,9 @@ const LoginModal = (props) => {
                 <label className="btn btn-success" htmlFor="submit-btn-login">Đăng nhập</label> 
                 <label className="btn btn-danger" htmlFor="cancel-btn-login">Hủy</label> 
             </Modal.Footer>
+            <WeToast show={isToast} onClose={() => setToast(false)}>{toastMessage}</WeToast>
         </Modal>
+
     )
 }
 

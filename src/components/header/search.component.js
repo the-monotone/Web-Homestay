@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { Form, ListGroup, ListGroupItem, Modal, Container} from 'react-bootstrap';
+import { Form, ListGroup, ListGroupItem, Modal} from 'react-bootstrap';
 import { autocompleteApi, placeDetailApi } from '../../api/goong.api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import { SearchContext } from '../../context/searchContext';
 import "react-datepicker/dist/react-datepicker.css";
 import './search.css';
@@ -45,19 +45,55 @@ const SearchModal = ({show, onHide}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onHide();
-        const body = {
-            latitude: place.lat,
-            longitude: place.lng,
-            radius: 10
+        if (place.lat === null) {
+            autocompleteApi(inputValue, (result) => {
+                placeDetailApi(result.data.predictions[0].place_id, (detailResult) => {
+                    const location = detailResult.data.results[0].geometry.location;
+                    changePlace({description: inputValue, lat: location.lat, lng: location.lng});
+                    onHide();
+                    const body = {
+                        description: inputValue,
+                        latitude: location.lat,
+                        longitude: location.lng,
+                        begin_date: new Date(startDate).toISOString().split('T')[0],
+                        end_date: new Date(endDate).toISOString().split('T')[0],
+                        num_guest: guest,
+                        radius: 10
+                    }
+                    navigate({
+                        pathname: "/search",
+                        search: `?${createSearchParams({
+                            ...body
+                        })}`
+                    })
+                    window.location.reload();
+                }, (err) => {
+                    console.error(err);
+                })
+            }, (err) => {
+                console.error(err);
+            })
+        } else {
+            onHide();
+            const body = {
+                description: place.description,
+                latitude: place.lat,
+                longitude: place.lng,
+                begin_date: new Date(startDate).toISOString().split('T')[0],
+                end_date: new Date(endDate).toISOString().split('T')[0],
+                num_guest: guest,
+                radius: 10
+            }
+            navigate({
+                pathname: "/search",
+                search: `?${createSearchParams({...body})}`
+            });
+            window.location.reload();
         }
-        console.log(JSON.stringify(body));
-        localStorage.setItem("search-query", JSON.stringify(body));
-        localStorage.setItem("place", JSON.stringify(place));
-        navigate("/search", {state: body});
+        
     }
     return (
-        <Modal show={show} onHide={onHide} dialogClassName="modal-80w ">
+        <Modal show={show} onHide={onHide} dialogClassName="modal-search">
             <Form 
                 id="search-form" 
                 onSubmit={(event) => {handleSubmit(event)}} 
@@ -119,9 +155,9 @@ const SearchModal = ({show, onHide}) => {
                             <GuestPicker guest={guest} changeGuest={changeGuest}/>
                         </div>
                         <div
-                            className="fixed-height d-flex flex-column justify-content-center col-12 col-md-1"
+                            className="fixed-height d-flex flex-column justify-content-center col-md-1"
                         >
-                            <label htmlFor="submit-button-search" className="btn btn-danger rounded-pill text-white"><i class="bi bi-search"></i></label>
+                            <label htmlFor="submit-button-search" className="btn btn-danger rounded-pill text-white text-center d-flex align-items-center justify-content-center pe-2 ps-2"><i class="bi bi-search"></i></label>
                         </div>
                     </div>
                 </div>
@@ -163,8 +199,8 @@ const GuestPicker = ({guest, changeGuest}) => {
     }
     return (
         <div className="d-flex align-items-center">
-            <i className="bi bi-dash-circle-fill small-icon" onClick={decrease}></i>
-            <input
+            <span className="bi bi-dash-circle-fill small-icon me-1" onClick={decrease}></span>
+            <Form.Control
                 type="number"
                 disabled
                 autoComplete="off"
@@ -173,7 +209,7 @@ const GuestPicker = ({guest, changeGuest}) => {
                 min="0"
                 className="text-center input-w100 input-h0 search-input"
             />
-            <i className="bi bi-plus-circle-fill small-icon" onClick={increase}></i>
+            <span className="bi bi-plus-circle-fill small-icon ms-1" onClick={increase}></span>
         </div>
     )
 }
@@ -216,102 +252,135 @@ export const OnlySearchBar = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const body = {
-            latitude: place.lat,
-            longitude: place.lng,
-            radius: 10
+        if (place.lat === null) {
+            autocompleteApi(inputValue, (result) => {
+                placeDetailApi(result.data.predictions[0].place_id, (detailResult) => {
+                    const location = detailResult.data.results[0].geometry.location;
+                    changePlace({description: inputValue, lat: location.lat, lng: location.lng});
+                    const body = {
+                        description: inputValue,
+                        latitude: location.lat,
+                        longitude: location.lng,
+                        begin_date: new Date(startDate).toISOString().split('T')[0],
+                        end_date: new Date(endDate).toISOString().split('T')[0],
+                        num_guest: guest,
+                        radius: 10
+                    }
+                    navigate({
+                        pathname: "/search",
+                        search: `?${createSearchParams({
+                            ...body
+                        })}`
+                    })
+                    window.location.reload();
+                }, (err) => {
+                    console.error(err);
+                })
+            }, (err) => {
+                console.error(err);
+            })
+        } else {
+            const body = {
+                description: place.description,
+                latitude: place.lat,
+                longitude: place.lng,
+                begin_date: new Date(startDate).toISOString().split('T')[0],
+                end_date: new Date(endDate).toISOString().split('T')[0],
+                num_guest: guest,
+                radius: 10
+            }
+            navigate({
+                pathname: "/search",
+                search: `?${createSearchParams({...body})}`
+            });
+            window.location.reload();
         }
-        console.log(JSON.stringify(body));
-        localStorage.setItem("search-query", JSON.stringify(body));
-        localStorage.setItem("place", JSON.stringify(place));
-        navigate("/search", {state: body});
+        
     }
     return (
-        <Container dialogClassName="">
-            <Form 
-                id="search-form" 
-                onSubmit={(event) => {handleSubmit(event)}} 
-                className="position-relative rounded-pill pe-2 ps-4"
-            >
-                <div className="container">
-                    <div className="row align-items-center">
-                        <div 
-                            onClick={() => setSearchPlace(state => !state)} 
-                            className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3  btn-place pe-0"
-                        >
-                            <div className='w-100 gray-border-right'>
-                                <strong className='ms-1 search-form-label'>Địa điểm</strong>
-                                <input
-                                    type="text" 
-                                    value={inputValue} 
-                                    placeholder="Bạn muốn đi đâu?" 
-                                    onChange={(e) => searchPlace(e.target.value)} 
-                                    className="input-w100 search-input"
-                                />
-                            </div>
-                            
+        <Form 
+            id="search-form" 
+            onSubmit={(event) => {handleSubmit(event)}} 
+            className="position-relative rounded-pill-responsive pe-2 ps-4"
+        >
+            <div className="container">
+                <div className="row align-items-center">
+                    <div 
+                        onClick={() => setSearchPlace(state => !state)} 
+                        className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3"
+                    >
+                        <div className='w-100 gray-border-right'>
+                            <strong className='ms-1 search-form-label'>Địa điểm</strong>
+                            <input
+                                type="text" 
+                                value={inputValue} 
+                                placeholder="Bạn muốn đi đâu?" 
+                                onChange={(e) => searchPlace(e.target.value)} 
+                                className="w-100 search-input"
+                            />
                         </div>
-                        <div 
-                            onClick={() => setSearchPlace(false)} 
-                            className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3"
-                        >
-                            <div className='w-100 gray-border-right'>
-                                <strong className='ms-1 search-form-label'>Nhận phòng</strong>
-                                    <DatePicker 
-                                        selected={startDate} 
-                                        placeholderText="dd/MM/yyyy"
-                                        onChange={date => {changeStartDate(date)}} 
-                                        dateFormat="dd/MM/yyyy" 
-                                        minDate={new Date()} 
-                                        maxDate={endDate} 
-                                        monthsShown={2}
-                                        customInput={<input />}
-                                        className="input-w100 search-input"
-                                        />
-                                </div>
-                            </div>
-                        <div 
-                            onClick={() => setSearchPlace(false)} 
-                            className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3"
-                        >
-                            <div className='w-100 gray-border-right'>
-                            <strong className='ms-1 search-form-label'>Trả phòng</strong>
+                        
+                    </div>
+                    <div 
+                        onClick={() => setSearchPlace(false)} 
+                        className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3"
+                    >
+                        <div className='w-100 gray-border-right'>
+                            <strong className='ms-1 search-form-label'>Nhận phòng</strong>
                                 <DatePicker 
-                                    selected={endDate} 
+                                    selected={startDate} 
                                     placeholderText="dd/MM/yyyy"
-                                    onChange={date => {changeEndDate(date)}} 
+                                    onChange={date => {changeStartDate(date)}} 
                                     dateFormat="dd/MM/yyyy" 
-                                    minDate={startDate == null? new Date() : startDate} 
+                                    minDate={new Date()} 
+                                    maxDate={endDate} 
                                     monthsShown={2}
                                     customInput={<input />}
                                     className="input-w100 search-input"
                                     />
                             </div>
                         </div>
-                        <div 
-                            onClick={() => setSearchPlace(false)}
-                            className="fixed-height d-flex flex-column justify-content-center col-12 col-md-2 btn-guest"
-                        >
-                            <strong className='ms-1 search-form-label'>Khách</strong>
-                            <GuestPicker guest={guest} changeGuest={changeGuest}/>
-                        </div>
-                        <div
-                            className="fixed-height d-flex flex-column justify-content-center col-12 col-md-1"
-                        >
-                            <label htmlFor="submit-button-search" className="btn btn-danger rounded-pill text-white search-btn-label text-center d-flex align-items-center justify-content-center pe-2 ps-2"><i class="bi bi-search"></i></label>
+                    <div 
+                        onClick={() => setSearchPlace(false)} 
+                        className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3"
+                    >
+                        <div className='w-100 gray-border-right'>
+                        <strong className='ms-1 search-form-label'>Trả phòng</strong>
+                            <DatePicker 
+                                selected={endDate} 
+                                placeholderText="dd/MM/yyyy"
+                                onChange={date => {changeEndDate(date)}} 
+                                dateFormat="dd/MM/yyyy" 
+                                minDate={startDate == null? new Date() : startDate} 
+                                monthsShown={2}
+                                customInput={<input />}
+                                className="input-w100 search-input"
+                                />
                         </div>
                     </div>
+                    <div 
+                        onClick={() => setSearchPlace(false)}
+                        className="fixed-height d-flex flex-column justify-content-center col-12 col-md-2 btn-guest"
+                    >
+                        <strong className='ms-1 search-form-label'>Khách</strong>
+                        <GuestPicker guest={guest} changeGuest={changeGuest}/>
+                    </div>
+                    <div
+                        className="fixed-height d-flex flex-column justify-content-center col-12 col-md-1"
+                    >
+                        <label htmlFor="submit-button-search" className="btn btn-danger rounded-pill text-white text-center d-flex align-items-center justify-content-center pe-2 ps-2"><i class="bi bi-search"></i></label>
+                    </div>
                 </div>
-                {
-                    isSearchPlace && 
-                    <PlacePicker 
-                        predictions={predictions} 
-                        setSelectedPlace={setSelectedPlace} 
-                    />
-                }
-                <input type="submit" id="submit-button-search" hidden />
-            </Form>
-        </Container>
+            </div>
+            {
+                isSearchPlace && 
+                <PlacePicker 
+                    predictions={predictions} 
+                    setSelectedPlace={setSelectedPlace} 
+                />
+            }
+            <input type="submit" id="submit-button-search" hidden />
+        </Form>
     )
 }
 

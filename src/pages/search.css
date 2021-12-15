@@ -1,0 +1,30 @@
+.float-button {
+    width: 30vw !important;
+    z-index: 100;
+    position: fixed;
+    left: 35vw;
+    bottom: 50px;
+    border-radius: 50rem !important
+}
+
+.div-map {
+    z-index: 99;
+}
+
+.marker-container:hover {
+    z-index: 1;
+}
+
+.marker-container:hover > .btn-marker {
+    background-color: #dc3545
+}
+
+.btn-marker {
+    border: 1px solid black !important;
+    box-shadow: gray 1px 1px 5px;
+}
+
+.popup-container {
+    z-index: 2;
+}
+

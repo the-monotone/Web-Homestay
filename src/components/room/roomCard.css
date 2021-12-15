@@ -1,6 +1,6 @@
 @media only screen and (min-width: 768px) {
   .row-body {
-    height: 200px
+    height: 150px
   }
   .row-body > div {
     height: 100%
@@ -30,7 +30,7 @@
 
 
 .carousel-img {
-  height: 200px;
+  height: 100%;
   width: 100%;
   object-fit: cover;
   border-radius: 20px;
@@ -151,9 +151,10 @@
   }
 }
 
-.my-card .card-body:hover {
-  cursor: pointer;
+.my-card .room-title {
+  cursor: pointer
 }
+
 
 /* Change */
 .my-card {

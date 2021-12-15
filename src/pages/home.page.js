@@ -1,18 +1,17 @@
 import React, { useContext } from 'react';
 import { Container, Image, Row, Col, Card } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import { OnlySearchBar } from '../components/header/search.component';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import Layout from '../components/layout.component';
 import { SearchContext } from '../context/searchContext';
 
 import "./home.css";
 function HomePage() {
-    const userState = JSON.parse(localStorage.getItem("user-state"));
     return (
         <Layout containerStyleName=''>
             
             <Row className='bg-dark pt-3 w-100 gx-0 d-flex justify-content-center pb-5 align-items-center home-image-container'>
-                <Col md='7' className='mt-5 mb-3'>
+                <Col sm="10" className='mt-5 mb-3'>
                     <OnlySearchBar id='home-search-bar'/>
                 </Col>
                 <Image className="mt-3" src="hoian-bg.jpg" fluid id="home-img"/>
@@ -39,13 +38,16 @@ const PlaceCard = ({colorVariant, imageSrc, place, latitude, longitude}) => {
             lat: latitude,
             lng: longitude
         })
-        const query = {
+        const body = {
+            description: place,
             latitude: latitude,
             longitude: longitude,
             radius: 10
         }
-        localStorage.setItem("search-query", JSON.stringify(query));
-        navigate("/search");
+        navigate({
+            pathname: "/search",
+            search: `?${createSearchParams({...body})}`
+        });
     }
     return (
         <Col lg="3" md="4" sm="6">

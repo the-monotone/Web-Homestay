@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import {Row, Col, Button, Container, Tab, Tabs, Table} from 'react-bootstrap'
+import {Row, Col, Button, Container, Table} from 'react-bootstrap'
 import { WePagination } from '../components/shared/wePagnigation';
 import { WeToast } from '../components/shared/weToast';
 import { WEB_API } from '../config';

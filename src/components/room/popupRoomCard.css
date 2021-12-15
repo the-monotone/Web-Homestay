@@ -3,6 +3,10 @@
   height: 180px;
 }
 
+.popup-room-card > strong:hover {
+  cursor: pointer
+}
+
 .popup-room-card .carousel {
   height: 60%;
 }

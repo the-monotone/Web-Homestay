@@ -1,7 +1,7 @@
 import React from 'react';
 import { RoomContext } from '../../context/roomContext';
 import { useContext } from 'react';
-import { Card, Badge } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 
 export const FacilityBadgeList = ({facList}) => {

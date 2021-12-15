@@ -2,10 +2,22 @@ import React from 'react';
 import {Carousel} from 'react-bootstrap';
 import './popupRoomCard.css';
 
+const displayMoney = (amount) => {
+    var formatter = new Intl.NumberFormat('vi', {
+      style: 'currency',
+      currency: 'VND',
+      maximumFractionDigits: 0,
+    });
+    return formatter.format(amount);
+  }
+
 const PopupRoomCard = ({room, handleClick}) => {
     return (
         <div className="popup-room-card">
-            <Carousel fade variant="dark">
+            <Carousel 
+                fade 
+                prevIcon={<div aria-hidden="true" className="bi bi-arrow-left-circle-fill" />}
+                nextIcon={<div aria-hidden="true" className="bi bi-arrow-right-circle-fill" />}>
             {
                 room.images.map((imageUrl, index) => {
                     return(
@@ -20,13 +32,14 @@ const PopupRoomCard = ({room, handleClick}) => {
                 })
             }
             </Carousel>
-            <div onClick={handleClick}>
+            <div>
                 <i className="bi bi-star-fill small-icon"></i>
                 <small>{room.rate !== null ? parseFloat(room.rate).toFixed(1) !== 0.0 ? parseFloat(room.rate).toFixed(1): "Chưa có đánh giá"  : "Chưa có đánh giá"}</small>
+                <i className="bi bi-heart ms-2 small-icon"></i>
             </div>
-            <strong className="d-block w-100 text-truncate">{room.room_name}</strong>
+            <strong className="d-block w-100 text-truncate" onClick={handleClick}>{room.room_name}</strong>
             <div>
-                <small><strong>{`${room.price} VND`}</strong>{"/đêm"}</small>
+                <small><strong>{displayMoney(parseFloat(room.price))}</strong>{"/đêm"}</small>
             </div>
         </div>
     )
