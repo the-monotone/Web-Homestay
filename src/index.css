@@ -16,10 +16,6 @@ code {
   border: 1px solid #aeaeae ;
 }
 
-.gray-border-right {
-  border-right: 1px solid #aeaeae;
-}
-
 .round-radius {
   border-radius: 0.3rem;
 }

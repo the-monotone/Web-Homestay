@@ -10,19 +10,11 @@ const UserContextProvider = ({children}) => {
         return axios
             .post(`${WEB_API}/api/user/login`, payload)
             .then(res => {
-                console.log(res);
-                if (res.status === 200) {
-                    window.location.reload();
-                    return res.data;
-                } else {
-                    const error = new Error("Sai tài khoản hoặc mật khẩu");
-                    throw(error);
-                }
+                return res.data;
             })
             .catch(err => {
                 console.error(err);
-                const error = new Error(err.message)
-                throw(error);
+                throw(err);
             })
     }
 
@@ -30,11 +22,9 @@ const UserContextProvider = ({children}) => {
         return axios
             .post(`${WEB_API}/api/user/logout`, token)
             .then(res => {
-                if (res.status === 200) {
-                    localStorage.removeItem("user-state");
-                    window.location.replace("/home");
-                    return res.data;
-                }
+                localStorage.removeItem("user-state");
+                window.location.replace("/home");
+                return res.data;
             })
             .catch(err => {
                 console.error(err);

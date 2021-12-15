@@ -2,38 +2,56 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Carousel, Badge, ListGroup, ListGroupItem, Spinner } from 'react-bootstrap';
+import { FavoriteIcon } from '../components/shared/favorite.icon';
 import BillingCard from '../components/card/BillingCard';
 import FeedbackCard from '../components/card/FeedbackCard';
 import Layout from '../components/layout.component';
 import { RoomContext } from '../context/roomContext';
 import { FeedbackContext } from '../context/feedbackContext';
 import './roomView.page.css';
+import StarRatings from 'react-star-ratings';
 
 const RoomViewPage = () => {
     const {readRoom, roomFacility} = useContext(RoomContext);
-    const {getFeedback} = useContext(FeedbackContext);
+    const {getFeedback, getFavorite} = useContext(FeedbackContext);
     const [room, setRoom] = useState(null);
     const [feedback, setFeedback] = useState(null);
+    const [isFavorite, setFavorite] = useState(null);
     const { roomId } = useParams();
     const userState = JSON.parse(localStorage.getItem("user-state"));
     useEffect(() => {
+        let isActive = true;
         readRoom(roomId)
             .then(res => {
-                console.log(res);
-                setRoom(res);
+                if (isActive) setRoom(res);
+                if (!userState) return;
+                getFeedback(res.room_id, userState.token)
+                    .then(res1 => {
+                        if (isActive) setFeedback(res1);
+                    })
+                    .catch(err => {
+                        alert(err);
+                    })
+                getFavorite(userState.token)
+                    .then(res2 => {
+                        console.log(res2);
+                        console.log(res.room_id);
+                        if (isActive) {
+                            console.log(res2.includes(res.room_id));
+                            setFavorite(res2.includes(res.room_id)); 
+                            console.log(isFavorite);
+                        }
+                    })
+                    .catch(err => {
+                        alert(err);
+                    })
             })
             .catch(err => {
                 alert(err);
             });
-        if (!userState) return;
-        getFeedback(roomId, userState.token)
-            .then(res => {
-                console.log(res);
-                setFeedback(res);
-            })
-            .catch(err => {
-                alert(err);
-            })
+        return () => {
+            isActive = false;
+        }
     }, [readRoom, getFeedback, roomId])  
     return (
         room == null? 
@@ -42,7 +60,36 @@ const RoomViewPage = () => {
         </Layout> :
         <Layout>
             <h1>{room.room_name}</h1>
-            <Carousel fade variant="dark" className="bg-danger carousel-room gray-border round-radius shadow mb-5">
+            <div className="d-flex justify-content-between">     
+            {
+                room.rate !== null ? parseFloat(room.rate).toFixed(1) !== 0.0 ? 
+                
+                <div className="d-flex align-items-end mb-1">
+                    <StarRatings
+                        numberOfStars={5} 
+                        rating={parseFloat(room.rate)}
+                        starDimension='20px'
+                        starRatedColor='rgb(230, 67, 47)'
+                    />
+                    <div className="ms-2 me-2">{`${parseFloat(room.rate).toFixed(1)}`}</div>
+                </div>
+                : "Chưa có đánh giá"  : "Chưa có đánh giá"
+            }
+            {
+                userState && isFavorite &&  
+                <div className="d-flex align-items-center">
+                    <strong>Lưu</strong>
+                    <FavoriteIcon roomId={room.room_id} active={isFavorite} />
+                </div>
+            }
+            </div>
+            <Carousel 
+                fade 
+                variant="dark" 
+                className="bg-danger carousel-room gray-border round-radius shadow mb-5"
+                prevIcon={<div aria-hidden="true" className="bi bi-arrow-left-circle-fill" />}
+                nextIcon={<div aria-hidden="true" className="bi bi-arrow-right-circle-fill" />}
+            >
                 {room.images.map((imageItem, index) => (
                     <Carousel.Item key={index} className="d-flex justify-content-center" >
                         <img src={imageItem} alt={`Slide ${index}`}/>

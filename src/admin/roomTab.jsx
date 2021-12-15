@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import {Row, Col, Button, Container, Table, ListGroup, ListGroupItem, Form} from 'react-bootstrap'
@@ -55,7 +56,7 @@ const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setCo
 export const SearchPlaceInput = ({label, errStyle,setPosition , ...props}) => {
     const [isSearchPlace, setSearchPlace] = useState(false);
     const [predictions, setPredictions] = useState([]);
-    const { changePlace, place } = useContext(SearchContext);
+    const { changePlace } = useContext(SearchContext);
     const [field, meta, helper] = useField(props);
 
     const searchPlace = (input) => {
@@ -88,12 +89,11 @@ export const SearchPlaceInput = ({label, errStyle,setPosition , ...props}) => {
         >
             {label && <Form.Label>{label}</Form.Label>}
             <Form.Control 
-                className={`form-control shadow-none ${meta.touched && meta.error && 'is-invalid'}`}
+                className={`input-w100 form-control shadow-none ${meta.touched && meta.error && 'is-invalid'}`}
                 {...field}
                 {...props}
                 as='input'
                 autoComplete="off"
-                className="input-w100"
             />
             {
                 isSearchPlace && 

@@ -15,7 +15,16 @@ const createArrayDisplay = (length) => {
   return res;
 };
 
-const Map = ({ place, results, handleClickPopup }) => {
+const displayMoney = (amount) => {
+  var formatter = new Intl.NumberFormat('vi', {
+    style: 'currency',
+    currency: 'VND',
+    maximumFractionDigits: 0,
+  });
+  return formatter.format(amount);
+}
+
+const Map = ({ latitude, longitude, results, handleClickPopup }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [displayPopups, setDisplayPopups] = useState(() =>
     createArrayDisplay(results.length)
@@ -23,8 +32,8 @@ const Map = ({ place, results, handleClickPopup }) => {
 
   const [viewport, setViewport] = useState({
     zoom: 12,
-    latitude: place.lat,
-    longitude: place.lng,
+    latitude: latitude,
+    longitude: longitude,
   });
   
   const markers = useMemo(() => results.rooms.map((item, index) => {
@@ -48,11 +57,16 @@ const Map = ({ place, results, handleClickPopup }) => {
           longitude={item.longitude}
           offsetLeft={-20}
           offsetTop={-10}
+          className="marker-container"
         >
           <Button
+            className="btn-marker"
+            variant="light"
             size="sm"
             onClick={() => setPopupIndex(index)}
-          >{`${item.price}₫`}</Button>
+          >
+            <strong>{displayMoney(parseFloat(item.price))}</strong>
+          </Button>
         </Marker>
         {displayPopups[index] && (
           <Popup
@@ -61,8 +75,9 @@ const Map = ({ place, results, handleClickPopup }) => {
             altitude={100}
             closeButton={false}
             closeOnClick={true}
+            className="popup-container"
           >
-            <PopupRoomCard room={item} handleClick={() => handleClickPopup(item.room_id)}/>
+            <PopupRoomCard room={item} handleClick={() => {handleClickPopup(item.room_id)}} />
           </Popup>
         )}
       </div>

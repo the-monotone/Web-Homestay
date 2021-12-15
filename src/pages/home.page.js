@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { Container, Image, Row, Col, Card } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import { OnlySearchBar } from '../components/header/search.component';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import Layout from '../components/layout.component';
 import { SearchContext } from '../context/searchContext';
 import useIntersection from '../reducer/useIntersection';
@@ -60,13 +60,16 @@ const PlaceCard = ({colorVariant, imageSrc, place, latitude, longitude}) => {
             lat: latitude,
             lng: longitude
         })
-        const query = {
+        const body = {
+            description: place,
             latitude: latitude,
             longitude: longitude,
             radius: 10
         }
-        localStorage.setItem("search-query", JSON.stringify(query));
-        navigate("/search");
+        navigate({
+            pathname: "/search",
+            search: `?${createSearchParams({...body})}`
+        });
     }
     return (
         <Col lg="3" md="4" sm="6">

@@ -28,17 +28,10 @@
     width: 100%;
 }
 
-.modal-80w {
-    width: 80vw !important;
-    max-width: 80vw !important;
-}
+
 
 .fixed-height {
     height: 70px;
-}
-
-#search-bar {
-    border-radius: 20px;
 }
 
 .search-input {
@@ -53,6 +46,41 @@
     color: white;
     font-weight: 500;
 }
+
+
+@media only screen and (min-width: 768px) {
+    .modal-search {
+        width: 85vw !important;
+        max-width: 85vw !important;
+    }
+    
+    .modal-search .modal-content {
+        border-radius: 50rem !important;
+    }
+    .rounded-pill-responsive {
+        border-radius: 50rem !important;
+    }
+    .gray-border-right {
+        border-right: 1px solid #aeaeae;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .modal-search {
+        width: 90vw !important;
+        max-width: 90vw !important;
+    }
+    
+    .modal-search .modal-content {
+        border-radius: 1rem !important;
+    }
+
+    .rounded-pill-responsive {
+        border-radius: 1rem !important;
+    }
+}
+
+
 
 
 .search-btn-label {
