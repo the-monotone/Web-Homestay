@@ -1,4 +1,4 @@
-import React, {createContext, useReducer} from 'react';
+import React, {createContext, useReducer, useState} from 'react';
 import SearchReducer from '../reducer/searchReducer';
 import * as ActionTypes from '../reducer/actionTypes';
 import axios from 'axios';
@@ -41,12 +41,16 @@ const SearchContextProvider = ({children}) => {
             })
     }
 
+    const [searchBarOnViewport, setOnViewport] = useState(true);
+
     const contextValue = {
         changePlace,
         changeStartDate,
         changeEndDate,
         changeGuest,
         searchPlaceApi,
+        searchBarOnViewport,
+        setOnViewport,
         ...state
     }
 

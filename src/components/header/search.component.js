@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import { Form, ListGroup, ListGroupItem, Modal, Container} from 'react-bootstrap';
 import { autocompleteApi, placeDetailApi } from '../../api/goong.api';
@@ -195,6 +195,10 @@ export const OnlySearchBar = () => {
             guest
         } = useContext(SearchContext);
 
+    const {setOnViewport} = useContext(SearchContext);
+
+
+
     const searchPlace = (input) => {
         setInputValue(input);
         autocompleteApi(input, (result) => {
@@ -226,8 +230,12 @@ export const OnlySearchBar = () => {
         localStorage.setItem("place", JSON.stringify(place));
         navigate("/search", {state: body});
     }
+
+
     return (
-        <Container dialogClassName="">
+        <Container className=""
+            onScroll={() => {console.log("???")}}
+        >
             <Form 
                 id="search-form" 
                 onSubmit={(event) => {handleSubmit(event)}} 
@@ -298,7 +306,7 @@ export const OnlySearchBar = () => {
                         <div
                             className="fixed-height d-flex flex-column justify-content-center col-12 col-md-1"
                         >
-                            <label htmlFor="submit-button-search" className="btn btn-danger rounded-pill text-white search-btn-label text-center d-flex align-items-center justify-content-center pe-2 ps-2"><i class="bi bi-search"></i></label>
+                            <label htmlFor="submit-button-search" className="btn btn-danger rounded-pill text-white search-btn-label text-center d-flex align-items-center justify-content-center pe-2 ps-2"><i className="bi bi-search"></i></label>
                         </div>
                     </div>
                 </div>

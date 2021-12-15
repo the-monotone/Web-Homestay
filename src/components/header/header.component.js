@@ -130,7 +130,7 @@ function Header() {
     
 
     return (
-        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky w-100">
+        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky top-0  w-100">
             <Container fluid="md" className='w-100'>
                 <Navbar.Toggle />
                 <Navbar.Brand href="/" className="order-0 me-auto">

@@ -20,7 +20,7 @@ const SearchResultPage = () => {
     const [results, setResults] = useState({
         total: null,
         rooms: []
-    });
+    },[]);
     useEffect(() => {
         searchPlaceApi(searchBody)
             .then(res => {

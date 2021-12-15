@@ -1,23 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Container, Image, Row, Col, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { OnlySearchBar } from '../components/header/search.component';
 import Layout from '../components/layout.component';
 import { SearchContext } from '../context/searchContext';
-
+import useIntersection from '../reducer/useIntersection';
 import "./home.css";
-function HomePage() {
+
+const HomePage = () => {
     const userState = JSON.parse(localStorage.getItem("user-state"));
+    // const inViewport = useIntersection(ref, '-200px'); // Trigger if 200px is visible from the element
+    const {searchBarOnViewport, setOnViewport} = useContext(SearchContext);
+
+    const ref = useRef(null);
+    const visible = useIntersection(ref, '0px');
+
+    const handleScroll = () => {
+        console.log(visible);
+        // setOnViewport(visible);
+    }
+
+
+    useEffect(() => {
+        document.addEventListener('scroll', handleScroll,true);
+        return () => document.removeEventListener('scroll', handleScroll,true);
+    },[])
+
     return (
         <Layout containerStyleName=''>
-            
             <Row className='bg-dark pt-3 w-100 gx-0 d-flex justify-content-center pb-5 align-items-center home-image-container'>
+
                 <Col md='7' className='mt-5 mb-3'>
-                    <OnlySearchBar id='home-search-bar'/>
+                    {
+                        searchBarOnViewport && <OnlySearchBar id='home-search-bar'/>
+                    }
                 </Col>
                 <Image className="mt-3" src="hoian-bg.jpg" fluid id="home-img"/>
             </Row>
-            <h2 >Cảm hứng cho chuyến đi tiếp theo của bạn</h2>
+            <div>.</div>
+            <h2 ref={ref}>Cảm hứng cho chuyến đi tiếp theo của bạn</h2>
             <Container>
                 <Row>
                     <PlaceCard colorVariant="danger" imageSrc="hanoi.jpg" place="Hà Nội" latitude={21.028195403} longitude={105.854159778}/>
