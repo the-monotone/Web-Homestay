@@ -26,7 +26,7 @@ export const Footer = ({isShow=true}) => {
             <Col md={2} className='text-team p-auto mt-3'>
                 <div className='footer-container'>
                     <div className="footer-title mb-3">Liên hệ</div>
-                    <div className='text-name'><i className="bi bi-telephone-fill footer-icon me-2"></i>0123456789</div>
+                    <div className='text-name'><i className="bi bi-telephone-fill footer-icon me-2"></i>0123456789A+</div>
                     <div className='text-name'><i className="bi bi-envelope footer-icon me-2"></i>wehome@gmail.com</div>
                 </div>
             </Col>

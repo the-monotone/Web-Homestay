@@ -7,3 +7,22 @@
     height: 70%;
     margin: -0.15rem
 }
+
+.home-image-container > img {
+    border-radius: 2rem;
+}
+
+#home-img {
+    width: 70vw;
+    height: fit-content;
+    border-radius: 2rem;
+}
+
+.bi-search {
+    font-size: 22px;
+    margin: 0;
+}
+
+.search-form-label {
+    font-size: 13px;
+}

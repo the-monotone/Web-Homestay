@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Container, Image, Row, Col, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { OnlySearchBar } from '../components/header/search.component';
 import Layout from '../components/layout.component';
 import { SearchContext } from '../context/searchContext';
 
@@ -8,10 +9,14 @@ import "./home.css";
 function HomePage() {
     const userState = JSON.parse(localStorage.getItem("user-state"));
     return (
-        <Layout>
-            <h1>Home</h1>
-            {userState != null && userState.name != null ? <h2>{`Chào mừng bạn, ${userState.name}`}</h2> : null}
-            <Image className="mb-5" src="thumbnail.jpg" fluid />
+        <Layout containerStyleName=''>
+            
+            <Row className='bg-dark pt-3 w-100 gx-0 d-flex justify-content-center pb-5 align-items-center home-image-container'>
+                <Col md='7' className='mt-5 mb-3'>
+                    <OnlySearchBar id='home-search-bar'/>
+                </Col>
+                <Image className="mt-3" src="hoian-bg.jpg" fluid id="home-img"/>
+            </Row>
             <h2 >Cảm hứng cho chuyến đi tiếp theo của bạn</h2>
             <Container>
                 <Row>

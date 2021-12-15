@@ -17,7 +17,7 @@ export const ImageCard = (props) => {
     return(
         <div className="image-card mb-3">
             <i className="bi bi-x-square img-dlt-btn" onClick={deleteHandle}></i>
-            <Image src={imgUrl} alt="" style={{width: "100%"}}/>
+            <Image src={imgUrl} alt="" className='room-upload-img'/>
         </div>
     )
 }

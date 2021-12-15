@@ -1,6 +1,6 @@
 @media only screen and (min-width: 768px) {
   .row-body {
-    height: 150px
+    height: 200px
   }
   .row-body > div {
     height: 100%
@@ -28,12 +28,13 @@
   }
 }
 
+
 .carousel-img {
+  height: 200px;
+  width: 100%;
   object-fit: cover;
-  display: block;
-  height: 100%;
-  width: 100%; 
-}
+  border-radius: 20px;
+  }
 .edit-card-button {
   position: absolute;
   right: 0;
@@ -42,6 +43,7 @@
   width: 65px;
   border-top-right-radius: 3px;
   background-color:rgb(80, 121, 255);
+  z-index: 5;
 
 }
 .edit-card-button:hover {
@@ -80,6 +82,7 @@
   width: 65px;
   border-bottom-right-radius: 3px;
   background-color: rgb(236, 30, 30);
+  z-index: 5;
 }
 .remove-card-button:hover {
   background-color: rgb(248, 6, 6);
@@ -91,6 +94,7 @@
 .my-card .remove-card-button {
   visibility: hidden;
   width: 0;
+
 }
 
 .my-card .remove-card-button span { 
@@ -149,4 +153,38 @@
 
 .my-card .card-body:hover {
   cursor: pointer;
+}
+
+/* Change */
+.my-card {
+  width: 100%;
+  position: relative;
+}
+.card-title {
+  display: block;
+  text-overflow:ellipsis;
+  overflow: hidden;
+}
+.room-title {
+  text-overflow: ellipsis;
+}
+.bi-dot {
+  color: black;
+  font-size: 11px;
+}
+.my-card-body {
+  position: relative;
+}
+.my-card-footer {
+  position: absolute;
+  bottom: 0px;
+  width: 90%;
+  z-index: 1;
+}
+
+.bi-heart {
+  color: black;
+}
+.bi-heart-fill {
+  color: rgb(240, 26, 26);
 }

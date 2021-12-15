@@ -7,10 +7,9 @@ import { MyButton } from '../shared/myButton';
 import './roomCard.css';
 import { RoomContext } from '../../context/roomContext';
 import { WeToast } from '../shared/weToast';
-import { FavoriteIcon } from '../shared/favorite.icon';
 
 
-export const RoomCard = ({onClick, isEditable, room}) => {
+export const RoomCardTest = ({onClick, isEditable, room}) => {
     const {deleteRoom} = useContext(RoomContext);
     const userState = JSON.parse(localStorage.getItem('user-state'));
     const [isToast, setToast] = useState(false);
@@ -21,7 +20,7 @@ export const RoomCard = ({onClick, isEditable, room}) => {
             <div className="my-card">
                 <Row className="g-0 row-body">
                     <Col sm="12" md="4">
-                        <Carousel fade>
+                        <Carousel fade variant="dark">
                         {
                             room.images.map((imageItem, index) => {
                                 return(
@@ -39,12 +38,7 @@ export const RoomCard = ({onClick, isEditable, room}) => {
                     </Col>
                     <Col sm="12" md="8" className='ps-3 pt-2 pb-2 pe-1 my-card-body h-100'>
                         <div onClick={onClick}>
-                            <Row>
-                                <Col md='10' className='room-title fw-bolder fs-5 overflow-hidden '>{room.room_name}</Col>
-                                <Col md='2'>
-                                    <FavoriteIcon active={false}/>
-                                </Col>
-                            </Row>
+                            <div className='room-title fw-bolder fs-5 overflow-hidden '>{room.room_name}</div>
                             <div className="fs-6 fw-light lh-sm kgnt">
                                 {`${room.num_guest} khách`}
                                 <i className="bi bi-dot"></i>

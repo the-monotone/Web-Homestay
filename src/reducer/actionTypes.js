@@ -22,3 +22,5 @@ export const GET_EMPTY_ROOMS = 'Empty';
 
 export const ROOMMAGSTATE = 'ROOM MANAGEMENT PAGE';
 export const RENTALMAGSATE = 'RENTAL MANAGEMENT PAGE';
+
+export const MAX_REQUEST = 1000000000;

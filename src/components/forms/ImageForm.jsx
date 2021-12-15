@@ -9,19 +9,13 @@ import { ImageCard } from '../shared/imageCard';
 export const ImageForm = ({label, ...props}) => {
     const [field, ,helper] = useField(props);
 
-    console.log("Field:", field);
-
     const [imageList, setImageList] = useState(field.value);
 
     useEffect(() => {
         helper.setValue([...imageList]);
     }, [imageList])
 
-    console.log("img list:", imageList);
-    console.log("Field:", field);
-
     const onChange = (e) => {
-        console.log("Event: ", e.target.files[0])
         
         let file = e.target.files[0]; 
         let body = new FormData();
@@ -45,8 +39,10 @@ export const ImageForm = ({label, ...props}) => {
     }
 
     return(
-        <div className = {props.pos} {...field}>
-            <label htmlFor="image-upload-id" className="upload-image-label mb-3">Chọn ảnh</label>
+        <div className = {`${props.pos} d-flex justify-content-center flex-column`} 
+            {...field}
+        >
+            <Row className='d-flex justify-content-center'><label htmlFor="image-upload-id" className="upload-image-label mb-3 w-50">Chọn ảnh</label></Row>
             <input 
                 type="file"
                 name = "image_upload"
@@ -55,12 +51,12 @@ export const ImageForm = ({label, ...props}) => {
                 onChange = {onChange}
                 hidden
             />
-            <Row>
+            <Row className='overflow-auto w-100' style={{height:'320px'}}>
             {
                 imageList.map((image,i) => {
                     return (
-                    <Col xs={12} md={6} key={i}>
-                        <ImageCard imgUrl={image} setValue = {setImageList} className = "room-image" />
+                    <Col md={6} key={i} className='d-flex justify-content-center'> 
+                        <ImageCard imgUrl={image} setValue = {setImageList} className = "room-image img-fluid" />
                     </Col>)
                 })
             }

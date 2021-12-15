@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useContext, useState, useEffect} from 'react';
-import {Badge, Button, Container, Dropdown, Nav, Navbar, NavItem, Spinner} from 'react-bootstrap';
-import SearchModal from './search.component';
+import {Badge, Button, Container, Dropdown, Nav, Navbar, NavItem, Spinner, Row} from 'react-bootstrap';
+import SearchModal, { OnlySearchBar } from './search.component';
 import LoginModal from './login.component';
 import { Signup } from '../../pages/signUp.page';
 import UnLoggedInDropdown from './unLoggedInDropdown';
@@ -130,8 +130,8 @@ function Header() {
     
 
     return (
-        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-fixed top-0 vw-100">
-            <Container fluid="md">
+        <Navbar id="nav-bar" expand="md" bg="dark" variant="dark" className="position-sticky w-100">
+            <Container fluid="md" className='w-100'>
                 <Navbar.Toggle />
                 <Navbar.Brand href="/" className="order-0 me-auto">
                     <WeLogoBranch roundedCircle style={{ height: 60 }} />
@@ -146,7 +146,7 @@ function Header() {
                         }
                     </Nav>
                     <Nav navbar className="m-auto">
-                        <Button id="search-bar" className="m-1 gray-border shadow round-radius" variant="light" onClick={() => setSearchModal(true)}>
+                        <Button id="search-bar" className="m-1 gray-border shadow rounded-pill" variant="light" onClick={() => setSearchModal(true)}>
                             <div>Bắt đầu tìm kiếm</div>
                             <span className="bi bi-search black-icon small-icon" />
                         </Button>

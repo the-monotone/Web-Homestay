@@ -12,16 +12,16 @@ export const RoomList = ({roomList, isEditable, isGetting}) => {
     }
 
     return(
-        <Container className="roomlist-container mb-3 mt-5">{
+        <Container className="roomlist-container mb-3 mt-5 ps-3 pe-3">{
         isGetting ? <LoadingCardList number={4}/> :
         <div>
         {
             roomList.length <= 0 ? <div className="no-room-text"><div className="bi bi-journal"></div>Hiện không có phòng nào</div> :
-            <Row id="room-list-block" xs={1} md={2} xl= {3} className="g-4">
+            <Row id="" xs={1} md={2}className="g-4 w-100">
                 {
                     roomList.map(room => {
                         return (
-                            <Col key = {room.room_id} id="my-card">
+                            <Col key = {room.room_id} md='6'>
                                 <RoomCard isEditable = {isEditable} room={room} onClick={!isEditable ? () => handleView(room) : null}/>
                             </Col>
                         )})

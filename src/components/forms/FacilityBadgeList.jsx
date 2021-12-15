@@ -19,11 +19,12 @@ export const FacilityBadgeList = ({facList}) => {
     return(
         <Card.Text>
             {
-                facList.map(fac => {
+                facList.map((fac, index) => {
                     return (
-                    <Badge pill bg="success" key = {fac} className="my-badge">
-                        {getFacility(fac)}
-                    </Badge>
+                        <span className='fs-6 fw-light lh-sm' key={index}>
+                            {index > 0 ? <i className="bi bi-dot"></i> : ''}
+                            {getFacility(fac)}
+                        </span>
                     )
                 })
             }

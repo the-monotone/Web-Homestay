@@ -43,7 +43,7 @@ const SearchResultPage = () => {
                     <h2>{`Phòng ở tại ${place.description}`}</h2>
                     {results.rooms.map(room => {
                         return (
-                            <div key={room.room_id} className="result-item">
+                            <div key={room.room_id} className="result-item mb-3">
                                 <RoomCard room={room} onClick={() => {handleClick(room.room_id)}}/>
                             </div>
                         )

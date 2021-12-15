@@ -7,7 +7,7 @@ import { MultiSelect } from "../components/forms/MultiSelect";
 import { NumField } from "../components/forms/NumField";
 import { RoomContext } from "../context/roomContext";
 import { useNavigate, useLocation } from "react-router";
-import { Button, Row, ProgressBar } from "react-bootstrap";
+import { Button, Row, ProgressBar, Col } from "react-bootstrap";
 import './roomSignup.page.css';
 import { useSpring, animated } from 'react-spring'
 import { ImageForm } from "../components/forms/ImageForm";
@@ -267,10 +267,10 @@ export const FormikStepper = ({ children, ...props }) => {
       >
         <Form>
           <Row className="input-step w-100 mt-4">
-            <div className="label-field">
+            <Col md='6' className="label-field">
               <animated.div style={styleAnimate}><div className="title ps-4">{getTitle(currentChild.props.className)}</div></animated.div>
-            </div>
-            <div className="input-field">
+            </Col>
+            <Col md='6' className="input-field">
               <div className = "input-row">{currentChild}</div>
               <ProgressBar animated now={Math.floor((step+1) /(childrenArray.length) * 100)} variant="dark"/>
               <div md="12" className="button-row">
@@ -287,7 +287,7 @@ export const FormikStepper = ({ children, ...props }) => {
                   {!isLastStep() ? "Tiếp theo" : "Hoàn tất"}
                 </Button>
               </div>
-            </div>
+            </Col>
           </Row>
         </Form>
       </Formik>

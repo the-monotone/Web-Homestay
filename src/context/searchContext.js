@@ -37,7 +37,6 @@ const SearchContextProvider = ({children}) => {
             .post(`${WEB_API}/api/room/search`, payload)
             .then(res => res.data)
             .catch(error => {
-                console.error(error);
                 throw(error);
             })
     }

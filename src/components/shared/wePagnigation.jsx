@@ -33,11 +33,11 @@ export const WePagination = (props) => {
 
     return(
         <Pagination style={{"justifyContent": "center"}}>
-            <Pagination.First onClick={() => setCurrentPage(1)} disabled={currentPage === 1}/>
-            <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}/>
+            <Pagination.First onClick={() => setCurrentPage(1)} disabled={currentPage === 1 || isGetting}/>
+            <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1 || isGetting}/>
             {showItems}
-            <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === items.length}/>
-            <Pagination.Last onClick={() => setCurrentPage(items.length)} disabled={currentPage === items.length}/>
+            <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === items.length  || isGetting}/>
+            <Pagination.Last onClick={() => setCurrentPage(items.length)} disabled={currentPage === items.length  || isGetting}/>
         </Pagination>
     )
 }

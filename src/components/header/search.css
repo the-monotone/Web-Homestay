@@ -1,3 +1,6 @@
+#search-form {
+    background-color: white;
+}
 #select-guest {
     background-color: white;
     position: absolute;
@@ -11,7 +14,8 @@
     background-color: white;
     position: absolute;
     width: fit-content;
-    left: 0px;
+    min-width: 250px;
+    left: 35px;
     padding: 10px;
     z-index: 10;
 }
@@ -35,4 +39,25 @@
 
 #search-bar {
     border-radius: 20px;
+}
+
+.search-input {
+    border-style: hidden;
+    outline: none;
+}
+.search-input:focus {
+    outline: none;
+}
+
+.bi-search {
+    color: white;
+    font-weight: 500;
+}
+
+.modal-content {
+    border-radius: 50rem !important;
+}
+
+.search-btn-label {
+    height: 80%;
 }

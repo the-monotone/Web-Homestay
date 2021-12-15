@@ -84,9 +84,10 @@ const RoomContextProvider = ({children}) => {
             }
         })
             .then(res => {
-                return "Delete Success";
+                return res;
             })
             .catch(err => {
+                console.log(err.response);
                 throw(err);
             })
     }
