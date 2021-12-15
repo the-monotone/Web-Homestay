@@ -89,7 +89,7 @@ const SearchResultPage = () => {
                         {buttonContent}
                         {buttonContent === "Hiện bản đồ"? 
                             <span className="bi bi-map-fill ms-1" /> :
-                            <span class="bi bi-list-ul ms-1" />
+                            <span className="bi bi-list-ul ms-1" />
                         }
                     </Button>
             </div>

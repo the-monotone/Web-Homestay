@@ -9,7 +9,6 @@ import "./home.css";
 function HomePage() {
     return (
         <Layout containerStyleName=''>
-            
             <Row className='bg-dark pt-3 w-100 gx-0 d-flex justify-content-center pb-5 align-items-center home-image-container'>
                 <Col sm="10" className='mt-5 mb-3'>
                     <OnlySearchBar id='home-search-bar'/>

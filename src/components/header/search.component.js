@@ -157,7 +157,7 @@ const SearchModal = ({show, onHide}) => {
                         <div
                             className="fixed-height d-flex flex-column justify-content-center col-md-1"
                         >
-                            <label htmlFor="submit-button-search" className="btn btn-danger rounded-pill text-white text-center d-flex align-items-center justify-content-center pe-2 ps-2"><i class="bi bi-search"></i></label>
+                            <label htmlFor="submit-button-search" className="btn btn-danger rounded-pill text-white text-center d-flex align-items-center justify-content-center pe-2 ps-2"><i className="bi bi-search"></i></label>
                         </div>
                     </div>
                 </div>
@@ -318,6 +318,13 @@ export const OnlySearchBar = () => {
                                 onChange={(e) => searchPlace(e.target.value)} 
                                 className="w-100 search-input"
                             />
+                            {
+                                isSearchPlace && 
+                                <PlacePicker 
+                                    predictions={predictions} 
+                                    setSelectedPlace={setSelectedPlace} 
+                                />
+                            }
                         </div>
                         
                     </div>
@@ -368,17 +375,11 @@ export const OnlySearchBar = () => {
                     <div
                         className="fixed-height d-flex flex-column justify-content-center col-12 col-md-1"
                     >
-                        <label htmlFor="submit-button-search" className="btn btn-danger rounded-pill text-white text-center d-flex align-items-center justify-content-center pe-2 ps-2"><i class="bi bi-search"></i></label>
+                        <label htmlFor="submit-button-search" className="btn btn-danger rounded-pill text-white text-center d-flex align-items-center justify-content-center pe-2 ps-2"><i className="bi bi-search"></i></label>
                     </div>
                 </div>
             </div>
-            {
-                isSearchPlace && 
-                <PlacePicker 
-                    predictions={predictions} 
-                    setSelectedPlace={setSelectedPlace} 
-                />
-            }
+            
             <input type="submit" id="submit-button-search" hidden />
         </Form>
     )

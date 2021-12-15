@@ -3,27 +3,18 @@ import { FeedbackContext } from '../../context/feedbackContext';
 
 export const FavoriteIcon = ({roomId, active}) => {
     const [isActive, setActive] = useState(active);
-    const [isLoading, setLoading] = useState(false);
     const {createFavorite, deleteFavorite} = useContext(FeedbackContext); 
     const userState = JSON.parse(localStorage.getItem("user-state"));
     const handleClick = () => {
-        if (isLoading) return;
-        setLoading(true);
-        if (active) {
-            setActive(false);
+        if (isActive) {
+            setActive(prevState => !prevState);
             deleteFavorite({room_id: roomId}, userState.token)
-                .then((res) => {
-                    setLoading(false);
-                })
                 .catch(err => {
                     alert(err);
                 })
         } else {
-            setActive(true);
+            setActive(prevState => !prevState);
             createFavorite({room_id: roomId}, userState.token)
-                .then((res) => {
-                    setLoading(false);
-                })
                 .catch(err => {
                     alert(err);
                 })

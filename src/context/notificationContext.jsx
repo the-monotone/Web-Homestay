@@ -1,14 +1,14 @@
 import axios from 'axios';
 import React, { createContext, useState } from 'react';
 import socketio from 'socket.io-client';
-import { WEB_API } from '../config';
+import { SOCKET_API, WEB_API } from '../config';
 
 export const NotificationContext = createContext();
 
 const getSocket = () => {
     const userState = JSON.parse(localStorage.getItem('user-state'));
     if (!userState) return null;
-    return socketio.connect(WEB_API, {
+    return socketio.connect(SOCKET_API, {
         query: { userId: userState.userId }
     });
 }
