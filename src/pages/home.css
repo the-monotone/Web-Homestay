@@ -18,7 +18,6 @@
     object-fit: cover;
     border-radius: 2rem;
     background-color: brown;
-    background-image: url('/hoian-bg.jpg');
 }
 
 .bi-search {

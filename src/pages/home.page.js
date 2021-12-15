@@ -23,7 +23,7 @@ const HomePage = () => {
                 <InView as="div" onChange={handleInView}>
                     <div className=''></div>
                 </InView>
-                <Col md='7' className='mt-3 mb-3 d-flex justify-content-center'>
+                <Col md='10' className='mt-3 mb-3 d-flex justify-content-center'>
                     {
                         <OnlySearchBar id='home-search-bar'/>
                     }
