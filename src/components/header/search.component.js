@@ -131,7 +131,6 @@ const SearchModal = ({ show, onHide }) => {
         <div className="container">
           <div className="row align-items-center">
             <div
-              onClick={() => setSearchPlace((state) => !state)}
               className="col-12 col-md-3 gray-border-right position-relative"
             >
               <strong className="ms-1">Địa điểm</strong>
@@ -141,6 +140,9 @@ const SearchModal = ({ show, onHide }) => {
                 placeholder="Bạn muốn đi đâu?"
                 onChange={(e) => searchPlace(e.target.value)}
                 className="input-w100 search-input"
+                onFocus={() => {setSearchPlace(true)}}
+                onBlur={() => {setSearchPlace(false)}}
+                required
               />
               {
                 isSearchPlace && 
@@ -151,7 +153,6 @@ const SearchModal = ({ show, onHide }) => {
               }
             </div>
             <div
-              onClick={() => setSearchPlace(false)}
               className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3 gray-border-right"
             >
               <strong>Nhận phòng</strong>
@@ -170,7 +171,6 @@ const SearchModal = ({ show, onHide }) => {
               />
             </div>
             <div
-              onClick={() => setSearchPlace(false)}
               className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3 gray-border-right"
             >
               <strong>Trả phòng</strong>
@@ -188,7 +188,6 @@ const SearchModal = ({ show, onHide }) => {
               />
             </div>
             <div
-              onClick={() => setSearchPlace(false)}
               className="fixed-height d-flex flex-column justify-content-center col-12 col-md-2 btn-guest"
             >
               <strong>Khách</strong>
@@ -401,7 +400,6 @@ export const OnlySearchBar = () => {
       <div className="container">
         <div className="row align-items-center">
           <div
-            onClick={() => setSearchPlace((state) => !state)}
             className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3"
           >
             <div className="w-100 gray-border-right position-relative">
@@ -412,6 +410,9 @@ export const OnlySearchBar = () => {
                 placeholder="Bạn muốn đi đâu?"
                 onChange={(e) => searchPlace(e.target.value)}
                 className="w-100 search-input"
+                onFocus={() => {setSearchPlace(true)}}
+                onBlur={() => {setSearchPlace(false)}}
+                required
               />
               {
                 isSearchPlace && 
@@ -424,7 +425,6 @@ export const OnlySearchBar = () => {
             
           </div>
           <div
-            onClick={() => setSearchPlace(false)}
             className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3"
           >
             <div className="w-100 gray-border-right">
@@ -445,7 +445,6 @@ export const OnlySearchBar = () => {
             </div>
           </div>
           <div
-            onClick={() => setSearchPlace(false)}
             className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3"
           >
             <div className="w-100 gray-border-right">
@@ -465,7 +464,6 @@ export const OnlySearchBar = () => {
             </div>
           </div>
           <div
-            onClick={() => setSearchPlace(false)}
             className="fixed-height d-flex flex-column justify-content-center col-12 col-md-2 btn-guest"
           >
             <strong className="ms-1 search-form-label">Khách</strong>

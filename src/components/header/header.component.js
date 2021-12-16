@@ -108,6 +108,7 @@ function Header() {
     return (
         <Navbar id="nav-bar" expand="md" bg={searchBarOnViewport ? 'dark' : 'light'} className="position-fixed top-0 w-100">
             <Container fluid="md" className='w-100'>
+                <Navbar.Toggle />
                 <Navbar.Brand href="/" className="order-0 me-auto">
                     <WeLogo style={{ height: '30px'}} />
                 </Navbar.Brand>

@@ -6,7 +6,7 @@ import { GOONG_MAP_KEY, GOONG_API_KEY } from '../../config';
 
 const GoongGeocoder = require('@goongmaps/goong-geocoder');
 const goongjs = require('@goongmaps/goong-js');
-goongjs.accessToken = GOONG_MAP_KEY[Math.round(Math.random() * GOONG_MAP_KEY.length)];
+goongjs.accessToken = GOONG_MAP_KEY[Math.floor(Math.random() * GOONG_MAP_KEY.length)];
 
 let map, geocoder;
 
