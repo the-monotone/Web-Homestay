@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Map from '../components/MapComponent';
 import '@goongmaps/goong-js/dist/goong-js.css';
 import { RoomCard } from '../components/room/RoomCard';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/layout.component';
 import { SearchContext } from '../context/searchContext';
 import { FeedbackContext } from '../context/feedbackContext';
@@ -12,7 +12,7 @@ import { Button, Spinner } from 'react-bootstrap';
 import './search.css';
 
 const SearchResultPage = () => {
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
     const description = searchParams.get("description");
     const [isLoading, setLoading] = useState(false);
@@ -36,6 +36,7 @@ const SearchResultPage = () => {
     useEffect(() => {
         let isActive = true;
         setLoading(true);
+        setSearchParams(createSearchParams(JSON.parse(localStorage.getItem("search"))));
         setLocation({
             latitude: parseFloat(searchParams.get("latitude")),
             longitude: parseFloat(searchParams.get("longitude")),
@@ -78,6 +79,8 @@ const SearchResultPage = () => {
     }
     return (
         <Layout styleName="mt-2 vh-100" containerStyleName="container-fluid" showFooter={false}>
+            {
+            isLoading? <Spinner animation='border' /> :
             <div className="row h-100">
                 <div className={`col col-12 col-lg-5 h-100` }>
                     <h2>{`Phòng ở tại ${description}`}</h2>
@@ -110,6 +113,7 @@ const SearchResultPage = () => {
                         }
                     </Button>
             </div>
+            }
         </Layout>
     )
 }

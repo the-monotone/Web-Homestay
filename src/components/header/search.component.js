@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import { Form, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import { autocompleteApi, placeDetailApi } from "../../api/goong.api";
-import { useNavigate, createSearchParams, generatePath } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import { SearchContext } from "../../context/searchContext";
 import "react-datepicker/dist/react-datepicker.css";
 import "./search.css";
@@ -83,10 +83,13 @@ const SearchModal = ({ show, onHide }) => {
                 num_guest: guest,
                 radius: 10,
               };
-              const path = generatePath("/search?:query", {
-                query: createSearchParams({...body})
-              })
-              navigate(path);
+              localStorage.setItem("search", JSON.stringify(body));
+              navigate({
+                pathname: "/search",
+                search: `?${createSearchParams({
+                  ...body,
+                })}`,
+              });
             },
             (err) => {
               console.error(err);
@@ -108,10 +111,13 @@ const SearchModal = ({ show, onHide }) => {
         num_guest: guest,
         radius: 10,
       };
-      const path = generatePath("/search?:query", {
-        query: createSearchParams({...body})
-      })
-      navigate(path);
+      localStorage.setItem("search", JSON.stringify(body));
+      navigate({
+        pathname: "/search",
+        search: `?${createSearchParams({
+          ...body,
+        })}`,
+      });
     }
   };
   return (
@@ -345,13 +351,13 @@ export const OnlySearchBar = () => {
                 num_guest: guest,
                 radius: 10,
               };
+              localStorage.setItem("search", JSON.stringify(body));
               navigate({
                 pathname: "/search",
                 search: `?${createSearchParams({
                   ...body,
                 })}`,
               });
-              window.location.reload();
             },
             (err) => {
               console.error(err);
@@ -372,11 +378,11 @@ export const OnlySearchBar = () => {
         num_guest: guest,
         radius: 10,
       };
+      localStorage.setItem("search", JSON.stringify(body));
       navigate({
         pathname: "/search",
         search: `?${createSearchParams({ ...body })}`,
       });
-      window.location.reload();
     }
   };
 
