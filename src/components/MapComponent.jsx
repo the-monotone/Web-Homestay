@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import MapGL, { Marker, Popup } from "@goongmaps/goong-map-react";
 
@@ -25,7 +25,7 @@ const displayMoney = (amount) => {
 }
 
 const randomMapKey = () => {
-  return GOONG_MAP_KEY[Math.round(Math.random() * GOONG_MAP_KEY.length)];
+  return GOONG_MAP_KEY[Math.floor(Math.random() * GOONG_MAP_KEY.length)];
 }
 
 const Map = ({ latitude, longitude, results, handleClickPopup }) => {
@@ -34,12 +34,14 @@ const Map = ({ latitude, longitude, results, handleClickPopup }) => {
     createArrayDisplay(results.length)
   );
 
-  const [viewport, setViewport] = useState({
-    zoom: 12,
-    latitude: latitude,
-    longitude: longitude,
-  });
-  
+  const [viewport, setViewport] = useState(null);
+  useEffect(() => {
+    setViewport({
+      zoom: 12,
+      latitude: latitude,
+      longitude: longitude
+    })
+  }, [latitude, longitude]);
   const markers = useMemo(() => results.rooms.map((item, index) => {
     const setPopupIndex = (index) => {
       const newDisplayPopups = [...displayPopups];

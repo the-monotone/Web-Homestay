@@ -79,7 +79,7 @@ const FavoritePage = () => {
                 }
                 </Col>
                 <Col md='6' sm='0' className='mb-5 d-flex justify-content-center align-items-start'>
-                    <Image src='favorite.png' className='w-75 mt-5'/>
+                    <Image src='/favorite.png' className='w-75 mt-5'/>
                 </Col>
             </Row>
             <div className={isToast? "d-block position-fixed vh-100 vw-100 top-0 start-0" : "d-none"}>

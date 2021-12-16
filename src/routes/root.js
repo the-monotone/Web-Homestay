@@ -20,7 +20,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Root() {
     return (
-        <Router basename={process.env.PUBLIC_URL}>
+        <Router>
             <Routes>
                 <Route path="/" element={<HomePage/>} />
                 <Route path="home" element={<HomePage/>} />

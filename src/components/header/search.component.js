@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import { Form, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import { autocompleteApi, placeDetailApi } from "../../api/goong.api";
-import { useNavigate, createSearchParams } from "react-router-dom";
+import { useNavigate, createSearchParams, generatePath } from "react-router-dom";
 import { SearchContext } from "../../context/searchContext";
 import "react-datepicker/dist/react-datepicker.css";
 import "./search.css";
@@ -83,13 +83,10 @@ const SearchModal = ({ show, onHide }) => {
                 num_guest: guest,
                 radius: 10,
               };
-              navigate({
-                pathname: "/search",
-                search: `?${createSearchParams({
-                  ...body,
-                })}`,
-              });
-              window.location.reload();
+              const path = generatePath("/search?:query", {
+                query: createSearchParams({...body})
+              })
+              navigate(path);
             },
             (err) => {
               console.error(err);
@@ -111,11 +108,10 @@ const SearchModal = ({ show, onHide }) => {
         num_guest: guest,
         radius: 10,
       };
-      navigate({
-        pathname: "/search",
-        search: `?${createSearchParams({ ...body })}`,
-      });
-      window.location.reload();
+      const path = generatePath("/search?:query", {
+        query: createSearchParams({...body})
+      })
+      navigate(path);
     }
   };
   return (
