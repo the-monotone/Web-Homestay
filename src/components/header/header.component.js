@@ -177,6 +177,13 @@ function Header() {
                         }
                     </Nav> */}
                     <Nav navbar className="m-auto">
+                        {
+                            searchBarOnViewport ? 
+                            <div id='slogan' className='m-3 text-center d-flex justify-content-center align-items-center'>
+                                <div className='slogan-text mt-1 me-2 text-white'>weHome - anh em bốn bể là nhà</div>
+                                <span className='slogan-icon'>&#128582;  &#129304; &#129311;</span>
+                                {/* <span class="bi bi-hand-thumbs-up text-white"></span> */}
+                            </div> :
                         <animated.div
                             style={{...searchStyles}}
                         >
@@ -185,6 +192,8 @@ function Header() {
                                 <span className="bi bi-search black-icon small-icon" />
                             </Button>
                         </animated.div>
+                        }
+
                     </Nav>
                 </Navbar.Collapse>
                 

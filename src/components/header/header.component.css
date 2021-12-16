@@ -34,8 +34,25 @@
     display: none !important
 }
 
+
 .notification-menu {
     max-height: 300px;
     width: 500px;
     overflow-y: scroll;
+}
+
+#slogan {
+    height: 47px;
+    font-size: 20px;
+}
+
+#slogan .slogan-text {
+    font-size: 20px;
+    font-weight: 600;
+}
+#slogan .bi-hand-thumbs-up {
+    font-size: 30px;
+}
+#slogan .slogan-icon {
+    font-size: 25px;
 }
