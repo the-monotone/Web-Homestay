@@ -7,8 +7,8 @@ export const RoomContext = createContext();
 const RoomContextProvider = ({children}) => {
 
     //State
-    const [roomType, setRoomType] = useState(null);
-    const [roomFacility, setRoomFacility] = useState(null);
+    const [roomType, setRoomType] = useState([]);
+    const [roomFacility, setRoomFacility] = useState([]);
 
     useEffect(() => {
         axios.get(`${WEB_API}/api/room/room-type`)

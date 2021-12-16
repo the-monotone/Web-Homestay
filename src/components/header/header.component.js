@@ -180,7 +180,7 @@ function Header() {
                         <animated.div
                             style={{...searchStyles}}
                         >
-                            <Button id="search-bar" className="m-3 gray-border shadow rounded-pill" variant="light" onClick={() => setSearchModal(true)}>
+                            <Button id="search-bar" className="m-3 gray-border shadow rounded-pill" variant="light" onClick={() => {if(!searchBarOnViewport) setSearchModal(true)}}>
                                 <div>Bắt đầu tìm kiếm</div>
                                 <span className="bi bi-search black-icon small-icon" />
                             </Button>

@@ -28,7 +28,7 @@ const HomePage = () => {
                         <OnlySearchBar id='home-search-bar'/>
                     }
                 </Col>
-                <div id='home-introduce' className='d-flex justify-content-center position-relative mb-5'>
+                <div id='home-introduce' className='d-flex justify-content-center mb-5'>
                     <Image className="mt-3" src="hoian-bg.jpg" id="home-img"/>
                     <div id='home-introduce-text' className='text-white position-absolute d-flex flex-column justify-content-center align-items-center'>
                         <div id='introduce-title' className='text-center'>Bạn chưa biết đi đâu?</div>
@@ -59,11 +59,13 @@ const PlaceCard = ({colorVariant, imageSrc, place, latitude, longitude}) => {
         
         from: {
             scale: onHover ? 1 : 1.05,
-            boxShadow: onHover ? '0px 0px 0px grey' : '0px 0px 20px grey'
+            boxShadow: onHover ? '0px 0px 0px grey' : '0px 0px 20px grey',
+            zIndex: onHover ? 0 : 5
         },
         to: {
             scale: onHover ? 1.05 : 1,
-            boxShadow: onHover ? '0px 0px 20px grey' : '0px 0px 0px grey'
+            boxShadow: onHover ? '0px 0px 20px grey' : '0px 0px 0px grey',
+            zIndex: onHover ? 5 : 0
         }
     })
 
@@ -92,15 +94,15 @@ const PlaceCard = ({colorVariant, imageSrc, place, latitude, longitude}) => {
             <animated.div
                 style={{...cardStyles}}
             >
-                <div class={`cardContainer bg-${colorVariant}`} onClick={handleClick}
+                <div className={`cardContainer bg-${colorVariant}`} onClick={handleClick}
                  onMouseEnter={()=>setHover(true)}
                  onMouseLeave={()=>setHover(false)}
                 >
-                    <div class="cardMain">
-                        <div class="cardImg">
+                    <div className="cardMain">
+                        <div className="cardImg">
                             <Image src={imageSrc} className="" />
                         </div>
-                        <div class="info ps-3 pt-3">
+                        <div className="info ps-3 pt-3">
                             <h2>{place}</h2>
                         </div>
                     </div>

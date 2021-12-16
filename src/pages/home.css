@@ -42,6 +42,7 @@ h2 {
     font-size: 3.5rem;
     bottom: 30%;
     font-weight: bold;
+    z-index: 10;
 }
 #home-introduce-text {
     bottom: 20%;

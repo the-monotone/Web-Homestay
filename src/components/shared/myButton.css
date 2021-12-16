@@ -1,6 +1,11 @@
 .myButton {
     text-align: center;
     display: flex;
+    background-color: rgb(187, 92, 14);
+    position: absolute;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 50rem;
 }
 .myButton span {
     margin: auto;
