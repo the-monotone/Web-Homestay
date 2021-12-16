@@ -80,8 +80,9 @@ const PlaceCard = ({colorVariant, imageSrc, place, latitude, longitude}) => {
             description: place,
             latitude: latitude,
             longitude: longitude,
-            radius: 10
+            radius: 20
         }
+        localStorage.setItem("search", JSON.stringify(body));
         const path = generatePath("/search?:query", {
             query: createSearchParams({...body})
         })
