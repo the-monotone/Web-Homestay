@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Container, Image, Row, Col, Card } from 'react-bootstrap';
+import React, { useContext, useState } from 'react';
+import { Container, Image, Row, Col } from 'react-bootstrap';
 import { OnlySearchBar } from '../components/header/search.component';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import Layout from '../components/layout.component';

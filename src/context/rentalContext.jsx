@@ -34,7 +34,7 @@ const RentalContextProvider = ({children}) => {
             })
     }
 
-    const genRentalById = (token, rentalId) => {
+    const getRentalById = (token, rentalId) => {
         return axios
             .get(`${WEB_API}/api/rental/${rentalId}`, {
                 headers: {
@@ -96,6 +96,7 @@ const RentalContextProvider = ({children}) => {
         updateRental,
         postRental,
         getRentalByHost,
+        getRentalById
     }
 
 

@@ -8,9 +8,7 @@ import UnLoggedInDropdown from './unLoggedInDropdown';
 import LoggedInDropdown from './loggedInDropdown'; 
 import { NotificationContext } from '../../context/notificationContext';
 import NotificationItem from './NotificationItem';
-import {UserContext} from '../../context/userContext'
 import { WeToast } from '../shared/weToast';
-import { useNavigate } from 'react-router-dom';
 import { WeLogo } from '../../assets/logo';
 import { useSpring, animated } from 'react-spring';
 import  './header.component.css';
