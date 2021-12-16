@@ -13,9 +13,12 @@
 }
 
 #home-img {
-    width: 70vw;
-    height: fit-content;
+    width: 90vw;
+    height: 700px;
+    object-fit: cover;
     border-radius: 2rem;
+    background-color: brown;
+    /* background-image: url('/hoian-bg.jpg'); */
 }
 
 .bi-search {

@@ -23,7 +23,7 @@ const UserContextProvider = ({children}) => {
             .post(`${WEB_API}/api/user/logout`, token)
             .then(res => {
                 localStorage.removeItem("user-state");
-                window.location.replace("/home");
+                window.location.replace("/");
                 return res.data;
             })
             .catch(err => {

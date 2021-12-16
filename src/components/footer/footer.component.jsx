@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import { Col, Image } from 'react-bootstrap';
-import Banner from '../../logo/banner.svg';
+import Banner from '../../assets/banner.svg';
 import './footer.css';
 import { Report } from '../forms/report';
 

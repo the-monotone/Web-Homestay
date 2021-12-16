@@ -34,6 +34,22 @@ const RentalContextProvider = ({children}) => {
             })
     }
 
+    const genRentalById = (token, rentalId) => {
+        return axios
+            .get(`${WEB_API}/api/rental/${rentalId}`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            .then(res => {
+                console.log(res);
+                return res.data;
+            })
+            .catch(err => {
+                throw(err);
+            })
+    }
+
     const getRentalByHost = (token, hostId, status, currentPage, rentalPerPage) => {
         if (token == null || hostId == null) {
             return null;

@@ -1,6 +1,6 @@
 import {React} from 'react';
 import { Toast, ToastContainer } from 'react-bootstrap';
-import {WeLogoBgDark} from '../../logo/logo'
+import {WeLogoBgDark} from '../../assets/logo'
 
 export const WeToast = ({position='top-end', ...props}) => {
 

@@ -9,6 +9,10 @@
     height: 75vh;
 }
 
+.carousel-room .carousel-item img {
+    width: 100%
+}
+
 .facility {
     width: 40vw;
 }

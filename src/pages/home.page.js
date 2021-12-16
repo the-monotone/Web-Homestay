@@ -4,19 +4,33 @@ import { OnlySearchBar } from '../components/header/search.component';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import Layout from '../components/layout.component';
 import { SearchContext } from '../context/searchContext';
-
 import "./home.css";
-function HomePage() {
+import {InView} from 'react-intersection-observer';
+
+const HomePage = () => {
+    // const inViewport = useIntersection(ref, '-200px'); // Trigger if 200px is visible from the element
+    const {searchBarOnViewport, setOnViewport} = useContext(SearchContext);
+
+    const handleInView = (inView, entry) => {
+        console.log('Inview:', inView)
+        setOnViewport(inView)
+    }
+
     return (
         <Layout containerStyleName=''>
             <Row className='bg-dark pt-3 w-100 gx-0 d-flex justify-content-center pb-5 align-items-center home-image-container'>
-                <Col sm="10" className='mt-5 mb-3'>
-                    <OnlySearchBar id='home-search-bar'/>
+                <InView as="div" onChange={handleInView}>
+                    <div className=''></div>
+                </InView>
+                <Col md='10' className='mt-3 mb-3 d-flex justify-content-center'>
+                    {
+                        <OnlySearchBar id='home-search-bar'/>
+                    }
                 </Col>
-                <Image className="mt-3" src="hoian-bg.jpg" fluid id="home-img"/>
+                <div className="mt-3" id="home-img"/>
             </Row>
-            <h2 >Cảm hứng cho chuyến đi tiếp theo của bạn</h2>
-            <Container>
+
+            <Container className='mt-3'>
                 <Row>
                     <PlaceCard colorVariant="danger" imageSrc="hanoi.jpg" place="Hà Nội" latitude={21.028195403} longitude={105.854159778}/>
                     <PlaceCard colorVariant="info" imageSrc="halong.jpg" place="Hạ Long" latitude={20.9492078640001} longitude={107.074284282} />
@@ -62,3 +76,10 @@ const PlaceCard = ({colorVariant, imageSrc, place, latitude, longitude}) => {
 
 export default HomePage;
 
+
+export const Wrapper = React.forwardRef(
+    ({ style, ...props }, ref) => {
+        return <div ref={ref} {...props} />;
+    }
+);
+  

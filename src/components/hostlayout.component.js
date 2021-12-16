@@ -4,9 +4,9 @@ import {Footer} from './footer/footer.component';
 
 export default function HostLayout({styleName, containerStyleName="container-md", children}) {
     return(
-      <div className={`d-flex flex-column ${styleName}`}>
+      <div className={`d-flex flex-column position-relative ${styleName}`}>
         <HostHeader />
-        <div className={`row w-100 gx-0 pb-4 main-div`}>
+        <div className={`row w-100 gx-0 padding-bottom-footer`}>
           {children}
         </div>
         <Footer/>

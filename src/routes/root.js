@@ -6,6 +6,7 @@ import { AccountSettings } from '../pages/accountSetting.page';
 import SearchResultPage from '../pages/searchResult.page';
 import RoomViewPage from '../pages/roomView.page';
 import RentalViewPage from '../pages/rentalView.page';
+import RentalDetailPage from '../pages/rentalDetail.page';
 import FavoritePage from '../pages/favorite.page';
 import { RentalManagement } from '../pages/rentalManagement.page';
 import { AdminPage } from '../admin/admin.page';
@@ -36,6 +37,7 @@ function Root() {
                     <Route path="/rental/user">
                         <Route path=":userId" element={<RentalViewPage />} />
                     </Route>
+                    <Route path=":rentalId" element={<RentalDetailPage />} />
                 </Route>
                 <Route path="/favorite" element={<FavoritePage />} />
                 <Route path="/admin" element={<AdminPage/>}/>

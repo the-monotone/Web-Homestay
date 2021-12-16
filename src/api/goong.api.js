@@ -4,7 +4,6 @@ export const autocompleteApi = (input, callback, error) => {
     var nonSpaceInput = input.replace(" ", "%20");
     const key = GOONG_API_KEY[Math.floor(Math.random() * GOONG_API_KEY.length)]
     const path = `https://rsapi.goong.io/Place/AutoComplete?api_key=${key}&input=${nonSpaceInput}`;
-    console.log(path);
     axios
         .get(path)
         .then(callback)
