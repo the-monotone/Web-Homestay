@@ -79,7 +79,10 @@ export const RatingModal = (props) => {
         }
         console.log(body);
         postFeedback(body, userState.token);
-        socket.emit("send_feedback", props.room_id, `Khách ${userState.name} đã đánh giá phòng của bạn`);
+        const options = JSON.stringify({
+            room_id: props.room_id
+        })
+        socket.emit("send_feedback", props.room_id, `Khách ${userState.name} đã đánh giá phòng của bạn|${options}`);
         props.onHide();
     }
     return (

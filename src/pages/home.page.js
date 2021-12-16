@@ -9,7 +9,6 @@ import {InView} from 'react-intersection-observer';
 import { animated, useSpring } from 'react-spring';
 
 const HomePage = () => {
-    const userState = JSON.parse(localStorage.getItem("user-state"));
     // const inViewport = useIntersection(ref, '-200px'); // Trigger if 200px is visible from the element
     const {setOnViewport} = useContext(SearchContext);
 

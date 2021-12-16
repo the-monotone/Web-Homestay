@@ -22,7 +22,6 @@ const FavoritePage = () => {
         navigate(`/room/${roomId}`);
     }
     useEffect(() => {
-        setLoading(true);
         let isActive = true;
         const userState = JSON.parse(localStorage.getItem('user-state'));
         if (userState == null) {
@@ -34,13 +33,15 @@ const FavoritePage = () => {
                 }
             }
         }
+        setLoading(true);
         getFavorite(userState.token)
             .then(res => {
+                if (res.length === 0) setLoading(false);
                 for (let item of res) {
                     readRoom(item)
                         .then(res => {
                             setFavoriteList(prevState => [...prevState, res]);
-                            setLoading(false)
+                            setLoading(false);
                         })
                         .catch(err => {
                             throw(err);
@@ -58,7 +59,7 @@ const FavoritePage = () => {
         }
     }, [])
     return (
-        <Layout>
+        <Layout styleName='mt-3 min-height'>
             <h1>Danh sách yêu thích</h1>
             <Row>
                 <Col md='6' sm='12'>

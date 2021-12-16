@@ -24,6 +24,10 @@ const displayMoney = (amount) => {
   return formatter.format(amount);
 }
 
+const randomMapKey = () => {
+  return GOONG_MAP_KEY[Math.round(Math.random() * GOONG_MAP_KEY.length)];
+}
+
 const Map = ({ latitude, longitude, results, handleClickPopup }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [displayPopups, setDisplayPopups] = useState(() =>
@@ -90,7 +94,7 @@ const Map = ({ latitude, longitude, results, handleClickPopup }) => {
       width="100%"
       height="100%"
       onViewportChange={setViewport}
-      goongApiAccessToken={GOONG_MAP_KEY}
+      goongApiAccessToken={randomMapKey()}
     >
       {markers}
     </MapGL>

@@ -29,7 +29,7 @@ const LoginModal = (props) => {
                 window.location.reload();
             })
             .catch(err => {
-                switch(err.status) {
+                switch(err.response.status) {
                     case 400:
                         setToastMessage("Tài khoản hoặc mật khẩu không đúng");
                         setToast(true);
