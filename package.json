@@ -1,6 +1,7 @@
 {
   "name": "homestay",
   "version": "0.1.0",
+  "homepage": "",
   "private": true,
   "dependencies": {
     "@goongmaps/goong-geocoder": "^1.1.1",

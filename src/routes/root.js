@@ -11,7 +11,6 @@ import FavoritePage from '../pages/favorite.page';
 import { RentalManagement } from '../pages/rentalManagement.page';
 import { AdminPage } from '../admin/admin.page';
 
-
 import {
     BrowserRouter as Router,
     Route,
@@ -21,7 +20,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Root() {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Routes>
                 <Route path="/" element={<HomePage/>} />
                 <Route path="home" element={<HomePage/>} />
