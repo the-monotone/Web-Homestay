@@ -8,9 +8,7 @@ import UnLoggedInDropdown from './unLoggedInDropdown';
 import LoggedInDropdown from './loggedInDropdown'; 
 import { NotificationContext } from '../../context/notificationContext';
 import NotificationItem from './NotificationItem';
-import {UserContext} from '../../context/userContext'
 import { WeToast } from '../shared/weToast';
-import { useNavigate } from 'react-router-dom';
 import { WeLogo } from '../../assets/logo';
 import { useSpring, animated } from 'react-spring';
 import  './header.component.css';
@@ -31,57 +29,6 @@ function Header() {
     
     const { socket, getNotification } = useContext(NotificationContext);
     const userState = JSON.parse(localStorage.getItem("user-state"));
-
-    const {getInfo, updateInfo} = useContext(UserContext);
-    const [isGetting, setGetting] = useState(false);
-    const [isHost, setIsHost] = useState(false);
-
-    const navigate = useNavigate();
-
-    useEffect(()=>{
-        if (!userState) return;
-        let isActive = true;
-        const getData = async () => {
-            if (isGetting) return;
-            setGetting(true);
-            await getInfo(userState.userId)
-                .then(data => {
-                    console.log(data);
-                    if (isActive) setIsHost(data.role === 'host');
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-            setGetting(false);
-        }
-        getData();
-        return () => {
-            isActive = false;
-        }
-    },[])
-
-    const hostNavigate = () => {
-        if (isGetting) return;
-
-        const becomeHost = async () => {
-            if (isHost) return;
-            setGetting(true);
-            await updateInfo(userState.token, {role: "host", user_id: userState.userId})
-                .then(res => {
-                    console.log(res);
-                })
-                .catch(err => {
-                    console.log(err);
-                    if(err.status === 401) {
-                    } else {
-                        alert("Lỗi hệ thống, vui lòng thử lại sau!!!");
-                    }
-                })
-            setGetting(false);
-        }
-        becomeHost();
-        navigate('/host/roommanager');
-    }
     
     const handleViewNotification = () => {
         setLoadNoti(true);
@@ -158,24 +105,13 @@ function Header() {
         }
     })
 
-    
-
     return (
-        <Navbar id="nav-bar" expand="md" bg={searchBarOnViewport ? 'dark' : 'light'} className="position-sticky top-0  w-100">
+        <Navbar id="nav-bar" expand="md" bg={searchBarOnViewport ? 'dark' : 'light'} className="position-fixed top-0 w-100">
             <Container fluid="md" className='w-100'>
-                <Navbar.Toggle />
                 <Navbar.Brand href="/" className="order-0 me-auto">
                     <WeLogo style={{ height: '30px'}} />
                 </Navbar.Brand>
                 <Navbar.Collapse className="order-last">
-                    {/* <Nav navbar>
-                        { userState != null && userState.token != null &&
-                        <Nav.Link href="" className="d-flex align-items-center" onClick={hostNavigate}>
-                            <span className="me-1 bi bi-person-badge white-icon small-icon" />
-                            {' '}{isHost ? 'Quản lý phòng' : 'Trở thành chủ nhà'}
-                        </Nav.Link>
-                        }
-                    </Nav> */}
                     <Nav navbar className="m-auto">
                         {
                             searchBarOnViewport ? 

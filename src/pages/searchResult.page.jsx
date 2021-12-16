@@ -8,13 +8,15 @@ import Layout from '../components/layout.component';
 import { SearchContext } from '../context/searchContext';
 import { FeedbackContext } from '../context/feedbackContext';
 
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import './search.css';
 
 const SearchResultPage = () => {
     const [searchParams] = useSearchParams();
-    const description = searchParams.get("description");
     const navigate = useNavigate();
+    const description = searchParams.get("description");
+    const [isLoading, setLoading] = useState(false);
+    const [location, setLocation] = useState(null);
     const {searchPlaceApi} = useContext(SearchContext);
     const {getFavorite} = useContext(FeedbackContext);
     const [results, setResults] = useState({
@@ -32,6 +34,12 @@ const SearchResultPage = () => {
     }
 
     useEffect(() => {
+        let isActive = true;
+        setLoading(true);
+        setLocation({
+            latitude: parseFloat(searchParams.get("latitude")),
+            longitude: parseFloat(searchParams.get("longitude")),
+        })
         const searchBody = {
             latitude: parseFloat(searchParams.get("latitude")),
             longitude: parseFloat(searchParams.get("longitude")),
@@ -42,7 +50,10 @@ const SearchResultPage = () => {
         }
         searchPlaceApi(searchBody)
             .then(res => {
-                setResults(res);
+                if (isActive) {
+                    setResults(res);
+                    setLoading(false);
+                }
             })
             .catch(err => {
                 const error = new Error(err.message);
@@ -51,23 +62,27 @@ const SearchResultPage = () => {
         if (userState != null) {
             getFavorite(userState.token)
                 .then(res => {
-                    setFavoriteList(res);
+                    if (isActive) setFavoriteList(res);
                 })
                 .catch(err => {
                     alert(err);
                 })
         }
-    }, [])
+        return () => {
+            isActive = false;
+        }
+    }, [searchParams])
 
     const handleClick = (roomId) => {
         navigate(`/room/${roomId}`);
     }
     return (
-        <Layout styleName="vh-100" containerStyleName="container-fluid" showFooter={false}>
+        <Layout styleName="mt-2 vh-100" containerStyleName="container-fluid" showFooter={false}>
             <div className="row h-100">
                 <div className={`col col-12 col-lg-5 h-100` }>
                     <h2>{`Phòng ở tại ${description}`}</h2>
                     {
+                        isLoading? <Spinner animation='border' /> :
                         results.total === 0? <p>Không tìm thấy kết quả nào</p> :
                         results.rooms.map(room => {
                         return (
@@ -78,18 +93,20 @@ const SearchResultPage = () => {
                     })}
                 </div>
                 <div className={`col ${!showMap && "d-none "} d-lg-block col-lg-7 h-100 position-fixed bottom-0 end-0 div-map p-0`}>
-                    <Map 
-                        latitude={parseFloat(searchParams.get("latitude"))} 
-                        longitude={parseFloat(searchParams.get("longitude"))} 
-                        results={results} 
-                        handleClickPopup={handleClick}
-                    />
+                    {
+                        location &&
+                        <Map 
+                            {...location}
+                            results={results} 
+                            handleClickPopup={handleClick}
+                        />
+                    }
                 </div>
                     <Button variant="dark" className="d-block d-lg-none float-button" onClick={toggleShowMap}>
                         {buttonContent}
                         {buttonContent === "Hiện bản đồ"? 
                             <span className="bi bi-map-fill ms-1" /> :
-                            <span class="bi bi-list-ul ms-1" />
+                            <span className="bi bi-list-ul ms-1" />
                         }
                     </Button>
             </div>

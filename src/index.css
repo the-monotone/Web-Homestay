@@ -89,9 +89,10 @@ a {
   margin-top: 60px;
 }
 
-div.main-div {
-  position: relative;
-  top: 90px;
+.main-div {
+  margin-top: 75px;
 }
 
-
+.min-height {
+  min-height: 90vh;
+}

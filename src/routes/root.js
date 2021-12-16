@@ -6,10 +6,10 @@ import { AccountSettings } from '../pages/accountSetting.page';
 import SearchResultPage from '../pages/searchResult.page';
 import RoomViewPage from '../pages/roomView.page';
 import RentalViewPage from '../pages/rentalView.page';
+import RentalDetailPage from '../pages/rentalDetail.page';
 import FavoritePage from '../pages/favorite.page';
 import { RentalManagement } from '../pages/rentalManagement.page';
 import { AdminPage } from '../admin/admin.page';
-
 
 import {
     BrowserRouter as Router,
@@ -23,22 +23,23 @@ function Root() {
         <Router>
             <Routes>
                 <Route path="/" element={<HomePage/>} />
-                <Route path="/home" element={<HomePage/>} />
-                <Route path='/host/roomsignup' element = {<RoomSignUp/>} />
-                <Route path='/host/roommanager' element = {<RoomManager/>} />
-                <Route path='/host/rentalmanagement' element = {<RentalManagement/>} />
-                <Route path="/search" element={<SearchResultPage />} />
-                <Route path='/accountsettings' element = {<AccountSettings/>} />
-                <Route path="/room">
+                <Route path="home" element={<HomePage/>} />
+                <Route path='host/roomsignup' element = {<RoomSignUp/>} />
+                <Route path='host/roommanager' element = {<RoomManager/>} />
+                <Route path='host/rentalmanagement' element = {<RentalManagement/>} />
+                <Route path="search" element={<SearchResultPage/>} />
+                <Route path='accountsettings' element = {<AccountSettings/>} />
+                <Route path="room">
                     <Route path=":roomId" element={<RoomViewPage />} />
                 </Route>
-                <Route path="/rental">
-                    <Route path="/rental/user">
+                <Route path="rental">
+                    <Route path="user">
                         <Route path=":userId" element={<RentalViewPage />} />
                     </Route>
+                    <Route path=":rentalId" element={<RentalDetailPage />} />
                 </Route>
-                <Route path="/favorite" element={<FavoritePage />} />
-                <Route path="/onlyadmincanseethis" element={<AdminPage/>}/>
+                <Route path="favorite" element={<FavoritePage />} />
+                <Route path="onlyadmincanseethis" element={<AdminPage/>}/>
             </Routes>
         </Router>   
     )

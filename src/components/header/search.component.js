@@ -1,18 +1,14 @@
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import { Form, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import { autocompleteApi, placeDetailApi } from "../../api/goong.api";
-import { useNavigate, createSearchParams } from "react-router-dom";
+import { useNavigate, createSearchParams, generatePath } from "react-router-dom";
 import { SearchContext } from "../../context/searchContext";
 import "react-datepicker/dist/react-datepicker.css";
 import "./search.css";
 import {
-  useTransition,
   useSpring,
-  useChain,
-  config,
   animated,
-  useSpringRef,
 } from 'react-spring'
 
 const SearchModal = ({ show, onHide }) => {
@@ -87,13 +83,10 @@ const SearchModal = ({ show, onHide }) => {
                 num_guest: guest,
                 radius: 10,
               };
-              navigate({
-                pathname: "/search",
-                search: `?${createSearchParams({
-                  ...body,
-                })}`,
-              });
-              window.location.reload();
+              const path = generatePath("/search?:query", {
+                query: createSearchParams({...body})
+              })
+              navigate(path);
             },
             (err) => {
               console.error(err);
@@ -115,27 +108,25 @@ const SearchModal = ({ show, onHide }) => {
         num_guest: guest,
         radius: 10,
       };
-      navigate({
-        pathname: "/search",
-        search: `?${createSearchParams({ ...body })}`,
-      });
-      window.location.reload();
+      const path = generatePath("/search?:query", {
+        query: createSearchParams({...body})
+      })
+      navigate(path);
     }
   };
   return (
     <Modal show={show} onHide={onHide} dialogClassName="modal-search">
       <Form
-        id="search-form"
         onSubmit={(event) => {
           handleSubmit(event);
         }}
-        className="position-relative m-1 round-radius p-1 rounded-pill pe-1 ps-1"
+        className="m-1 round-radius p-1 rounded-pill pe-1 ps-1"
       >
         <div className="container">
           <div className="row align-items-center">
             <div
               onClick={() => setSearchPlace((state) => !state)}
-              className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3 gray-border-right btn-place "
+              className="col-12 col-md-3 gray-border-right position-relative"
             >
               <strong className="ms-1">Địa điểm</strong>
               <input
@@ -145,6 +136,13 @@ const SearchModal = ({ show, onHide }) => {
                 onChange={(e) => searchPlace(e.target.value)}
                 className="input-w100 search-input"
               />
+              {
+                isSearchPlace && 
+                <PlacePicker
+                  predictions={predictions}
+                  setSelectedPlace={setSelectedPlace}
+                />
+              }
             </div>
             <div
               onClick={() => setSearchPlace(false)}
@@ -200,12 +198,6 @@ const SearchModal = ({ show, onHide }) => {
             </div>
           </div>
         </div>
-        {isSearchPlace && (
-          <PlacePicker
-            predictions={predictions}
-            setSelectedPlace={setSelectedPlace}
-          />
-        )}
         <input type="submit" id="submit-button-search" hidden />
       </Form>
     </Modal>
@@ -214,7 +206,7 @@ const SearchModal = ({ show, onHide }) => {
 
 const PlacePicker = (props) => {
   return (
-    <div id="search-place" className="round-radius shadow mt-3">
+    <div className="search-place round-radius shadow mt-3">
       <div className="ms-1 d-flex align-items-center fw-bold">
         Địa điểm tìm kiếm
       </div>
@@ -247,7 +239,7 @@ const GuestPicker = ({ guest, changeGuest }) => {
         className="bi bi-dash-circle-fill small-icon me-1"
         onClick={decrease}
       ></span>
-      <Form.Control
+      <input
         type="number"
         disabled
         autoComplete="off"
@@ -406,7 +398,7 @@ export const OnlySearchBar = () => {
             onClick={() => setSearchPlace((state) => !state)}
             className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3"
           >
-            <div className="w-100 gray-border-right">
+            <div className="w-100 gray-border-right position-relative">
               <strong className="ms-1 search-form-label">Địa điểm</strong>
               <input
                 type="text"
@@ -415,7 +407,15 @@ export const OnlySearchBar = () => {
                 onChange={(e) => searchPlace(e.target.value)}
                 className="w-100 search-input"
               />
+              {
+                isSearchPlace && 
+                <PlacePicker
+                  predictions={predictions}
+                  setSelectedPlace={setSelectedPlace}
+                />
+              }
             </div>
+            
           </div>
           <div
             onClick={() => setSearchPlace(false)}
@@ -475,12 +475,6 @@ export const OnlySearchBar = () => {
           </div>
         </div>
       </div>
-      {isSearchPlace && (
-        <PlacePicker
-          predictions={predictions}
-          setSelectedPlace={setSelectedPlace}
-        />
-      )}
       <input type="submit" id="submit-button-search" hidden />
     </Form>
     </animated.div>

@@ -1,5 +1,3 @@
-#search-form {
-}
 #select-guest {
     background-color: white;
     position: absolute;
@@ -9,12 +7,12 @@
     z-index: 10;
 }
 
-#search-place {
+.search-place {
     background-color: white;
     position: absolute;
-    width: fit-content;
+  
     min-width: 250px;
-    left: 35px;
+    top: 55px;
     padding: 10px;
     z-index: 500;
 }
@@ -42,10 +40,6 @@
     outline: none;
 }
 
-.bi-search {
-    
-}
-
 .home-search-bar-container {
     position: relative;
     z-index: 50;
@@ -66,7 +60,11 @@
         width: 70vw !important;
         max-width: 85vw !important;
     }
-    
+
+    .search-place {
+        width: 500px;
+    }
+
     .modal-search .modal-content {
         border-radius: 50rem !important;
     }
@@ -84,6 +82,10 @@
         max-width: 90vw !important;
     }
     
+    .search-place {
+        width: 100%;
+    }
+
     .modal-search .modal-content {
         border-radius: 1rem !important;
     }

@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Container, Image, Row, Col, Card } from 'react-bootstrap';
+import React, { useContext, useState } from 'react';
+import { Container, Image, Row, Col } from 'react-bootstrap';
 import { OnlySearchBar } from '../components/header/search.component';
-import { useNavigate, createSearchParams } from 'react-router-dom';
+import { useNavigate, createSearchParams, generatePath } from 'react-router-dom';
 import Layout from '../components/layout.component';
 import { SearchContext } from '../context/searchContext';
 import "./home.css";
@@ -9,7 +9,6 @@ import {InView} from 'react-intersection-observer';
 import { animated, useSpring } from 'react-spring';
 
 const HomePage = () => {
-    const userState = JSON.parse(localStorage.getItem("user-state"));
     // const inViewport = useIntersection(ref, '-200px'); // Trigger if 200px is visible from the element
     const {setOnViewport} = useContext(SearchContext);
 
@@ -23,13 +22,13 @@ const HomePage = () => {
                 <InView as="div" onChange={handleInView}>
                     <div className=''></div>
                 </InView>
-                <Col md='7' className='mt-3 mb-2 d-flex justify-content-center'>
+                <Col md='10' className='mt-3 mb-3 d-flex justify-content-center'>
                     {
                         <OnlySearchBar id='home-search-bar'/>
                     }
                 </Col>
                 <div id='home-introduce' className='d-flex justify-content-center mb-5'>
-                    <Image className="mt-3" src="hoian-bg.jpg" id="home-img"/>
+                    <Image className="mt-3" src="/hoian-bg.jpg" id="home-img"/>
                     <div id='home-introduce-text' className='text-white position-absolute d-flex flex-column justify-content-center align-items-center'>
                         <div id='introduce-title' className='text-center'>Bạn chưa biết đi đâu?</div>
                         <div id='introduce-sub' className='text-center'>Hãy cùng nhau khám phá những nơi bạn chưa từng đặt chân tới</div>
@@ -83,10 +82,10 @@ const PlaceCard = ({colorVariant, imageSrc, place, latitude, longitude}) => {
             longitude: longitude,
             radius: 10
         }
-        navigate({
-            pathname: "/search",
-            search: `?${createSearchParams({...body})}`
-        });
+        const path = generatePath("/search?:query", {
+            query: createSearchParams({...body})
+        })
+        navigate(path);
     }
     return (
         <Col lg="3" md="4" sm="6" className='d-flex justify-content-center'

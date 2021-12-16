@@ -38,11 +38,12 @@ const RentalViewPage = () => {
     }, []);
 
     return (
-        <Layout>
+        <Layout styleName='mt-3 min-height'>
             <h1>Chuyến đi</h1>
             {
                 rental === null ? 
             <Spinner animation="border" /> :
+            rental.total > 0? 
             <Tabs defaultActiveKey="renting">
                 <Tab eventKey="request" title="Đang yêu cầu">
                     <RentTab handleClickRate={handleClickRate} rentalList={rental.filter((rentalItem) => rentalItem.status === "UNCONFIRMED")} />
@@ -53,7 +54,8 @@ const RentalViewPage = () => {
                 <Tab eventKey="rented" title="Đã thuê">
                     <RentTab canRate handleClickRate={handleClickRate} rentalList={rental.filter((rentalItem) => rentalItem.status === "RETURNED")} />
                 </Tab>
-            </Tabs>
+            </Tabs> : 
+            <p>Chưa có chuyến đi nào</p>
             }
             <RatingModal show={isRate} onHide={handleCancel} room_id={roomId} client_id={userState.userId} />
         </Layout>

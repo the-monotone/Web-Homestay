@@ -1,10 +1,10 @@
 #footer {
-  position: relative;
+  position: absolute;
+  bottom: -210px;
   display: inline-flex;
-  top: 100px;
-  bottom: 0;
   background-color: #0C0E27;
   align-items: flex-start;
+  width: 100%;
   height: 200px;
 }
 #footer #footer-banner{

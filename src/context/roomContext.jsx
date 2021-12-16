@@ -47,6 +47,15 @@ const RoomContextProvider = ({children}) => {
             })
     }
 
+    const getRentalDateByRoom = (roomId) => {
+        return axios.get(`${WEB_API}/api/room/${roomId}/rental_date`)
+            .then(res => res.data)
+            .catch(err => {
+                console.error(err);
+                throw(err);
+            })
+    }
+
     const createRoom = (token, room) => {
         return axios.post(`${WEB_API}/api/room/create`, room, {
                 headers: {
@@ -96,6 +105,7 @@ const RoomContextProvider = ({children}) => {
     const roomContextData = {
         roomType,
         roomFacility,
+        getRentalDateByRoom,
         createRoom,
         readRoom,
         updateRoom,

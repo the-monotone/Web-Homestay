@@ -56,9 +56,11 @@
   text-overflow:ellipsis;
   overflow: hidden;
 }
+
 .room-title {
   text-overflow: ellipsis;
 }
+
 .bi-dot {
   color: black;
   font-size: 11px;
