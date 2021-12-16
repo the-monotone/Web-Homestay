@@ -67,8 +67,8 @@ const RoomViewPage = () => {
             <Spinner animation="border" />
         </Layout> :
         <Layout>
-            <div className="mt-2">
-                <h2>{room.room_name}</h2>
+            <div className="mt-5">
+                <h2 className='room-name'>{room.room_name}</h2>
                 <div className="d-flex justify-content-between">     
                 {
                     room.rate !== null ? parseFloat(room.rate).toFixed(1) !== 0.0 ? 
@@ -94,8 +94,8 @@ const RoomViewPage = () => {
                 <Carousel 
                     fade 
                     className="carousel-room gray-border round-radius shadow mb-5"
-                    prevIcon={<i aria-hidden="true" className="bi bi-arrow-left-circle-fill white-icon" />}
-                    nextIcon={<i aria-hidden="true" className="bi bi-arrow-right-circle-fill white-icon" />}
+                    prevIcon={<span aria-hidden="true" className="bi bi-arrow-left-circle-fill " />}
+                    nextIcon={<span aria-hidden="true" className="bi bi-arrow-right-circle-fill " />}
                 >
                     {room.images.map((imageItem, index) => (
                         <Carousel.Item key={index} className="d-flex justify-content-center" >
@@ -128,7 +128,7 @@ const RoomViewPage = () => {
                 <div className="facility m-1">
                     <h3>Tiện nghi</h3>
                     <ListGroup>
-                        {roomFacility != null? room.facilities.length !== 0? 
+                        {roomFacility ? room.facilities.length !== 0? 
                         room.facilities.map((facilityId) => {
                             return <ListGroupItem key={facilityId}>{roomFacility.find(item => item.id === facilityId).facility}</ListGroupItem>
                         }) : <p>Danh sách tiện nghi trống</p> : <Spinner animation='border' />}

@@ -50,11 +50,16 @@
 .my-card {
   width: 100%;
   position: relative;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .card-title {
   display: block;
   text-overflow:ellipsis;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .room-title {
@@ -88,3 +93,4 @@
   right: 20px;
   z-index: 10;
 }
+

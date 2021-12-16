@@ -8,6 +8,13 @@
     margin: auto;
     
 }
+
+.host-rental-cost:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px #888888;
+}
+
+
 .host-rental-date {
     width: fit-content;
     font-size: 16px;
@@ -21,7 +28,13 @@
     align-items: center;
 }
 .rental-card-title {
+    white-space: nowrap;
     text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
 }
 .host-rental-card {
+    width: 300px;
+    text-overflow: ellipsis;
 }

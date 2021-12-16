@@ -10,7 +10,8 @@
 }
 
 .carousel-room .carousel-item img {
-    width: 100%
+    width: 100%;
+    object-fit: contain;
 }
 
 .facility {
@@ -19,4 +20,10 @@
 
 .rule {
     width: 40vw;
+}
+
+.room-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

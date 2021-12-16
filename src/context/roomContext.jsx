@@ -11,30 +11,33 @@ const RoomContextProvider = ({children}) => {
     const [roomFacility, setRoomFacility] = useState([]);
 
     useEffect(() => {
-        axios.get(`${WEB_API}/api/room/room-type`)
-            .then(res => {
-                const clone = res.data.roomTypes.map(roomType => {
-                    return {
-                        key: roomType.room_type_id,
-                        value: roomType.room_type
-                    }
+        const init = async () => {
+            axios.get(`${WEB_API}/api/room/room-type`)
+                .then(res => {
+                    const clone = res.data.roomTypes.map(roomType => {
+                        return {
+                            key: roomType.room_type_id,
+                            value: roomType.room_type
+                        }
+                    })
+                    setRoomType([...clone]);
                 })
-                setRoomType([...clone]);
-            })
-            .catch(err => console.log(err))
+                .catch(err => console.log(err))
 
-        axios.get(`${WEB_API}/api/facility`)
-            .then(res => {
-                const clone = res.data.facilities.map(facility => {
-                    return {
-                        id : facility.facility_id,
-                        facility: facility.facility,
-                        description: facility.description
-                    }
+            axios.get(`${WEB_API}/api/facility`)
+                .then(res => {
+                    const clone = res.data.facilities.map(facility => {
+                        return {
+                            id : facility.facility_id,
+                            facility: facility.facility,
+                            description: facility.description
+                        }
+                    })
+                    setRoomFacility([...clone]);
                 })
-                setRoomFacility([...clone]);
-            })
-            .catch(err => console.log(err))
+                .catch(err => console.log(err))
+            }
+        init();
     }, [])
 
     const readRoom = (roomId) => {

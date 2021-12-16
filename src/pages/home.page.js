@@ -9,7 +9,6 @@ import {InView} from 'react-intersection-observer';
 import { animated, useSpring } from 'react-spring';
 
 const HomePage = () => {
-    // const inViewport = useIntersection(ref, '-200px'); // Trigger if 200px is visible from the element
     const {setOnViewport} = useContext(SearchContext);
 
     const handleInView = (inView) => {
@@ -19,7 +18,6 @@ const HomePage = () => {
     useEffect(() => {
         setOnViewport(true);
         return () => {
-            localStorage.setItem('unmout' ,"true")
             setOnViewport(false);
         }
     },[])
@@ -44,7 +42,7 @@ const HomePage = () => {
                 </div>
             </Row>
 
-            <Container className='mt-5 pt-1'>
+            <Container className='mt-5 pt-1 mb-5'>
                 <Row className='mt-3 mb-5 '><h2 id='hint'>Một số gợi ý của chúng tôi dành cho bạn</h2></Row>
                 <Row>
                     <PlaceCard colorVariant="warning" imageSrc="hanoi-img.jpg" place="Hà Nội" latitude={21.028195403} longitude={105.854159778}/>

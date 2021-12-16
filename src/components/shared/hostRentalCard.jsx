@@ -1,8 +1,10 @@
-import {React, useContext} from 'react';
-import { Card } from 'react-bootstrap';
+import {forwardRef, React, useContext} from 'react';
+import { Card, OverlayTrigger } from 'react-bootstrap';
 import './hostRentalCard.css'
 import { RentalContext } from '../../context/rentalContext';
+import { WePopover } from './wePopover';
 export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
+    console.log(rental);
 
     const userState = JSON.parse(localStorage.getItem("user-state"));
 
@@ -22,18 +24,22 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
                 .catch(err => {
                     console.log(err);
                 })
-            // window.location.reload();
+            window.location.reload();
         }
         update();
     }
 
+    const ThisWillWork = forwardRef((props, ref) => {
+        return <div className = "host-rental-cost" ref={ref}>{`Id: ${rental.cost}`}</div>;
+    });
 
     return(
         <Card className="host-rental-card mb-2">
-            {/* <Card.Img variant="top" src = {rental.images[0]} style={{height: "200px"}}></Card.Img> */}
-            <Card.Title className="rental-card-title mt-3">{rental.room_name}</Card.Title>
+            <Card.Title className="rental-card-title m-2">{rental.room_name}</Card.Title>
             <Card.Body>
-                <div className = "host-rental-cost">{rental.cost}</div>
+                <OverlayTrigger trigger='click' placement='right' overlay={<WePopover id={rental.client_id}/>}>
+                    <div className = "host-rental-cost">{`Id: ${rental.cost}`}</div>
+                </OverlayTrigger>
                 <div className = "rental-date-container mt-3">
                     <span className = "host-rental-date me-3">{rental.begin_date}</span>
                     <span> <i className="bi bi-caret-right"></i></span>
@@ -41,9 +47,6 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
                 </div>
             </Card.Body>
             <Card.Footer>
-                {/* <Button variant={isUnconfirmed() ? "primary" : "success"} style = {{width: "100%"}} onClick={hostUpdateRental}>
-                    {isUnconfirmed() ? "Cho thuê" : "Đã trả phòng"}
-                </Button> */}
                 <div onClick={hostUpdateRental}>
                     {children}
                 </div>
@@ -51,3 +54,4 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
         </Card>
     )
 }
+
