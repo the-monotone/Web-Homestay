@@ -35,120 +35,10 @@
   object-fit: cover;
   border-radius: 20px;
   }
-.edit-card-button {
-  position: absolute;
-  right: 0;
-  bottom: 50%;
-  height: 50%;
-  width: 65px;
-  border-top-right-radius: 3px;
-  background-color:rgb(80, 121, 255);
-  z-index: 5;
 
-}
-.edit-card-button:hover {
-  background-color: rgb(10, 74, 248);
-}
-.edit-card-button:active {
-  background-color: rgb(13, 9, 248);
-}
-
-.my-card .edit-card-button {
-  visibility: hidden;
-  width: 0;
-}
-
-.my-card .edit-card-button span {
-  opacity: 0;
-}
-
-.my-card:hover .edit-card-button {
-  visibility: visible;
-  width: 65px;
-  transition: width 0.75s;
-}
-
-.my-card:hover .edit-card-button span {
-  opacity: 1;
-  transition: opacity 0.75s;
-  transition-delay: 0.25s;
-}
-
-.remove-card-button {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  height: 50%;
-  width: 65px;
-  border-bottom-right-radius: 3px;
-  background-color: rgb(236, 30, 30);
-  z-index: 5;
-}
-.remove-card-button:hover {
-  background-color: rgb(248, 6, 6);
-}
-.remove-card-button:active {
-  background-color: rgb(204, 8, 8);
-}
-
-.my-card .remove-card-button {
-  visibility: hidden;
-  width: 0;
-
-}
-
-.my-card .remove-card-button span { 
-  opacity: 0;
-}
-
-.my-card:hover .remove-card-button {
-  visibility: visible;
-  width: 65px;
-  transition: width 0.75s;
-}
-.my-card:hover .remove-card-button span {
-  opacity: 1;
-  transition: opacity 0.75s;
-  transition-delay: 0.25s;
-}
 
 .carouse-inner{
   max-height: 80px;
-}
-
-@media only screen and (max-width: 770px) {
-  .edit-card-button {
-    left: 0;
-    bottom: 0;
-    width: 50%;
-    height: 50px;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 3px;
-  }
-  .remove-card-button {
-    right: 0;
-    bottom: 0;
-    width: 50%;
-    height: 50px;
-  }
-  .my-card .edit-card-button span {
-
-    height: 20px;
-  }
-  .my-card .remove-card-button span {
-    height: 20px;
-  }
-
-  .my-card:hover .remove-card-button {
-    visibility: visible;
-    width: 50%;
-    transition: width 1s;
-  }
-  .my-card:hover .edit-card-button {
-    visibility: visible;
-    width: 50%;
-    transition: width 1s;
-  }
 }
 
 .my-card .room-title {
@@ -188,4 +78,11 @@
 }
 .bi-heart-fill {
   color: rgb(240, 26, 26);
+}
+
+.room-edit-option {
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  z-index: 10;
 }

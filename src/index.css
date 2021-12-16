@@ -89,6 +89,10 @@ a {
   margin-top: 60px;
 }
 
-.padding-bottom-footer {
-  padding-bottom: 210px;
+.main-div {
+  margin-top: 75px;
+}
+
+.min-height {
+  min-height: 90vh;
 }

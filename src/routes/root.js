@@ -24,23 +24,23 @@ function Root() {
         <Router>
             <Routes>
                 <Route path="/" element={<HomePage/>} />
-                <Route path="/home" element={<HomePage/>} />
-                <Route path='/host/roomsignup' element = {<RoomSignUp/>} />
-                <Route path='/host/roommanager' element = {<RoomManager/>} />
-                <Route path='/host/rentalmanagement' element = {<RentalManagement/>} />
-                <Route path="/search" element={<SearchResultPage />} />
-                <Route path='/accountsettings' element = {<AccountSettings/>} />
-                <Route path="/room">
+                <Route path="home" element={<HomePage/>} />
+                <Route path='host/roomsignup' element = {<RoomSignUp/>} />
+                <Route path='host/roommanager' element = {<RoomManager/>} />
+                <Route path='host/rentalmanagement' element = {<RentalManagement/>} />
+                <Route path="search" element={<SearchResultPage />} />
+                <Route path='accountsettings' element = {<AccountSettings/>} />
+                <Route path="room">
                     <Route path=":roomId" element={<RoomViewPage />} />
                 </Route>
-                <Route path="/rental">
-                    <Route path="/rental/user">
+                <Route path="rental">
+                    <Route path="user">
                         <Route path=":userId" element={<RentalViewPage />} />
                     </Route>
                     <Route path=":rentalId" element={<RentalDetailPage />} />
                 </Route>
-                <Route path="/favorite" element={<FavoritePage />} />
-                <Route path="/admin" element={<AdminPage/>}/>
+                <Route path="favorite" element={<FavoritePage />} />
+                <Route path="onlyadmincanseethis" element={<AdminPage/>}/>
             </Routes>
         </Router>   
     )

@@ -22,7 +22,7 @@ export const FavoriteIcon = ({roomId, active}) => {
     }
 
     return(
-        <div className='rounded-pill d-flex justify-content-center align-items-center' onClick={handleClick}>
+        <div className='rounded-pill d-flex justify-content-center align-items-center fav-icon' onClick={handleClick}>
         {
             !isActive ? <i className="bi bi-heart"></i> : <i className="bi bi-heart-fill"></i>
         }

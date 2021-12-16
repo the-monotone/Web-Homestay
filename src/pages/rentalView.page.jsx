@@ -38,7 +38,7 @@ const RentalViewPage = () => {
     }, []);
 
     return (
-        <Layout>
+        <Layout styleName='mt-3 min-height'>
             <h1>Chuyến đi</h1>
             {
                 rental === null ? 

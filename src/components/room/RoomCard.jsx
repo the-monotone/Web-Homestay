@@ -7,6 +7,7 @@ import './roomCard.css';
 import { RoomContext } from '../../context/roomContext';
 import { WeToast } from '../shared/weToast';
 import { FavoriteIcon } from '../shared/favorite.icon';
+import { useSpring, animated } from 'react-spring';
 
 const displayMoney = (amount) => {
     var formatter = new Intl.NumberFormat('vi', {
@@ -21,8 +22,41 @@ export const RoomCard = ({onClick, isEditable, room, canFavorite, isFavorite}) =
     const {deleteRoom} = useContext(RoomContext);
     const userState = JSON.parse(localStorage.getItem('user-state'));
     const [isToast, setToast] = useState(false);
+    const [onHover, setHover] = useState(false);
+
+    const editBtnStyles = useSpring({
+        config: {duration: 200},
+        from: {
+            transform: onHover ? 'translateX(0px) translateY(0px)' : 'translateX(0px) translateY(-25px)',
+            scale : onHover ? 0 : 1,
+            opacity: onHover ? 0 : 1
+        },
+        to: {
+            transform: !onHover ? 'translateX(0px) translateY(0px)' : 'translateX(0px) translateY(-25px)',
+            scale : !onHover ? 0 : 1,
+            opacity: !onHover ? 0 : 1
+        }
+    })
+
+    const removeBtnStyles = useSpring({
+        config: {duration: 200},
+        from: {
+            transform: onHover ? 'translateX(0px) translateY(0px)' : 'translateX(20px) translateY(0px)',
+            scale : onHover ? 0 : 1,
+            opacity: onHover ? 0 : 1
+        },
+        to: {
+            transform: !onHover ? 'translateX(0px) translateY(0px)' : 'translateX(20px) translateY(0px)',
+            scale : !onHover ? 0 : 1,
+            opacity: !onHover ? 0 : 1
+        }
+    })
+
     return(
-            <div className="my-card">
+            <div className="my-card"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+            >
                 <Row className="g-0 row-body">
                     <Col sm="12" md="4">
                         <Carousel 
@@ -75,25 +109,40 @@ export const RoomCard = ({onClick, isEditable, room, canFavorite, isFavorite}) =
                                 <strong>{displayMoney(parseFloat(room.price))}</strong>{"/đêm"}
                             </div>
                         </div>
-                        { isEditable &&
+                        
+                    </Col>
+
+                </Row>
+                { isEditable &&
                             <div className="room-edit-option">
-                                <Link to="/host/roomsignup" state={{stateRoom: room}}>
-                                    <MyButton text="Chỉnh sửa" classNam = "edit-card-button"/>
-                                </Link>
-                                <div onClick={() => {
-                                    deleteRoom(userState.token, room.room_id)
-                                        .then(res => {
-                                            window.location.reload();
-                                            setToast(true);
-                                        })
-                                        .catch(err => console.log(err))
-                                }}>
-                                    <MyButton text="Xoá" classNam = "remove-card-button"/>
-                                </div>
+                                <animated.div
+                                    style={{...editBtnStyles}}
+                                >
+                                    <Link to="/host/roomsignup" state={{stateRoom: room}}>
+                                        <MyButton classNam = "edit-card-button">
+                                            <span className='bi bi-gear'></span>    
+                                        </MyButton>
+                                    </Link>
+                                </animated.div>
+                                <animated.div
+                                    style={{...removeBtnStyles}}
+                                >
+                                    <div onClick={() => {
+                                        deleteRoom(userState.token, room.room_id)
+                                            .then(res => {
+                                                window.location.reload();
+                                                setToast(true);
+                                            })
+                                            .catch(err => console.log(err))
+                                    }}>
+                                        <MyButton text="Xoá" classNam = "remove-card-button">
+                                            <span className='bi bi-trash'></span>
+                                        </MyButton>
+                                    </div>
+                                </animated.div>
+                                
                             </div>
                         }
-                    </Col>
-                </Row>
                 <WeToast show={isToast} onClose={() => setToast(false)}/>
             </div>
     );

@@ -387,6 +387,7 @@ export const OnlySearchBar = () => {
   return (
     <animated.div
       style={{ ...styles }}
+      className='home-search-bar-container'
     >
     <Form
       id="search-form"

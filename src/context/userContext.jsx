@@ -37,11 +37,9 @@ const UserContextProvider = ({children}) => {
         return axios
             .get(`${WEB_API}/api/user/${userId}`)
             .then(res => {
-                console.log("User res: ",res);
                 return res.data;
             })
             .catch(err => {
-                console.log(err);
                 throw(err.response);
             })
     }

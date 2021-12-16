@@ -63,7 +63,7 @@ const SearchResultPage = () => {
         navigate(`/room/${roomId}`);
     }
     return (
-        <Layout styleName="vh-100" containerStyleName="container-fluid" showFooter={false}>
+        <Layout styleName="mt-2 vh-100" containerStyleName="container-fluid" showFooter={false}>
             <div className="row h-100">
                 <div className={`col col-12 col-lg-5 h-100` }>
                     <h2>{`Phòng ở tại ${description}`}</h2>
