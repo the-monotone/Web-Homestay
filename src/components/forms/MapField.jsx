@@ -21,7 +21,7 @@ const MapField = ({label, ...props}) => {
         zoom: 14
       })
       geocoder = new GoongGeocoder({
-        accessToken: GOONG_API_KEY,
+        accessToken: GOONG_API_KEY[Math.floor(Math.random() * GOONG_API_KEY.length)],
         goongjs: goongjs,
         marker: {
           draggable: true
