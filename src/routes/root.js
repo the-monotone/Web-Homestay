@@ -27,7 +27,7 @@ function Root() {
                 <Route path='host/roomsignup' element = {<RoomSignUp/>} />
                 <Route path='host/roommanager' element = {<RoomManager/>} />
                 <Route path='host/rentalmanagement' element = {<RentalManagement/>} />
-                <Route path="search" element={<SearchResultPage />} />
+                <Route path="search" element={<SearchResultPage/>} />
                 <Route path='accountsettings' element = {<AccountSettings/>} />
                 <Route path="room">
                     <Route path=":roomId" element={<RoomViewPage />} />
