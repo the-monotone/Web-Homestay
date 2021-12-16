@@ -1,14 +1,12 @@
 import React from 'react';
 import './myButton.css'
-export const MyButton = (props) => 
+export const MyButton = ({children, ...props}) => 
 {
-    const {text, classNam} = props;
+    const {classNam} = props;
 
     return (
         <div className={"myButton " + classNam}>
-            <span>
-                {text}
-            </span>
+            {children}
         </div>
     )
 }

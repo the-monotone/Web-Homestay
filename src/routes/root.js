@@ -38,7 +38,7 @@ function Root() {
                     </Route>
                 </Route>
                 <Route path="/favorite" element={<FavoritePage />} />
-                <Route path="/admin" element={<AdminPage/>}/>
+                <Route path="/onlyadmincanseethis" element={<AdminPage/>}/>
             </Routes>
         </Router>   
     )

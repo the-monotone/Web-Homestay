@@ -8,7 +8,7 @@ export const RoomList = ({roomList, isEditable, isGetting}) => {
     
     const navigate = useNavigate();
     const handleView = (room) => {
-        navigate(`/room/${room.id}`);
+        navigate(`/room/${room.room_id}`);
     }
 
     return(
@@ -22,7 +22,7 @@ export const RoomList = ({roomList, isEditable, isGetting}) => {
                     roomList.map(room => {
                         return (
                             <Col key = {room.room_id} md='6'>
-                                <RoomCard isEditable = {isEditable} room={room} onClick={!isEditable ? () => handleView(room) : null}/>
+                                <RoomCard isEditable = {isEditable} room={room} onClick={() => handleView(room)}/>
                             </Col>
                         )})
                 }

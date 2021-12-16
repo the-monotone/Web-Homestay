@@ -1,11 +1,28 @@
 .card-place {
-    height: 400px;
+    height: 300px;
     cursor: pointer
 }
 
 .card-place > img {
-    height: 70%;
-    margin: -0.15rem
+    height: 200px;
+    margin: -0.15rem;
+    object-fit: cover;
+}
+
+h2, h4,h1 {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 25px;
+  letter-spacing: -0.2px;
+  margin-bottom: 10px;
+  font-weight: 550;
+}
+
+#hint {
+    font-size: 2.3rem !important;
 }
 
 .home-image-container > img {
@@ -13,11 +30,31 @@
 }
 
 #home-img {
-    width: 90vw;
+    width: 85vw;
     height: 700px;
     object-fit: cover;
     border-radius: 2rem;
     background-color: brown;
+    opacity: 0.65;
+}
+#home-introduce {
+    position: relative;
+    font-size: 3.5rem;
+    bottom: 30%;
+    font-weight: bold;
+    z-index: 10;
+}
+#home-introduce-text {
+    bottom: 20%;
+}
+#home-introduce-text #introduce-title {
+    flex:100%;
+}
+#home-introduce-text #introduce-sub {
+    text-align: center;
+    width: 80%;
+    font-size: 1.3rem;
+    flex: 100%;
 }
 
 .bi-search {
@@ -27,4 +64,24 @@
 
 .search-form-label {
     font-size: 13px;
+}
+
+.cardContainer {
+  position: relative;
+  width: 250px;
+  height: 400px;
+  margin: 4px;
+}
+.cardContainer:hover {
+    cursor: pointer;
+}
+.cardImg {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+}
+.cardImg img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
 }

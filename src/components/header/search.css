@@ -16,7 +16,7 @@
     min-width: 250px;
     left: 35px;
     padding: 10px;
-    z-index: 10;
+    z-index: 500;
 }
 
 .form-background {
@@ -36,6 +36,7 @@
 .search-input {
     border-style: hidden;
     outline: none;
+    background-color: rgb(248, 249, 250);
 }
 .search-input:focus {
     outline: none;
@@ -45,15 +46,24 @@
     
 }
 
+.home-search-bar-container {
+    position: relative;
+    z-index: 50;
+}
+
 .home-search-bar-icon {
     color: white;
     font-weight: 500;
 }
 
+.modal-search {
+    margin-top: 7.8rem!important;
+}
+
 
 @media only screen and (min-width: 768px) {
     .modal-search {
-        width: 85vw !important;
+        width: 70vw !important;
         max-width: 85vw !important;
     }
     
@@ -87,3 +97,4 @@
 .search-btn-label {
     height: 80%;
 }
+
