@@ -272,7 +272,7 @@ export const OnlySearchBar = () => {
     guest,
   } = useContext(SearchContext);
 
-  const { searchBarOnViewport } = useContext(SearchContext);
+  const { searchBarOnViewport, setOnViewport} = useContext(SearchContext);
 
   const styles = useSpring({
     config: { duration: 80 },

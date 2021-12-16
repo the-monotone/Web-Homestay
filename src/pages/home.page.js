@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Container, Image, Row, Col } from 'react-bootstrap';
 import { OnlySearchBar } from '../components/header/search.component';
 import { useNavigate, createSearchParams, generatePath } from 'react-router-dom';
@@ -15,6 +15,14 @@ const HomePage = () => {
     const handleInView = (inView) => {
         setOnViewport(inView)
     }
+
+    useEffect(() => {
+        setOnViewport(true);
+        return () => {
+            localStorage.setItem('unmout' ,"true")
+            setOnViewport(false);
+        }
+    },[])
 
     return (
         <Layout containerStyleName=''>

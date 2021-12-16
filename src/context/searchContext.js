@@ -41,7 +41,7 @@ const SearchContextProvider = ({children}) => {
             })
     }
 
-    const [searchBarOnViewport, setOnViewport] = useState(true);
+    const [searchBarOnViewport, setOnViewport] = useState(false);
 
     const contextValue = {
         changePlace,

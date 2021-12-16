@@ -6,7 +6,7 @@ export default function HostLayout({styleName='', containerStyleName="container-
     return(
       <div className={`d-flex flex-column position-relative ${styleName}`}>
         <HostHeader />
-        <div className={`row w-100 gx-0 main-div`}>
+        <div className={`row w-100 gx-0 `}>
           {children}
         </div>
         <Footer/>
