@@ -9,9 +9,9 @@
     
 }
 
-.host-rental-cost:hover {
+.bi-telephone-outbound-fill:hover {
     cursor: pointer;
-    box-shadow: 0 0 10px #888888;
+    text-shadow: 0 0 10px #f1a054;
 }
 
 

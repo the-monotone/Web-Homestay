@@ -20,3 +20,6 @@
     width: 100%;
 }
 
+.modal-content {
+    border-radius: 1.5rem !important;
+}
