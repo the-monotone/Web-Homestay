@@ -1,3 +1,6 @@
 #search-place-2 {
     position: absolute;
 }
+.room-id-field:hover {
+    cursor: pointer;
+}

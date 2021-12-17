@@ -13,6 +13,7 @@ import { autocompleteApi, placeDetailApi } from '../api/goong.api';
 import './admin.page.css'
 import { MAX_REQUEST } from '../reducer/actionTypes';
 import { RoomContext } from '../context/roomContext';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -20,6 +21,9 @@ const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setCo
 
     const userState = JSON.parse(localStorage.getItem('user-state'));
     const {deleteRoom, updateRoom} = useContext(RoomContext);
+
+    const navigate = useNavigate();
+
 
     const handleDeleteRoom = async () => {
         if(isLoading) return;
@@ -42,7 +46,7 @@ const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setCo
     return(
         <tr>
             <td>{room.host_id}</td>
-            <td>{room.room_id}</td>
+            <td onClick={() => navigate(`/room/${room.room_id}`)} className='room-id-field'>{room.room_id}</td>
             <td>{room.room_name}</td>
             <td>{room.confirmed ? 'CONFIRMED' : 'UNCONFIRMED'}</td>
             <td className='text-center'>
@@ -143,6 +147,7 @@ export const RoomTab = () => {
     const [filterRoomsStore, setFilterRoomsStore] = useState([]);
 
     const [location, setLocation] = useState({});
+
 
     const handlePageNumber = (number) => {
         setCurrentPage(number);
