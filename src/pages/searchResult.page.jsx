@@ -33,6 +33,7 @@ const SearchResultPage = () => {
         setButtonContent(prevState => prevState === "Hiện bản đồ"? "Hiện danh sách phòng" : "Hiện bản đồ");
     }
 
+
     useEffect(() => {
         let isActive = true;
         setLoading(true);
@@ -89,7 +90,7 @@ const SearchResultPage = () => {
                         results.total === 0? <p>Không tìm thấy kết quả nào</p> :
                         results.rooms.map(room => {
                         return (
-                            <div key={room.room_id} className="mb-3">
+                            <div key={room.room_id} className="mb-4 pt-4 border-top border-1" >
                                 <RoomCard room={room} onClick={() => {handleClick(room.room_id)}} canFavorite={userState != null} isFavorite={favoriteList.includes(room.room_id)}/>
                             </div>
                         )

@@ -31,7 +31,7 @@ h2 {
 
 #home-img {
     width: 85vw;
-    height: 700px;
+    max-height: 700px;
     object-fit: cover;
     border-radius: 2rem;
     background-color: brown;
@@ -84,4 +84,19 @@ h2 {
     width: 100%;
     height: 250px;
     object-fit: cover;
+}
+
+@media screen and (max-width: 500px) {
+    .web-logo {
+        display: none;
+    }
+    #home-introduce {
+        height: 500px;
+    }
+    #introduce-title {
+        font-size: 1.8rem;
+    }
+    #introduce-sub {
+        font-size: 0.8rem;
+    }
 }

@@ -3,7 +3,7 @@ import { Image } from 'react-bootstrap';
 
 import WeHomeLogo from './onlyLogo.svg';
 import WeHomeLogoBgDark from './weHomeLogo.svg';
-import WeBranch from './logoandbranch.svg';
+import WeBranch from './logoandbrand.svg';
 
 export const WeLogo = (props) => {
     return (

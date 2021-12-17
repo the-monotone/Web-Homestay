@@ -10,7 +10,6 @@ export const WePopover = React.forwardRef(({id, ...props},ref) => {
     useEffect(() => {
         getInfo(id)
             .then(res => {
-                console.log(res);
                 setInfo(res);
             })
     },[])

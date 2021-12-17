@@ -10,34 +10,35 @@ const RoomContextProvider = ({children}) => {
     const [roomType, setRoomType] = useState([]);
     const [roomFacility, setRoomFacility] = useState([]);
 
-    useEffect(() => {
-        const init = async () => {
-            axios.get(`${WEB_API}/api/room/room-type`)
-                .then(res => {
-                    const clone = res.data.roomTypes.map(roomType => {
-                        return {
-                            key: roomType.room_type_id,
-                            value: roomType.room_type
-                        }
-                    })
-                    setRoomType([...clone]);
+    const roomInit = async () => {
+        await axios.get(`${WEB_API}/api/room/room-type`)
+            .then(res => {
+                const clone = res.data.roomTypes.map(roomType => {
+                    return {
+                        key: roomType.room_type_id,
+                        value: roomType.room_type
+                    }
                 })
-                .catch(err => console.log(err))
+                setRoomType([...clone]);
+            })
+            .catch(err => console.log(err))
 
-            axios.get(`${WEB_API}/api/facility`)
-                .then(res => {
-                    const clone = res.data.facilities.map(facility => {
-                        return {
-                            id : facility.facility_id,
-                            facility: facility.facility,
-                            description: facility.description
-                        }
-                    })
-                    setRoomFacility([...clone]);
+        await axios.get(`${WEB_API}/api/facility`)
+            .then(res => {
+                const clone = res.data.facilities.map(facility => {
+                    return {
+                        id : facility.facility_id,
+                        facility: facility.facility,
+                        description: facility.description
+                    }
                 })
-                .catch(err => console.log(err))
-            }
-        init();
+                setRoomFacility([...clone]);
+            })
+            .catch(err => console.log(err))
+        }
+
+    useEffect(() => {
+        roomInit();
     }, [])
 
     const readRoom = (roomId) => {
@@ -112,7 +113,8 @@ const RoomContextProvider = ({children}) => {
         createRoom,
         readRoom,
         updateRoom,
-        deleteRoom
+        deleteRoom,
+        roomInit
     }
 
     //Return provider

@@ -12,7 +12,7 @@ import './roomView.page.css';
 import StarRatings from 'react-star-ratings';
 
 const RoomViewPage = () => {
-    const {readRoom, roomFacility, getRentalDateByRoom} = useContext(RoomContext);
+    const {readRoom, roomFacility, getRentalDateByRoom, roomInit} = useContext(RoomContext);
     const {getFeedback, getFavorite} = useContext(FeedbackContext);
     const [room, setRoom] = useState(null);
     const [feedback, setFeedback] = useState(null);
@@ -20,6 +20,7 @@ const RoomViewPage = () => {
     const [isFavorite, setFavorite] = useState(null);
     const { roomId } = useParams();
     const userState = JSON.parse(localStorage.getItem("user-state"));
+
     useEffect(() => {
         let isActive = true;
         readRoom(roomId)
@@ -61,6 +62,16 @@ const RoomViewPage = () => {
             isActive = false;
         }
     }, [])  
+
+    const getFacility = (id) => {
+        for (let i = 0; i < roomFacility.length; i++) {
+            if (roomFacility[i].id === id) {
+                return roomFacility[i].facility;
+            }
+        }
+    }
+
+    console.log(roomFacility);
     return (
         room == null? 
         <Layout>
@@ -130,7 +141,7 @@ const RoomViewPage = () => {
                     <ListGroup>
                         {roomFacility ? room.facilities.length !== 0? 
                         room.facilities.map((facilityId) => {
-                            return <ListGroupItem key={facilityId}>{roomFacility.find(item => item.id === facilityId).facility}</ListGroupItem>
+                            return <ListGroupItem key={facilityId}>{getFacility(facilityId)}</ListGroupItem>
                         }) : <p>Danh sách tiện nghi trống</p> : <Spinner animation='border' />}
                     </ListGroup>
                 </div>
