@@ -19,6 +19,7 @@ export const GET_ARRIVING_ROOMS = 'Arriving soon';
 export const GET_CHECKING_OUT_ROOMS = 'Checking out';
 export const GET_CURRENTLY_HOSTING_ROOMS = 'Currently hosting';
 export const GET_EMPTY_ROOMS = 'Empty';
+export const GET_UNCONFIRMED_ROOMS = 'Unconfirmed'
 
 export const ROOMMAGSTATE = 'ROOM MANAGEMENT PAGE';
 export const RENTALMAGSATE = 'RENTAL MANAGEMENT PAGE';

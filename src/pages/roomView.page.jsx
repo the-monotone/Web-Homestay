@@ -84,13 +84,15 @@ const RoomViewPage = () => {
                 {
                     room.rate !== null ? parseFloat(room.rate).toFixed(1) !== 0.0 ? 
                     <div className="d-flex align-items-end mb-1">
+                        <div className='d-flex justify-content-center'>
                         <StarRatings
                             numberOfStars={5} 
                             rating={parseFloat(room.rate)}
-                            starDimension='35px'
+                            starDimension='20px'
                             starRatedColor='rgb(230, 67, 47)'
                         />
-                        <div className="ms-2 me-2">{`${parseFloat(room.rate).toFixed(1)}`}</div>
+                        </div>
+                        <div className="ms-2 me-2" voting-num>{`${parseFloat(room.rate).toFixed(1)}`}</div>
                     </div>
                     : "Chưa có đánh giá"  : "Chưa có đánh giá"
                 }
