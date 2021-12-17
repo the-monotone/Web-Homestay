@@ -5,9 +5,9 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { ManagerRoomContext } from "../context/managerRoomContext";
 import "./roomManager.css";
-import { GET_ARRIVING_ROOMS, GET_CHECKING_OUT_ROOMS, GET_CURRENTLY_HOSTING_ROOMS, GET_EMPTY_ROOMS, ROOMMAGSTATE } from "../reducer/actionTypes";
+import { GET_ARRIVING_ROOMS, GET_CHECKING_OUT_ROOMS, GET_CURRENTLY_HOSTING_ROOMS, GET_EMPTY_ROOMS, GET_UNCONFIRMED_ROOMS, ROOMMAGSTATE } from "../reducer/actionTypes";
 import { RoomList } from "../components/room/roomList";
-import { ARRIVING_SOON_INDEX,CHECKING_OUT_INDEX, CURRENTLY_HOSTING_INDEX, EMPTY_INDEX } from "../reducer/roomViewTypes";
+import { ARRIVING_SOON_INDEX,CHECKING_OUT_INDEX, CURRENTLY_HOSTING_INDEX, EMPTY_INDEX, UNCONFIRMED_INDEX } from "../reducer/roomViewTypes";
 import { WePagination } from "../components/shared/wePagnigation";
 import HostLayout from '../components/hostlayout.component'
 import "./roomManager.css";
@@ -23,7 +23,7 @@ export const RoomManager = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRoom, setTotalRoom] = useState(0);
   
-  const [checkingArray, setCheckingArray] = useState([true, false, false, false]);
+  const [checkingArray, setCheckingArray] = useState([true, false, false, false,false]);
 
   const [pageChange, setPageChange] = useState(false);
 
@@ -62,11 +62,12 @@ export const RoomManager = () => {
     if (checkingArray[1]) getData(GET_ARRIVING_ROOMS)
     else if (checkingArray[2]) getData(GET_CHECKING_OUT_ROOMS);
     else if (checkingArray[3]) getData(GET_EMPTY_ROOMS);
+    else if (checkingArray[4]) getData(GET_UNCONFIRMED_ROOMS);
     else getData(GET_CURRENTLY_HOSTING_ROOMS);
   },[pageChange])
 
   const handleClick = (e) => {
-    let tempChecking = [false, false, false, false];
+    let tempChecking = [false, false, false, false,false];
     tempChecking[e.target.id] = true; 
     setCheckingArray(tempChecking);
   };
@@ -107,6 +108,11 @@ export const RoomManager = () => {
           onClick={handleClick}
           id={EMPTY_INDEX}
         >{`Trống`}</button>
+        <button
+          className={`view-type-btn${(checkingArray[UNCONFIRMED_INDEX] ? "-choosen" : "")} ${isGetting ? "isGetting" : ""}`}
+          onClick={handleClick}
+          id={UNCONFIRMED_INDEX}
+        >{`Chờ xác nhận`}</button>
       </Container>
       {
         <div>

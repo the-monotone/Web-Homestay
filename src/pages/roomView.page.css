@@ -30,3 +30,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.voting-num {
+    font-size: 0.8rem;
+}

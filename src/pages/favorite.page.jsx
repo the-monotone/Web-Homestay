@@ -60,7 +60,7 @@ const FavoritePage = () => {
     }, [])
     return (
         <Layout styleName='mt-3 min-height'>
-            <h1>Danh sách yêu thích</h1>
+            <h3>Danh sách yêu thích</h3>
             <Row>
                 <Col md='6' sm='12'>
                 {
