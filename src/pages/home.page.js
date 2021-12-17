@@ -9,7 +9,6 @@ import {InView} from 'react-intersection-observer';
 import { animated, useSpring } from 'react-spring';
 
 const HomePage = () => {
-    // const inViewport = useIntersection(ref, '-200px'); // Trigger if 200px is visible from the element
     const {setOnViewport} = useContext(SearchContext);
 
     const handleInView = (inView) => {
@@ -19,7 +18,6 @@ const HomePage = () => {
     useEffect(() => {
         setOnViewport(true);
         return () => {
-            localStorage.setItem('unmout' ,"true")
             setOnViewport(false);
         }
     },[])
@@ -36,7 +34,7 @@ const HomePage = () => {
                     }
                 </Col>
                 <div id='home-introduce' className='d-flex justify-content-center mb-5'>
-                    <Image className="mt-3" src="/hoian-bg.jpg" id="home-img"/>
+                    <Image className="mt-3" src="hoian-2.jpg" id="home-img" alt='.'/>
                     <div id='home-introduce-text' className='text-white position-absolute d-flex flex-column justify-content-center align-items-center'>
                         <div id='introduce-title' className='text-center'>Bạn chưa biết đi đâu?</div>
                         <div id='introduce-sub' className='text-center'>Hãy cùng nhau khám phá những nơi bạn chưa từng đặt chân tới</div>
@@ -44,13 +42,13 @@ const HomePage = () => {
                 </div>
             </Row>
 
-            <Container className='mt-5 pt-1'>
+            <Container className='mt-5 pt-1 mb-5'>
                 <Row className='mt-3 mb-5 '><h2 id='hint'>Một số gợi ý của chúng tôi dành cho bạn</h2></Row>
                 <Row>
-                    <PlaceCard colorVariant="warning" imageSrc="hanoi-img.jpg" place="Hà Nội" latitude={21.028195403} longitude={105.854159778}/>
-                    <PlaceCard colorVariant="info" imageSrc="halong-img.jpg" place="Hạ Long" latitude={20.9492078640001} longitude={107.074284282} />
-                    <PlaceCard colorVariant="danger" imageSrc="sapa-img.jpg" place="Sa Pa" latitude={22.3331296700001} longitude={103.840040452} />
-                    <PlaceCard colorVariant="success" imageSrc="trang an.jpg" place="Ninh Bình" latitude={20.2584345220001} longitude={105.976350094} />
+                    <PlaceCard colorVariant="warning" imageSrc="hanoi-2.jpg" place="Hà Nội" latitude={21.028195403} longitude={105.854159778}/>
+                    <PlaceCard colorVariant="info" imageSrc="halong-2.jpg" place="Hạ Long" latitude={20.9492078640001} longitude={107.074284282} />
+                    <PlaceCard colorVariant="danger" imageSrc="sapa-2.jpg" place="Sa Pa" latitude={22.3331296700001} longitude={103.840040452} />
+                    <PlaceCard colorVariant="success" imageSrc="ninhbinh-2.jpg" place="Ninh Bình" latitude={20.2584345220001} longitude={105.976350094} />
                 </Row>
             </Container>
         </Layout>

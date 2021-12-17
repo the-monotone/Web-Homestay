@@ -118,17 +118,19 @@ function Header() {
                             searchBarOnViewport ? 
                             <div id='slogan' className='m-3 text-center d-flex justify-content-center align-items-center'>
                                 <div className='slogan-text mt-1 me-2 text-white'>weHome - anh em bốn bể là nhà</div>
-                                <span className='slogan-icon'>&#128582;  &#129304; &#129311;</span>
+                                <span className='slogan-icon'>&#128582;</span>
                                 {/* <span class="bi bi-hand-thumbs-up text-white"></span> */}
                             </div> :
-                        <animated.div
-                            style={{...searchStyles}}
-                        >
-                            <Button id="search-bar" className="m-3 gray-border shadow rounded-pill" variant="light" onClick={() => {if(!searchBarOnViewport) setSearchModal(true)}}>
-                                <div>Bắt đầu tìm kiếm</div>
-                                <span className="bi bi-search black-icon small-icon" />
-                            </Button>
-                        </animated.div>
+                            <animated.div
+                                style={{...searchStyles}}
+                            >
+                                <Button 
+                                    id="search-bar" className="m-3 gray-border shadow rounded-pill" 
+                                    variant="light" onClick={() =>  setSearchModal(true)}>
+                                    <div>Bắt đầu tìm kiếm</div>
+                                    <span className="bi bi-search black-icon small-icon" />
+                                </Button>
+                            </animated.div>
                         }
 
                     </Nav>
@@ -141,8 +143,8 @@ function Header() {
                             <Dropdown>
                                 <Dropdown.Toggle className='rounded-pill'>
                                     <div onClick={handleViewNotification}>
-                                        <span className="bi bi-bell-fill white-icon"></span>
-                                        {newNotiCount > 0 && <Badge pill bg="danger">{newNotiCount}</Badge>}
+                                        <span className="bi bi-bell-fill white-icon "></span>
+                                        {newNotiCount > 0 && <Badge pill bg="danger" className='position-absolute top-0 start-50' id='noti-badge'>{newNotiCount}</Badge>}
                                     </div>
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className="notification-menu position-absolute dropdown-menu-end">

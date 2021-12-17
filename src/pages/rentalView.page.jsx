@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
-import { Tabs, Tab, Row, Col, Spinner, Button } from 'react-bootstrap';
+import { Tabs, Tab, Row, Col, Spinner, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import Layout from '../components/layout.component';
 import { HostRentalCard } from '../components/shared/hostRentalCard';
 import { RentalContext } from '../context/rentalContext';
 import { RatingModal } from '../components/shared/weModal';
+import { RentalBanner } from '../assets/rentalBanner';
 
 const RentalViewPage = () => {
     const navigate = useNavigate();
@@ -39,7 +40,8 @@ const RentalViewPage = () => {
 
     return (
         <Layout styleName='mt-3 min-height'>
-            <h1>Chuyến đi</h1>
+            <Container>
+            <h3>Chuyến đi</h3>
             {
                 rental === null ? 
             <Spinner animation="border" /> :
@@ -55,9 +57,13 @@ const RentalViewPage = () => {
                     <RentTab canRate handleClickRate={handleClickRate} rentalList={rental.filter((rentalItem) => rentalItem.status === "RETURNED")} />
                 </Tab>
             </Tabs> : 
-            <p>Chưa có chuyến đi nào</p>
+            <p>Hiện bạn không đặt chỗ nào</p>
             }
             <RatingModal show={isRate} onHide={handleCancel} room_id={roomId} client_id={userState.userId} />
+            <Row>
+                <RentalBanner/>
+            </Row>
+            </Container>
         </Layout>
     )
 }

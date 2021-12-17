@@ -10,8 +10,8 @@ const RoomContextProvider = ({children}) => {
     const [roomType, setRoomType] = useState([]);
     const [roomFacility, setRoomFacility] = useState([]);
 
-    useEffect(() => {
-        axios.get(`${WEB_API}/api/room/room-type`)
+    const roomInit = async () => {
+        await axios.get(`${WEB_API}/api/room/room-type`)
             .then(res => {
                 const clone = res.data.roomTypes.map(roomType => {
                     return {
@@ -23,7 +23,7 @@ const RoomContextProvider = ({children}) => {
             })
             .catch(err => console.log(err))
 
-        axios.get(`${WEB_API}/api/facility`)
+        await axios.get(`${WEB_API}/api/facility`)
             .then(res => {
                 const clone = res.data.facilities.map(facility => {
                     return {
@@ -35,6 +35,10 @@ const RoomContextProvider = ({children}) => {
                 setRoomFacility([...clone]);
             })
             .catch(err => console.log(err))
+        }
+
+    useEffect(() => {
+        roomInit();
     }, [])
 
     const readRoom = (roomId) => {
@@ -109,7 +113,8 @@ const RoomContextProvider = ({children}) => {
         createRoom,
         readRoom,
         updateRoom,
-        deleteRoom
+        deleteRoom,
+        roomInit
     }
 
     //Return provider

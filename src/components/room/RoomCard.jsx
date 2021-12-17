@@ -41,12 +41,12 @@ export const RoomCard = ({onClick, isEditable, room, canFavorite, isFavorite}) =
     const removeBtnStyles = useSpring({
         config: {duration: 200},
         from: {
-            transform: onHover ? 'translateX(0px) translateY(0px)' : 'translateX(20px) translateY(0px)',
+            transform: onHover ? 'translateX(0px) translateY(0px)' : 'translateX(20px) translateY(10px)',
             scale : onHover ? 0 : 1,
             opacity: onHover ? 0 : 1
         },
         to: {
-            transform: !onHover ? 'translateX(0px) translateY(0px)' : 'translateX(20px) translateY(0px)',
+            transform: !onHover ? 'translateX(0px) translateY(0px)' : 'translateX(20px) translateY(10px)',
             scale : !onHover ? 0 : 1,
             opacity: !onHover ? 0 : 1
         }

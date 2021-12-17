@@ -16,8 +16,7 @@ import HostLayout from "../components/hostlayout.component";
 export const RoomSignUp = () => {
   const { roomType, roomFacility, createRoom, updateRoom } = useContext(RoomContext);
 
-  console.log(roomType);
-  console.log(roomFacility);
+  const [isGetting, setGetting] = useState(false);
 
   const userState = JSON.parse(localStorage.getItem('user-state'));
 
@@ -31,7 +30,7 @@ export const RoomSignUp = () => {
     stateRoom = location.state.stateRoom;
   }
 
-  console.log(stateRoom);
+
 
 
   const onSubmit = async (room) => {
@@ -42,7 +41,6 @@ export const RoomSignUp = () => {
       latitude: location.latitude,
       longitude: location.longitude
     }
-    console.log(cloneRoom);
     const requestCreateRoom = async () => {
       if (!stateRoom) {
         await createRoom(userState.token, cloneRoom)
@@ -76,7 +74,7 @@ export const RoomSignUp = () => {
 
   return (
     <HostLayout>
-      <FormikStepper initialValues={initialValue} onSubmit={onSubmit}>
+      <FormikStepper initialValues={initialValue} onSubmit={onSubmit} isGetting={isGetting}>
         <Form>
           <FormikStep
             validationSchema={Yup.object({
@@ -170,6 +168,8 @@ export const RoomSignUp = () => {
               name="images"
               type="file"
               pos="col-md-12 image-field"
+              setGetting={setGetting}
+              isGetting={isGetting}
             />
           </FormikStep>
           
@@ -215,7 +215,7 @@ export const FormikStep = ({ children }) => {
   return <animated.div style={styleAnimate} className="input-wrap">{children}</animated.div>;
 };
 
-export const FormikStepper = ({ children, ...props }) => {
+export const FormikStepper = ({ children, isGetting,...props }) => {
   const childrenArray = React.Children.toArray(children.props.children);
 
   const [step, setStep] = useState(0);
@@ -266,11 +266,11 @@ export const FormikStepper = ({ children, ...props }) => {
         }}
       >
         <Form>
-          <Row className="input-step w-100 mt-4">
-            <Col md='6' className="label-field">
+          <Row className="input-step w-100 mt-2">
+            <Col md='6' sm='0' className="label-field">
               <animated.div style={styleAnimate}><div className="title ps-4">{getTitle(currentChild.props.className)}</div></animated.div>
             </Col>
-            <Col md='6' className="input-field">
+            <Col md='6' sm='12' className="input-field">
               <div className = "input-row">{currentChild}</div>
               <ProgressBar animated now={Math.floor((step+1) /(childrenArray.length) * 100)} variant="dark"/>
               <div md="12" className="button-row">
@@ -279,11 +279,12 @@ export const FormikStepper = ({ children, ...props }) => {
                     onClick={() => setStep((s) => s - 1)}
                     variant="outline-secondary "
                     className="pre"
+                    disabled={isGetting}
                   >
                     Quay lại
                   </Button>
                 ) : null}
-                <Button type="submit" variant="outline-success" className="next">
+                <Button type="submit" variant="outline-success" className="next" disabled={isGetting}>
                   {!isLastStep() ? "Tiếp theo" : "Hoàn tất"}
                 </Button>
               </div>

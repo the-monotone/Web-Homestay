@@ -1,16 +1,20 @@
 @media only screen and (min-width: 768px) {
     .billing {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 79px;
         float: right;
         width: 30vw;
     }
 }
 
 .carousel-room .carousel-item {
-    height: 75vh;
+    height: 50vh;
 }
 
 .carousel-room .carousel-item img {
-    width: 100%
+    width: 100%;
+    object-fit: contain;
 }
 
 .facility {
@@ -19,4 +23,10 @@
 
 .rule {
     width: 40vw;
+}
+
+.room-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

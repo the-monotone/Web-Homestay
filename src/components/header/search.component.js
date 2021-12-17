@@ -207,7 +207,7 @@ const SearchModal = ({ show, onHide }) => {
             </div>
             <div className="fixed-height d-flex flex-column justify-content-center col-md-1">
               <label
-                htmlFor="submit-button-search"
+                htmlFor="submit-button-search-modal"
                 className="btn btn-danger rounded-pill text-white text-center d-flex align-items-center justify-content-center pe-2 ps-2"
               >
                 <i className="bi bi-search home-search-bar-icon"></i>
@@ -215,7 +215,7 @@ const SearchModal = ({ show, onHide }) => {
             </div>
           </div>
         </div>
-        <input type="submit" id="submit-button-search" hidden />
+        <input type="submit" id="submit-button-search-modal" hidden />
       </Form>
     </Modal>
   );
@@ -290,7 +290,7 @@ export const OnlySearchBar = () => {
     guest,
   } = useContext(SearchContext);
 
-  const { searchBarOnViewport, setOnViewport} = useContext(SearchContext);
+  const { searchBarOnViewport} = useContext(SearchContext);
 
   const styles = useSpring({
     config: { duration: 80 },
