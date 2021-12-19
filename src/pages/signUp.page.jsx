@@ -105,7 +105,7 @@ export const Signup = (props) => {
             >
                 {formik => (
                     <div>
-                    <h4>Chào mừng bạn đến với Wehome</h4>
+                    <h5 className="mb-3 text-center">Chào mừng bạn đến với Wehome</h5>
                     <Form>
                         <TextField placeholder="Họ và tên" name="name" type="text" />
                         <TextField placeholder="Tên đăng nhập" name="username" type="text" />
