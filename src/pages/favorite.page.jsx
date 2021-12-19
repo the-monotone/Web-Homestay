@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ListGroup, ListGroupItem, Col, Image, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout.component';
-import { RoomCard } from '../components/room/RoomCard';
+import { RoomCard } from '../components/room/roomCard';
 import { LoadingCard } from '../components/shared/loadingCard';
 import { WeToast } from '../components/shared/weToast';
 import { FeedbackContext } from '../context/feedbackContext';

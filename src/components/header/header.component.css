@@ -39,7 +39,8 @@
 .notification-menu {
     max-height: 300px;
     width: 500px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    border-radius: 1rem !important;
 }
 
 #slogan {
@@ -60,4 +61,8 @@
 
 #noti-badge {
     font-size: 0.6rem!important;
+}
+
+.noti-item {
+    white-space:normal;
 }

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Map from '../components/MapComponent';
 import '@goongmaps/goong-js/dist/goong-js.css';
-import { RoomCard } from '../components/room/RoomCard';
+import { RoomCard } from '../components/room/roomCard';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/layout.component';
 import { SearchContext } from '../context/searchContext';

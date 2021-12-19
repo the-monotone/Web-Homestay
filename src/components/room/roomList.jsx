@@ -1,6 +1,6 @@
 import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
-import { RoomCard } from './RoomCard'
+import { RoomCard } from './roomCard'
 import { useNavigate } from 'react-router-dom';
 import { LoadingCardList } from '../shared/loadingCard';
 
@@ -17,11 +17,11 @@ export const RoomList = ({roomList, isEditable, isGetting}) => {
         <div>
         {
             roomList.length <= 0 ? <div className="no-room-text"><div className="bi bi-journal"></div>Hiện không có phòng nào</div> :
-            <Row id="" xs={1} md={2}className="g-4 w-100">
+            <Row id="" xs={1} md={2}className="g-4 w-100 d-flex justify-content-around">
                 {
                     roomList.map(room => {
                         return (
-                            <Col key = {room.room_id} md='6'>
+                            <Col key = {room.room_id} md='5' className=' border border-gray pt-2 pb-2'>
                                 <RoomCard isEditable = {isEditable} room={room} onClick={() => handleView(room)}/>
                             </Col>
                         )})
