@@ -1,4 +1,4 @@
-import React, { createRef, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import { Form, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import { autocompleteApi, placeDetailApi } from "../../api/goong.api";
@@ -82,11 +82,12 @@ const SearchModal = ({ show, onHide }) => {
                 description: inputValue,
                 latitude: location.lat,
                 longitude: location.lng,
-                begin_date: new Date(startDate).toISOString().split("T")[0],
-                end_date: new Date(endDate).toISOString().split("T")[0],
+                begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
+                end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
                 num_guest: guest,
                 radius: 10,
               };
+              console.log(body);
               localStorage.setItem("search", JSON.stringify(body));
               navigate({
                 pathname: "/search",
@@ -107,14 +108,15 @@ const SearchModal = ({ show, onHide }) => {
     } else {
       onHide();
       const body = {
-        description: place.description,
+        description: inputValue,
         latitude: place.lat,
         longitude: place.lng,
-        begin_date: new Date(startDate).toISOString().split("T")[0],
-        end_date: new Date(endDate).toISOString().split("T")[0],
+        begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
+        end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
         num_guest: guest,
         radius: 10,
       };
+      console.log(body);
       localStorage.setItem("search", JSON.stringify(body));
       navigate({
         pathname: "/search",
@@ -156,7 +158,8 @@ const SearchModal = ({ show, onHide }) => {
               />
               {
                 isSearchPlace && 
-                <div onMouseEnter={() => {setChoosingPlace(true)}}>
+                <div onMouseEnter={() => {setChoosingPlace(true)}}
+                  onMouseLeave={() => {setChoosingPlace(false)}}>
                   <PlacePicker
                     predictions={predictions}
                     setSelectedPlace={setSelectedPlace}
@@ -360,11 +363,12 @@ export const OnlySearchBar = () => {
                 description: inputValue,
                 latitude: location.lat,
                 longitude: location.lng,
-                begin_date: new Date(startDate).toISOString().split("T")[0],
-                end_date: new Date(endDate).toISOString().split("T")[0],
+                begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
+                end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
                 num_guest: guest,
                 radius: 10,
               };
+              console.log(body);
               localStorage.setItem("search", JSON.stringify(body));
               navigate({
                 pathname: "/search",
@@ -384,14 +388,15 @@ export const OnlySearchBar = () => {
       );
     } else {
       const body = {
-        description: place.description,
+        description: inputValue,
         latitude: place.lat,
         longitude: place.lng,
-        begin_date: new Date(startDate).toISOString().split("T")[0],
-        end_date: new Date(endDate).toISOString().split("T")[0],
+        begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
+        end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
         num_guest: guest,
         radius: 10,
       };
+      console.log(body);
       localStorage.setItem("search", JSON.stringify(body));
       navigate({
         pathname: "/search",
@@ -437,7 +442,8 @@ export const OnlySearchBar = () => {
               {
                 isSearchPlace && 
                 <div 
-                  onMouseEnter={() => {setChoosingPlace(true)}}>
+                  onMouseEnter={() => {setChoosingPlace(true)}}
+                  onMouseLeave={() => {setChoosingPlace(false)}}>
                   <PlacePicker
                     predictions={predictions}
                     setSelectedPlace={setSelectedPlace}

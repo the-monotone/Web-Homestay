@@ -33,11 +33,13 @@ const SearchResultPage = () => {
         setButtonContent(prevState => prevState === "Hiện bản đồ"? "Hiện danh sách phòng" : "Hiện bản đồ");
     }
 
-
     useEffect(() => {
         let isActive = true;
         setLoading(true);
-        setSearchParams(createSearchParams(JSON.parse(localStorage.getItem("search"))));
+        const searchQuery = JSON.parse(localStorage.getItem("search"));
+        if (searchQuery !== null) {
+            setSearchParams(createSearchParams(searchQuery))
+        };
         setLocation({
             latitude: parseFloat(searchParams.get("latitude")),
             longitude: parseFloat(searchParams.get("longitude")),

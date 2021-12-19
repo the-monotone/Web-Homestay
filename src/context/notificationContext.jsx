@@ -29,11 +29,27 @@ const NotificationProvider = ({children}) => {
             })
     }
 
+    const seenNotification = (notiId, token) => {
+        return axios.put(`${WEB_API}/api/notification/${notiId}`, {
+            "status" : "SEEN"
+        }, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+            .then(res => res.data)
+            .catch(err => {
+                console.error(err);
+                throw(err);
+            })
+    } 
+
     
     const data = {
         socket,
         getNotification,
         getSocket,
+        seenNotification
     }
 
     return <NotificationContext.Provider value={data}>
