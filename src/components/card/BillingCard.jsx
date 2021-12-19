@@ -70,13 +70,13 @@ const calcMaxStartDate = (startDate, endDate, rentalDateList) => {
     } else {
         let minDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
         for (let rental_date of rentalDateList) {
-            const begin_date = new Date(rental_date.begin_date);
+            let begin_date = new Date(rental_date.begin_date);
+            begin_date.setDate(begin_date.getDate() - 1);
             if (begin_date >= startDate) {
                 if (begin_date <= minDate) minDate = begin_date;
             }
         }
         if (endDate <= minDate) minDate = endDate;
-        minDate.setDate(minDate.getDate() - 1);
         return minDate;
     } 
 }
@@ -88,12 +88,12 @@ const calcMaxEndDate = (startDate, endDate, rentalDateList) => {
     } else {
         let minDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
         for (let rental_date of rentalDateList) {
-            const begin_date = new Date(rental_date.begin_date);
+            let begin_date = new Date(rental_date.begin_date);
+            begin_date.setDate(begin_date.getDate() - 1);
             if (begin_date >= endDate) {
                 if (begin_date <= minDate) minDate = begin_date;
             }
         }
-        minDate.setDate(minDate.getDate() - 1);
         return minDate;
     }
 }

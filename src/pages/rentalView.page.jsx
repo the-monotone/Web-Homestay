@@ -34,7 +34,7 @@ const RentalViewPage = () => {
         getRental(userState.token, userState.userId)
             .then(res => {
                 console.log(res);
-                setRental(res.rentals);
+                setRental(res);
             })
     }, []);
 
@@ -48,13 +48,13 @@ const RentalViewPage = () => {
             rental.total > 0? 
             <Tabs defaultActiveKey="renting">
                 <Tab eventKey="request" title="Đang yêu cầu">
-                    <RentTab handleClickRate={handleClickRate} rentalList={rental.filter((rentalItem) => rentalItem.status === "UNCONFIRMED")} />
+                    <RentTab handleClickRate={handleClickRate} rentalList={rental.rentals.filter((rentalItem) => rentalItem.status === "UNCONFIRMED")} />
                 </Tab>
                 <Tab eventKey="renting" title="Đang thuê">
-                    <RentTab handleClickRate={handleClickRate} rentalList={rental.filter((rentalItem) => rentalItem.status === "CONFIRMED")} />
+                    <RentTab handleClickRate={handleClickRate} rentalList={rental.rentals.filter((rentalItem) => rentalItem.status === "CONFIRMED")} />
                 </Tab>
                 <Tab eventKey="rented" title="Đã thuê">
-                    <RentTab canRate handleClickRate={handleClickRate} rentalList={rental.filter((rentalItem) => rentalItem.status === "RETURNED")} />
+                    <RentTab canRate handleClickRate={handleClickRate} rentalList={rental.rentals.filter((rentalItem) => rentalItem.status === "RETURNED")} />
                 </Tab>
             </Tabs> : 
             <p>Hiện bạn không đặt chỗ nào</p>

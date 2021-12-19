@@ -13,8 +13,10 @@ import {
 
 const SearchModal = ({ show, onHide }) => {
   const [isSearchPlace, setSearchPlace] = useState(false);
+  const [isChoosingPlace, setChoosingPlace] = useState(false);
   const [predictions, setPredictions] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  
   const navigate = useNavigate();
   const {
     changePlace,
@@ -41,6 +43,8 @@ const SearchModal = ({ show, onHide }) => {
   };
 
   const setSelectedPlace = (place_item) => {
+    setSearchPlace(false);
+    setChoosingPlace(false);
     setInputValue(place_item.description);
     placeDetailApi(
       place_item.place_id,
@@ -78,11 +82,12 @@ const SearchModal = ({ show, onHide }) => {
                 description: inputValue,
                 latitude: location.lat,
                 longitude: location.lng,
-                begin_date: new Date(startDate).toISOString().split("T")[0],
-                end_date: new Date(endDate).toISOString().split("T")[0],
+                begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
+                end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
                 num_guest: guest,
                 radius: 10,
               };
+              console.log(body);
               localStorage.setItem("search", JSON.stringify(body));
               navigate({
                 pathname: "/search",
@@ -103,14 +108,15 @@ const SearchModal = ({ show, onHide }) => {
     } else {
       onHide();
       const body = {
-        description: place.description,
+        description: inputValue,
         latitude: place.lat,
         longitude: place.lng,
-        begin_date: new Date(startDate).toISOString().split("T")[0],
-        end_date: new Date(endDate).toISOString().split("T")[0],
+        begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
+        end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
         num_guest: guest,
         radius: 10,
       };
+      console.log(body);
       localStorage.setItem("search", JSON.stringify(body));
       navigate({
         pathname: "/search",
@@ -120,6 +126,12 @@ const SearchModal = ({ show, onHide }) => {
       });
     }
   };
+
+  const handleBlurInput = () => {
+    if (isChoosingPlace) return;
+    setSearchPlace(false);
+  }
+
   return (
     <Modal show={show} onHide={onHide} dialogClassName="modal-search">
       <Form
@@ -141,15 +153,18 @@ const SearchModal = ({ show, onHide }) => {
                 onChange={(e) => searchPlace(e.target.value)}
                 className="input-w100 search-input"
                 onFocus={() => {setSearchPlace(true)}}
-                onBlur={() => {setSearchPlace(false)}}
+                onBlur={handleBlurInput}
                 required
               />
               {
                 isSearchPlace && 
-                <PlacePicker
-                  predictions={predictions}
-                  setSelectedPlace={setSelectedPlace}
-                />
+                <div onMouseEnter={() => {setChoosingPlace(true)}}
+                  onMouseLeave={() => {setChoosingPlace(false)}}>
+                  <PlacePicker
+                    predictions={predictions}
+                    setSelectedPlace={setSelectedPlace}
+                  />
+                </div>
               }
             </div>
             <div
@@ -265,6 +280,7 @@ export const OnlySearchBar = () => {
   const [isSearchPlace, setSearchPlace] = useState(false);
   const [predictions, setPredictions] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [isChoosingPlace, setChoosingPlace] = useState(false);
   const navigate = useNavigate();
   const {
     changePlace,
@@ -309,6 +325,8 @@ export const OnlySearchBar = () => {
   };
 
   const setSelectedPlace = (place_item) => {
+    setSearchPlace(false);
+    setChoosingPlace(false);
     setInputValue(place_item.description);
     placeDetailApi(
       place_item.place_id,
@@ -345,11 +363,12 @@ export const OnlySearchBar = () => {
                 description: inputValue,
                 latitude: location.lat,
                 longitude: location.lng,
-                begin_date: new Date(startDate).toISOString().split("T")[0],
-                end_date: new Date(endDate).toISOString().split("T")[0],
+                begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
+                end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
                 num_guest: guest,
                 radius: 10,
               };
+              console.log(body);
               localStorage.setItem("search", JSON.stringify(body));
               navigate({
                 pathname: "/search",
@@ -369,14 +388,15 @@ export const OnlySearchBar = () => {
       );
     } else {
       const body = {
-        description: place.description,
+        description: inputValue,
         latitude: place.lat,
         longitude: place.lng,
-        begin_date: new Date(startDate).toISOString().split("T")[0],
-        end_date: new Date(endDate).toISOString().split("T")[0],
+        begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
+        end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
         num_guest: guest,
         radius: 10,
       };
+      console.log(body);
       localStorage.setItem("search", JSON.stringify(body));
       navigate({
         pathname: "/search",
@@ -384,6 +404,11 @@ export const OnlySearchBar = () => {
       });
     }
   };
+
+  const handleBlurInput = () => {
+    if (isChoosingPlace) return;
+    setSearchPlace(false);
+  }
 
   return (
     <animated.div
@@ -411,15 +436,19 @@ export const OnlySearchBar = () => {
                 onChange={(e) => searchPlace(e.target.value)}
                 className="w-100 search-input"
                 onFocus={() => {setSearchPlace(true)}}
-                onBlur={() => {setSearchPlace(false)}}
+                onBlur={handleBlurInput}
                 required
               />
               {
                 isSearchPlace && 
-                <PlacePicker
-                  predictions={predictions}
-                  setSelectedPlace={setSelectedPlace}
-                />
+                <div 
+                  onMouseEnter={() => {setChoosingPlace(true)}}
+                  onMouseLeave={() => {setChoosingPlace(false)}}>
+                  <PlacePicker
+                    predictions={predictions}
+                    setSelectedPlace={setSelectedPlace}
+                  />
+                </div>
               }
             </div>
             
