@@ -18,9 +18,9 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import FeedbackContextProvider from "./context/feedbackContext";
 ReactDOM.render(
-    <HeaderContextProvider>
-        <UserContextProvider>
-          <NotificationProvider>
+    <UserContextProvider>
+      <NotificationProvider>
+        <HeaderContextProvider>
             <RentalContextProvider>
               <FeedbackContextProvider>
                 <RoomListProvider>
@@ -32,9 +32,9 @@ ReactDOM.render(
                 </RoomListProvider>
               </FeedbackContextProvider>
             </RentalContextProvider>
-          </NotificationProvider>
-        </UserContextProvider>
-    </HeaderContextProvider>,
+        </HeaderContextProvider>
+      </NotificationProvider>
+    </UserContextProvider>,
     document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function

@@ -17,6 +17,7 @@ export const Signup = (props) => {
     const {signUp, login} = useContext(UserContext);
     const [isPosting, setPosting] = useState(false);
     const [isToast, setToast] = useState(false);
+    const [errorToast, setErrorToast] = useState('');
 
     const validate = Yup.object({
         name: Yup.string()
@@ -45,20 +46,22 @@ export const Signup = (props) => {
         const doSignUp = async () => {
             setPosting(true);
             const {userType, confirmPassword, ...account} = value;
+            console.log(account);
             await signUp({...account, role: userType === 2 ? "client" : "host"})
                 .then(res => {
-                    setToast(true);
                     const logInAccount = {
                         username: account.username,
                         password: account.password
                     }
                     login(logInAccount)
                         .then(res => {
+                            props.onHide();
                             localStorage.setItem("user-state", JSON.stringify(res));
-                            window.location.replace("/home");
+                            props.displaySuccessToast();
                         })
                         .catch(err => {
-                            alert("Lỗi hệ thống, vui lòng thử lại sau.");
+                            setErrorToast("Lỗi hệ thống, vui lòng thử lại sau.");
+                            setToast(true);
                         });
                 })
                 .catch(err => {
@@ -66,13 +69,16 @@ export const Signup = (props) => {
                     if (err.status === 400) {
                         switch(err.data.message) {
                             case 'Failed! Phone number is already in use!':
-                                alert('Số điện thoại đã được đăng ký');
+                                setErrorToast('Số điện thoại đã được đăng ký');
+                                setToast(true);
                                 break;
                             case 'Failed! Username is already in use!':
-                                alert('Tên đăng nhập đã tồn tại');
+                                setErrorToast("Tên đăng nhập đã tồn tại");
+                                setToast(true);
                                 break;
                             default:
-                                alert("Đăng ký không thành công, vui lòng kiểm tra lại thông tin đăng nhập.")
+                                setErrorToast("Đăng ký không thành công, vui lòng kiểm tra lại thông tin đăng ký.");
+                                setToast(true);
                         }
                     }
                 })
@@ -105,24 +111,26 @@ export const Signup = (props) => {
             >
                 {formik => (
                     <div>
-                    <h5 className="mb-3 text-center">Chào mừng bạn đến với Wehome</h5>
-                    <Form>
-                        <TextField placeholder="Họ và tên" name="name" type="text" />
-                        <TextField placeholder="Tên đăng nhập" name="username" type="text" />
-                        <TextField placeholder="Mật khẩu" name="password" type="password" />
-                        <TextField placeholder="Xác nhận mật khẩu" name="confirmPassword" type="password" />
-                        <TextField placeholder="Email" name="email" type="mail" />
-                        <TextField placeholder="Số điện thoại" name="phone" type="tel" />
-                        <SelectButton label="Bạn là?" name="userType" options = {userTypes} />
-
-                        <button className="btn btn-danger mt-3" type="submit" style = {{width: '100%'}}>Đăng ký</button>
-                    </Form> 
+                        <h5 className="mb-3 text-center">Chào mừng bạn đến với Wehome</h5>
+                        <Form>
+                            <TextField placeholder="Họ và tên" name="name" type="text" />
+                            <TextField placeholder="Tên đăng nhập" name="username" type="text" />
+                            <TextField placeholder="Mật khẩu" name="password" type="password" />
+                            <TextField placeholder="Xác nhận mật khẩu" name="confirmPassword" type="password" />
+                            <TextField placeholder="Email" name="email" type="mail" />
+                            <TextField placeholder="Số điện thoại" name="phone" type="tel" />
+                            <SelectButton label="Bạn là?" name="userType" options = {userTypes} />
+                            <button className="btn btn-danger mt-3" type="submit" style = {{width: '100%'}}>Đăng ký</button>
+                        </Form> 
                     </div>
-
                 )}
             </Formik>
             </Modal.Body>
-            <WeToast show={isToast} onClose={() => setToast(false)}>Đăng ký thành công</WeToast>
+            <div className={isToast? "d-block position-fixed vh-100 vw-100 top-0 start-0" : "d-none"}>
+                <WeToast position="bottom-start" show={isToast} onClose={() => setToast(false)}>
+                    {errorToast}
+                </WeToast>
+            </div>
         </Modal>
     )
 }

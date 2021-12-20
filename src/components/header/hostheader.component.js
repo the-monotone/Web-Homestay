@@ -14,11 +14,13 @@ import { NotificationContext } from '../../context/notificationContext';
 import { WeToast } from '../shared/weToast';
 
 import  './header.component.css';
+import ForgotPasswordModal from './forgotPassword.component';
 
 function HostHeader() {
     const [isLoginModal, setLoginModal] = useState(false);
     const [isSearchModal, setSearchModal] = useState(false);
     const [isSignupModal, setSignupModal] = useState(false);
+    const [isForgot, setForgot] = useState(false);
 
     const userState = JSON.parse(localStorage.getItem("user-state"));
 
@@ -47,8 +49,29 @@ function HostHeader() {
             })
     }
 
+    const handleForgotPassword = () => {
+        setLoginModal(false);
+        setForgot(true);
+    }
+
+    const handleForgotToast = () => {
+        setToastNoti('Đã gửi email cấp lại mật khẩu');
+        setToast(true);
+    }
+
+    const handleLoginToast = () => {
+        setToastNoti('Đăng nhập thành công');
+        setToast(true);
+    }
+
+    const handleSignupToast = () => {
+        setToastNoti('Đăng ký thành công');
+        setToast(true);
+    }
+
     useEffect(() => {
         if (!userState) return;
+        console.log(socket);
         let isActive = true;
         socket.on("receive_rental", (content, sendDate) => {
             if (isActive) {
@@ -147,8 +170,9 @@ function HostHeader() {
                         }
                     </NavItem>
                 </Nav>
-                <Signup show={isSignupModal} onHide={() => setSignupModal(false)}/>
-                <LoginModal show={isLoginModal} onHide={() => setLoginModal(false)} />
+                <Signup show={isSignupModal} onHide={() => setSignupModal(false)} displaySuccessToast={handleSignupToast}/>
+                <LoginModal show={isLoginModal} onHide={() => setLoginModal(false)} onClickForgot={handleForgotPassword} displaySuccessToast={handleLoginToast}/>
+                <ForgotPasswordModal show={isForgot} onHide={() => setForgot(false)} displaySuccessToast={handleForgotToast}/>
                 <SearchModal show={isSearchModal} onHide={() => setSearchModal(false)}/>
             </Container>
             <div className={isToast? "d-block position-fixed vh-100 vw-100 top-0 start-0" : "d-none"}>

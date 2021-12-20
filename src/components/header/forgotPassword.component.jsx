@@ -1,47 +1,46 @@
 import React, { useContext, useState } from 'react';
 import { Formik, Form } from 'formik';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { TextField } from '../forms/TextField';
 import { UserContext } from '../../context/userContext';
 import { WeToast } from '../shared/weToast';
 
-const LoginModal = (props) => {
-    const { login } = useContext(UserContext); 
+const ForgotPasswordModal = (props) => {
+    const { forgotPassword } = useContext(UserContext); 
     const [errorToast, setErrorToast] = useState('');
     const [isToast, setToast] = useState(false);
 
     const validate = Yup.object({
         username: Yup.string()
             .required("Bắt buộc"),
-        password: Yup.string()
+        email: Yup.string()
             .required("Bắt buộc")
+            .email("Không đúng định dạng email"),
     })
     const handleSubmit = (value) => {
         console.log(value); 
         const body = {
             username: value.username.trim(),
-            password: value.password.trim()
+            email: value.email.trim()
         }
-        login(body)
+        forgotPassword(body)
             .then(res => {
                 props.onHide();
-                localStorage.setItem("user-state", JSON.stringify(res));
                 props.displaySuccessToast();
-                window.location.reload();
             })
             .catch(err => {
                 switch(err.response.status) {
                     case 400:
-                        setErrorToast("Tài khoản hoặc mật khẩu không đúng.");
+                        setErrorToast('Tài khoản hoặc email không đúng.');
                         setToast(true);
                         break;
                     case 500:
-                        setErrorToast("Lỗi hệ thống. Vui lòng thử lại sau.");
+                        setErrorToast('Lỗi hệ thống. Vui lòng thử lại sau.');
                         setToast(true);
                         break;
                     default:
-                        setErrorToast("Lỗi hệ thống. Vui lòng thử lại sau");
+                        setErrorToast("Lỗi hệ thống. Vui lòng thử lại sau.");
                         setToast(true);
                         break;
                 }
@@ -51,13 +50,13 @@ const LoginModal = (props) => {
     return (
         <Modal {...props}>
             <Modal.Header closeButton>
-                <Modal.Title>Đăng nhập</Modal.Title>
+                <Modal.Title>Yêu cầu cấp lại mật khẩu</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Formik
                     initialValues={{
                         username: '',
-                        password: ''
+                        email: ''
                     }}
                     validationSchema={validate}
                     onSubmit={handleSubmit} >
@@ -65,8 +64,8 @@ const LoginModal = (props) => {
                         (formik) => (
                             <Form>
                                 <TextField type="text" name="username" placeholder="Tên đăng nhập"/>
-                                <TextField type="password" name="password" placeholder="Mật khẩu"/>
-                                <button type="submit" id="submit-btn-login" hidden />
+                                <TextField type="email" name="email" placeholder="Email đã đăng ký"/>
+                                <button type="submit" id="submit-btn-forgot" hidden />
                             </Form>
                         ) 
 
@@ -74,8 +73,7 @@ const LoginModal = (props) => {
                 </Formik>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-primary" onClick={props.onClickForgot}>Quên mật khẩu?</Button>
-                <label className="btn btn-danger" htmlFor="submit-btn-login">Đăng nhập</label> 
+                <label className="btn btn-danger" htmlFor="submit-btn-forgot">Gửi yêu cầu</label> 
             </Modal.Footer>
             <div className={isToast? "d-block position-fixed vh-100 vw-100 top-0 start-0" : "d-none"}>
                 <WeToast position="bottom-start" show={isToast} onClose={() => setToast(false)}>
@@ -87,4 +85,4 @@ const LoginModal = (props) => {
     )
 }
 
-export default LoginModal;
+export default ForgotPasswordModal;
