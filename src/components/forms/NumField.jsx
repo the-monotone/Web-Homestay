@@ -14,6 +14,7 @@ export const NumField = ({label, ...props}) => {
 
     const increase = e => {
         e.preventDefault();
+        e.stopPropagation();
         count = field.value;
         count++;
         helper.setValue(count);
@@ -22,6 +23,7 @@ export const NumField = ({label, ...props}) => {
 
     const decrease = e => {
         e.preventDefault();
+        e.stopPropagation();
         if (!isPositive()) return;
         count = field.value;
         count--;
