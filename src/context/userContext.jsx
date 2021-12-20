@@ -57,6 +57,15 @@ const UserContextProvider = ({children}) => {
             })
     }
 
+    const forgotPassword = (payload) => {
+        return axios.post(`${WEB_API}/api/user/forgot-password`, payload)
+            .then(res => res.data)
+            .catch(err => {
+                console.error(err);
+                throw(err);
+            })
+    }
+
     const changePassword = (user_id, token, payload) => {
         const body = {
             oldPassword: payload.currentPassword,
@@ -89,6 +98,7 @@ const UserContextProvider = ({children}) => {
         getInfo,
         updateInfo,
         changePassword,
+        forgotPassword,
         signUp
     }
 
