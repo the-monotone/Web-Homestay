@@ -28,6 +28,7 @@ const SearchResultPage = () => {
 
     const [showMap, setShowMap] = useState(false);
     const [buttonContent, setButtonContent] = useState("Hiện bản đồ");
+
     const toggleShowMap = () => {
         setShowMap(prevState => !prevState);
         setButtonContent(prevState => prevState === "Hiện bản đồ"? "Hiện danh sách phòng" : "Hiện bản đồ");
@@ -74,6 +75,7 @@ const SearchResultPage = () => {
         }
         return () => {
             isActive = false;
+            setLocation(null);
         }
     }, [searchParams])
 
