@@ -35,7 +35,7 @@ const LoggedInDropdown = () => {
         return () => {
             isActive = false;
         }
-    },[])
+    },[isGetting])
 
     const handleLogout = (token) => {
         logout(token)
