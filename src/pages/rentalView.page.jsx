@@ -47,7 +47,7 @@ const RentalViewPage = () => {
                 rental === null ? 
             <Spinner animation="border" /> :
             rental.total > 0? 
-            <Tabs defaultActiveKey="renting">
+            <Tabs defaultActiveKey="request">
                 <Tab eventKey="request" title="Đang yêu cầu">
                     <RentTab handleClickRate={handleClickRate} rentalList={rental.rentals.filter((rentalItem) => rentalItem.status === "UNCONFIRMED")} />
                 </Tab>
