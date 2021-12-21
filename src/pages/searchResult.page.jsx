@@ -75,7 +75,6 @@ const SearchResultPage = () => {
         }
         return () => {
             isActive = false;
-            setLocation(null);
         }
     }, [searchParams])
 
