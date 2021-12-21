@@ -14,7 +14,7 @@ const NotificationItem = ({noti}) => {
     const [exposedNoti, hiddenNoti] = splitContent(noti.content);
     const handleClick = () => {
         const userState = JSON.parse(localStorage.getItem("user-state"));
-        if (noti.status !== "UNREAD") {
+        if (noti.status === "UNREAD") {
             seenNotification(noti.id, userState.token)
                 .catch(err => {
                     alert(err);
