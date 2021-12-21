@@ -11,7 +11,7 @@ const LoggedInDropdown = () => {
     const { logout } = useContext(UserContext);
     const {getInfo, updateInfo} = useContext(UserContext);
     const [isGetting, setGetting] = useState(false);
-    const [isHost, setIsHost] = useState(false);
+    const [isUser, setIsUser] = useState(true);
 
     const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ const LoggedInDropdown = () => {
             await getInfo(userState.userId)
                 .then(data => {
                     console.log(data);
-                    if (isActive) setIsHost(data.role === 'host');
+                    if (isActive) setIsUser(data.role === 'user');
                 })
                 .catch(err => {
                     console.log(err);
@@ -49,7 +49,7 @@ const LoggedInDropdown = () => {
         if (isGetting) return;
 
         const becomeHost = async () => {
-            if (isHost) return;
+            if (!isUser) return;
             setGetting(true);
             await updateInfo(userState.token, {role: "host", user_id: userState.userId})
                 .then(res => {
@@ -80,7 +80,7 @@ const LoggedInDropdown = () => {
                 <Dropdown.Item href="/favorite">Yêu thích</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={hostNavigate}>
-                    {' '}{isHost ? 'Quản lý phòng' : 'Trở thành chủ nhà'}
+                    {' '}{!isUser ? 'Quản lý phòng' : 'Trở thành chủ nhà'}
                     <span className="me-1 bi bi-person-badge small-icon" />
                 </Dropdown.Item>
                 <Dropdown.Divider />
