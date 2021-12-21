@@ -166,7 +166,7 @@ export const RoomTab = () => {
     }
     const getAllRoom = async () => {
         setLoading(true);
-        await axios.get(`${WEB_API}/api/room?limit=${roomsPerPage}&page=${currentPage}`, {
+        await axios.post(`${WEB_API}/api/room/admin-search?limit=${roomsPerPage}&page=${currentPage}`,{}, {
             headers: {
                 "Authorization": `Bearer ${userState.token}`
             }
@@ -183,14 +183,13 @@ export const RoomTab = () => {
     }
 
     const getAllRoomWithFilter = () => {
-        return axios.get(`${WEB_API}/api/room?limit=${MAX_REQUEST}`, {
+        return axios.post(`${WEB_API}/api/room/admin-search?limit=${MAX_REQUEST}`,{}, {
             headers: {
                 "Authorization": `Bearer ${userState.token}`
             }
         })
             .then(res => {
-                const clone = res.data.rooms.filter(room => !room.confirmed);
-                return clone;
+                return [...res.data.rooms];
             })
             .catch(err => {
                 console.log(err.response);
@@ -205,10 +204,7 @@ export const RoomTab = () => {
         }
         return axios.post(`${WEB_API}/api/room/search?limit=${MAX_REQUEST}`, body)
             .then(res => {
-                console.log(res);
-                const clone = res.data.rooms.filter(room => !room.confirmed);
-                console.log(clone);
-                return clone;
+                return [...res.data.rooms];
             })
             .catch(err => console.log(err))
     }
@@ -300,7 +296,7 @@ export const RoomTab = () => {
             </Formik>
 
             <Container>
-                <Table striped bordered hover variant="dark">
+                <Table striped bordered hover variant="dark" id='room-table'>
                     <thead>
                         <tr className='text-center'>
                             <th>Host Id</th>

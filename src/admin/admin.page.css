@@ -4,3 +4,13 @@
 .room-id-field:hover {
     cursor: pointer;
 }
+
+#room-table {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+#room-table td {
+    max-width: 500px;
+    word-wrap: break-word;
+}
