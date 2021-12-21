@@ -7,6 +7,7 @@ import { HostRentalCard } from '../components/shared/hostRentalCard';
 import { RentalContext } from '../context/rentalContext';
 import { RatingModal } from '../components/shared/weModal';
 import { RentalBanner } from '../assets/rentalBanner';
+import RentalCard from '../components/card/RentalCard';
 
 const RentalViewPage = () => {
     const navigate = useNavigate();
@@ -78,14 +79,14 @@ const RentTab = ({rentalList, canRate, handleClickRate}) => {
                 rentalList.map((rental, index) => {
                     return(
                         <Col md = "3" key={index}>
-                            <HostRentalCard rental={rental}>
+                            <RentalCard rental={rental}>
                                 {
                                     canRate && 
                                     <Button className="w-100" onClick={() => handleClickRate(rental.room_id)}>
                                         Đánh giá
                                     </Button>
                                 }
-                            </HostRentalCard>
+                            </RentalCard>
                         </Col>
                     )
                 })

@@ -95,7 +95,7 @@ const PlaceCard = ({colorVariant, imageSrc, place, latitude, longitude}) => {
         navigate(path);
     }
     return (
-        <Col lg="3" md="4" sm="6" className='d-flex justify-content-center'
+        <Col lg="3" sm="6" className='d-flex justify-content-center'
         >
             <animated.div
                 style={{...cardStyles}}

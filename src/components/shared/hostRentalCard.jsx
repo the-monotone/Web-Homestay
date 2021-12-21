@@ -3,6 +3,16 @@ import { Card, OverlayTrigger, Row, Col } from 'react-bootstrap';
 import './hostRentalCard.css'
 import { RentalContext } from '../../context/rentalContext';
 import { WePopover } from './wePopover';
+
+const displayMoney = (amount) => {
+    var formatter = new Intl.NumberFormat('vi', {
+      style: 'currency',
+      currency: 'VND',
+      maximumFractionDigits: 0,
+    });
+    return formatter.format(amount);
+}
+
 export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
     console.log(rental);
 
@@ -46,11 +56,11 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
                 </Row>
             </Card.Title>
             <Card.Body>
-                    <div className = "host-rental-cost">{`${rental.cost}`}</div>
+                    <div className = "host-rental-cost">{displayMoney(rental.cost)}</div>
                 <div className = "rental-date-container mt-3">
-                    <span className = "host-rental-date me-3">{rental.begin_date}</span>
+                    <span className = "host-rental-date me-3">{new Date(rental.begin_date).toLocaleDateString()}</span>
                     <span> <i className="bi bi-caret-right"></i></span>
-                    <span className = "host-rental-date ms-3">{rental.end_date}</span>
+                    <span className = "host-rental-date ms-3">{new Date(rental.end_date).toLocaleDateString()}</span>
                 </div>
             </Card.Body>
 
