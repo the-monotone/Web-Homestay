@@ -21,7 +21,7 @@ export const ImageForm = ({label, isGetting, setGetting,...props}) => {
     async function resizeImageFn(file) {
 
         const resizedImage = await compress.compress([file], {
-            size: 3, 
+            size: 10, 
             quality: 0.6, 
             maxWidth: 800, 
             maxHeight: 600
@@ -39,7 +39,7 @@ export const ImageForm = ({label, isGetting, setGetting,...props}) => {
         
         let file = e.target.files[0]; 
         resizeImageFn(file);
-        file = imgCompressed;
+        if (imgCompressed) file = imgCompressed;
 
         let body = new FormData();
         body.set('key', 'b1d351b87540a7a9b8bb380248e85040')
@@ -61,6 +61,7 @@ export const ImageForm = ({label, isGetting, setGetting,...props}) => {
                 })
               .catch(Err=>console.log(Err))
             setGetting(false);
+            setImgCompressed(null);
         }
 
         postImage();
