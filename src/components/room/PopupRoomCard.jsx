@@ -35,7 +35,6 @@ const PopupRoomCard = ({room, handleClick}) => {
             <div>
                 <i className="bi bi-star-fill small-icon"></i>
                 <small>{room.rate !== null ? parseFloat(room.rate).toFixed(1) !== 0.0 ? parseFloat(room.rate).toFixed(1): "Chưa có đánh giá"  : "Chưa có đánh giá"}</small>
-                <i className="bi bi-heart ms-2 small-icon"></i>
             </div>
             <strong className="d-block w-100 text-truncate" onClick={handleClick}>{room.room_name}</strong>
             <div>

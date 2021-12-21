@@ -19,7 +19,6 @@ export const ImageForm = ({label, isGetting, setGetting,...props}) => {
     }, [imageList])
 
     async function resizeImageFn(file) {
-
         const resizedImage = await compress.compress([file], {
             size: 3, 
             quality: 0.6, 

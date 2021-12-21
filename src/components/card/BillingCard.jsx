@@ -57,10 +57,14 @@ const GuestPicker = ({ guest, changeGuest }) => {
   };
 
 const filterRental = (rentalDateList) => {
-    return rentalDateList.map(rental_date => ({
-        start: new Date(rental_date.begin_date),
-        end: new Date(rental_date.end_date)
-    }));
+    return rentalDateList.map(rental_date => {
+        let beginDateInterval = new Date(rental_date.begin_date);
+        beginDateInterval.setDate(beginDateInterval.getDate() + 1);
+        return {
+            start: beginDateInterval,
+            end: new Date(rental_date.end_date)
+        }
+    });
 }
 
 const calcMaxStartDate = (startDate, endDate, rentalDateList) => {

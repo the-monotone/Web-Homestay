@@ -3,6 +3,7 @@ import { Card, OverlayTrigger, Row, Col } from 'react-bootstrap';
 import './hostRentalCard.css'
 import { RentalContext } from '../../context/rentalContext';
 import { WePopover } from './wePopover';
+import { NotificationContext } from '../../context/notificationContext';
 
 const displayMoney = (amount) => {
     var formatter = new Intl.NumberFormat('vi', {
@@ -17,6 +18,7 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
     console.log(rental);
 
     const userState = JSON.parse(localStorage.getItem("user-state"));
+    const { socket } = useContext(NotificationContext);
 
     const {updateRental} = useContext(RentalContext);
 
@@ -30,6 +32,12 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
             await updateRental(userState.token, rentalAfter)
                 .then(res => {
                     console.log(res);
+                    const optionGuest = JSON.stringify({
+                        forHost: false,
+                        rental_id: rental.rental_id,
+                        host_id: rental.host_id
+                    });
+                    socket.emit("send_rental", rental.client_id, `Chủ nhà ${userState.name} đã cập nhật bản thuê của bạn|${optionGuest}`)
                 })
                 .catch(err => {
                     console.log(err);
@@ -38,10 +46,6 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
         }
         update();
     }
-
-    const ThisWillWork = forwardRef((props, ref) => {
-        return <div className = "host-rental-cost" ref={ref}>{`Id: ${rental.cost}`}</div>;
-    });
 
     return(
         <Card className="host-rental-card mb-2 me-2 ">
