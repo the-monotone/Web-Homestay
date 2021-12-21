@@ -5,11 +5,14 @@ import * as Yup from 'yup';
 import { TextField } from '../forms/TextField';
 import { UserContext } from '../../context/userContext';
 import { WeToast } from '../shared/weToast';
+import {useNavigate} from 'react-router-dom'
 
 const LoginModal = (props) => {
     const { login } = useContext(UserContext); 
     const [isToast, setToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
+    const navigate = useNavigate();
+
     const validate = Yup.object({
         username: Yup.string()
             .required("Bắt buộc"),
@@ -20,12 +23,13 @@ const LoginModal = (props) => {
         console.log(value); 
         const body = {
             username: value.username.trim(),
-            password: value.password.trim()
+            password: value.password
         }
         login(body)
             .then(res => {
                 props.onHide();
                 localStorage.setItem("user-state", JSON.stringify(res));
+                if(res.role === 'admin') navigate('/onlyadmincanseethis')
                 window.location.reload();
             })
             .catch(err => {
