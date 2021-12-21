@@ -38,7 +38,7 @@
     width: 300px;
     text-overflow: ellipsis;
 }
-.room-name {
+.rental-room-name {
     overflow: hidden;
     text-overflow: ellipsis;
 }

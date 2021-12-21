@@ -37,7 +37,7 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
         <Card className="host-rental-card mb-2">
             <Card.Title className="rental-card-title m-2">
                 <Row>
-                    <Col md='10' className='room-name'>{rental.room_name}</Col>
+                    <Col md='10' className='rental-room-name'>{rental.room_name}</Col>
                     <Col md='1'>
                         <OverlayTrigger trigger='click' placement='right' overlay={<WePopover id={rental.client_id}/>}>
                             <span className="bi bi-telephone-outbound-fill"></span>
