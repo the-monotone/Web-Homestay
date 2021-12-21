@@ -166,7 +166,7 @@ export const RoomTab = () => {
     }
     const getAllRoom = async () => {
         setLoading(true);
-        await axios.get(`${WEB_API}/api/room?limit=${roomsPerPage}&page=${currentPage}`, {
+        await axios.post(`${WEB_API}/api/room/admin-search?limit=${roomsPerPage}&page=${currentPage}`,{}, {
             headers: {
                 "Authorization": `Bearer ${userState.token}`
             }
@@ -183,14 +183,13 @@ export const RoomTab = () => {
     }
 
     const getAllRoomWithFilter = () => {
-        return axios.get(`${WEB_API}/api/room?limit=${MAX_REQUEST}`, {
+        return axios.post(`${WEB_API}/api/room/admin-search?limit=${MAX_REQUEST}`,{}, {
             headers: {
                 "Authorization": `Bearer ${userState.token}`
             }
         })
             .then(res => {
-                const clone = res.data.rooms.filter(room => !room.confirmed);
-                return clone;
+                return [...res.data.rooms];
             })
             .catch(err => {
                 console.log(err.response);
@@ -203,14 +202,20 @@ export const RoomTab = () => {
             latitude: location.lat,
             longitude: location.lng
         }
-        return axios.post(`${WEB_API}/api/room/search?limit=${MAX_REQUEST}`, body)
+        return axios.post(`${WEB_API}/api/room/admin-search?limit=${MAX_REQUEST}`, body,
+        {
+            headers: {
+                "Authorization": `Bearer ${userState.token}`
+            }
+        })
             .then(res => {
                 console.log(res);
-                const clone = res.data.rooms.filter(room => !room.confirmed);
-                console.log(clone);
-                return clone;
+                return [...res.data.rooms];
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+                throw(err)
+            })
     }
 
     const handleFilterRoom = async () => {
@@ -300,7 +305,7 @@ export const RoomTab = () => {
             </Formik>
 
             <Container>
-                <Table striped bordered hover variant="dark">
+                <Table striped bordered hover variant="dark" id='room-table'>
                     <thead>
                         <tr className='text-center'>
                             <th>Host Id</th>

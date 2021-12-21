@@ -15,7 +15,7 @@ const displayMoney = (amount) => {
 const RentalCard = ({rental, children}) => {
     console.log(rental);
     return(
-        <Card className="host-rental-card mb-2">
+        <Card className="host-rental-card mb-2 me-2">
             <Card.Title className="m-2">
                 <Row>
                     <Col className="rental-card-title" xs='10'>{rental.room_name}</Col>

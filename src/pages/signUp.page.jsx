@@ -33,7 +33,8 @@ export const Signup = (props) => {
             .oneOf([Yup.ref('password'), null], "Không khớp với mật khẩu")
             .required('Bắt buộc'),
         email: Yup.string()
-            .email("Không đúng định dạng email"),
+            .email("Không đúng định dạng email")
+            .required('Bắt buộc'),
         phone: Yup.number()
             .typeError("Bắt buộc phải là số")
             .positive("Số điện thoại phải lớn hơn 0")

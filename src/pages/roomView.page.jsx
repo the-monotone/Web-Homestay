@@ -105,10 +105,11 @@ const RoomViewPage = () => {
                 }
                 </div>
                 <Carousel 
-                    fade 
+                    fade
                     className="carousel-room gray-border round-radius shadow mb-5"
-                    prevIcon={<span aria-hidden="true" className="bi bi-arrow-left-circle-fill " />}
-                    nextIcon={<span aria-hidden="true" className="bi bi-arrow-right-circle-fill " />}
+                    variant='dark'
+                    prevIcon={<i aria-hidden="true" className="bi bi-arrow-left-circle-fill " />}
+                    nextIcon={<i aria-hidden="true" className="bi bi-arrow-right-circle-fill " />}
                 >
                     {room.images.map((imageItem, index) => (
                         <Carousel.Item key={index} className="d-flex justify-content-center" >
