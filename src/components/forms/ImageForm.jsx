@@ -5,9 +5,12 @@ import axios from 'axios';
 import {Row, Col} from 'react-bootstrap';
 import './formik.css'
 import { ImageCard } from '../shared/imageCard';
-
+import Compress from 'compress.js';
 export const ImageForm = ({label, isGetting, setGetting,...props}) => {
     const [field, ,helper] = useField(props);
+    const [imgCompressed, setImgCompressed] = useState(null);
+
+    const compress = new Compress();
 
     const [imageList, setImageList] = useState(field.value);
 
@@ -15,11 +18,29 @@ export const ImageForm = ({label, isGetting, setGetting,...props}) => {
         helper.setValue([...imageList]);
     }, [imageList])
 
+    async function resizeImageFn(file) {
+
+        const resizedImage = await compress.compress([file], {
+            size: 3, 
+            quality: 0.6, 
+            maxWidth: 800, 
+            maxHeight: 600
+        })
+        const img = resizedImage[0];
+        const base64str = img.data
+        const imgExt = img.ext
+        const resizedFile = Compress.convertBase64ToFile(base64str, imgExt)
+        setImgCompressed(resizedFile);
+    }
+
     const onChange = (e) => {
 
         if (isGetting) return;
         
         let file = e.target.files[0]; 
+        resizeImageFn(file);
+        file = imgCompressed;
+
         let body = new FormData();
         body.set('key', 'b1d351b87540a7a9b8bb380248e85040')
         body.append('image', file)

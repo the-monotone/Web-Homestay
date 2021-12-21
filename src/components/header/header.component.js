@@ -154,7 +154,7 @@ function Header() {
                                         {newNotiCount > 0 && <Badge pill bg="danger" className='position-absolute top-0 start-50' id='noti-badge'>{newNotiCount}</Badge>}
                                     </div>
                                 </Dropdown.Toggle>
-                                <Dropdown.Menu className="notification-menu position-absolute dropdown-menu-end">
+                                <Dropdown.Menu className="notification-menu position-absolute dropdown-menu-end pb-3">
                                     {   isLoadNoti? <Spinner animation="border" /> : noti.length > 0 ?
                                         noti.map(notiItem => 
                                             <Dropdown.Item key={notiItem.id}>

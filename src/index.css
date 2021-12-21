@@ -96,3 +96,7 @@ a {
 .min-height {
   min-height: 90vh;
 }
+
+.btn {
+  border-radius: 50rem !important;
+}

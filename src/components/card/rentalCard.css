@@ -38,7 +38,3 @@
     width: 300px;
     text-overflow: ellipsis;
 }
-.rental-room-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
