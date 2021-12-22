@@ -8,15 +8,20 @@
 }
 
 .div-map {
+    top: 80px; 
     z-index: 99;
 }
 
-.marker-container:hover {
+.div-map div[background-color=transparent]:hover {
+    z-index: 1 !important; 
+}
+
+.btn-marker:hover {
     z-index: 1;
 }
 
 .marker-container:hover > .btn-marker {
-    background-color: #dc3545
+    background-color: #dc3545;
 }
 
 .btn-marker {
@@ -26,5 +31,9 @@
 
 .popup-container {
     z-index: 2;
+}
+
+.popup-container img {
+    width: 100%
 }
 
