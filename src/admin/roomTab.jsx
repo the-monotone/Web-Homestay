@@ -8,13 +8,12 @@ import { WEB_API } from '../config';
 import { Formik, Form as FomikForm, useField,ErrorMessage } from 'formik';
 import { TextField } from '../components/forms/TextField';
 import * as Yup from 'yup'
-import { SearchContext } from '../context/searchContext';
-import { autocompleteApi, placeDetailApi } from '../api/goong.api';
 import './admin.page.css'
 import { MAX_REQUEST } from '../reducer/actionTypes';
 import { RoomContext } from '../context/roomContext';
 import { useNavigate } from 'react-router-dom';
 import { NotificationContext } from '../context/notificationContext';
+import { placeAutocompleteApi, placeDetailsApi } from '../api/maps.api';
 
 const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setConfirmToast, socket}) => {
 
@@ -64,28 +63,28 @@ const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setCo
 export const SearchPlaceInput = ({label, errStyle,setPosition , ...props}) => {
     const [isSearchPlace, setSearchPlace] = useState(false);
     const [predictions, setPredictions] = useState([]);
-    const { changePlace } = useContext(SearchContext);
     const [field, meta, helper] = useField(props);
 
     const searchPlace = (input) => {
-        autocompleteApi(input, (result) => {
-        setPredictions(result.data.predictions);
-        }, (err) => {
-            console.error(err);
-        })
-    }
-
-    const setSelectedPlace = (place_item) => {
+        placeAutocompleteApi(input)
+          .then(res => {
+            console.log(input, res);
+            setPredictions(res);
+          })
+      };
+    
+      const setSelectedPlace = (place_item) => {
         helper.setValue(place_item.description);
-        placeDetailApi(place_item.place_id, (result) => {
-            const location = result.data.results[0].geometry.location;
-            changePlace({description: place_item.description, lat: location.lat, lng: location.lng});
+        placeDetailsApi(place_item.place_id)
+          .then(res => {
+            const location = res.geometry.location;
             setPosition(location);
-        }, (err) => {
+          })
+          .catch(err => {
             console.error(err);
-        })
-    }
-
+          })
+      };
+    
     useEffect(() => {
         searchPlace(field.value)
     },[field.value])
@@ -119,7 +118,6 @@ export const SearchPlaceInput = ({label, errStyle,setPosition , ...props}) => {
 const PlacePicker = (props) => {
     return (
         <div id="search-place-2" className="gray-border round-radius shadow mt-1">  
-            <h6 className='text-white ms-3 pt-2 pe-3'>Địa điểm tìm kiếm</h6>
             <ListGroup>
                 {props.predictions.map(
                     item => 

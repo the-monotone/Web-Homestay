@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import { Form, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
-import { autocompleteApi, placeDetailApi } from "../../api/goong.api";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { SearchContext } from "../../context/searchContext";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,119 +9,106 @@ import {
   useSpring,
   animated,
 } from 'react-spring'
+import { placeAutocompleteApi, placeDetailsApi } from "../../api/maps.api";
 
 const SearchModal = ({ show, onHide }) => {
   const [isSearchPlace, setSearchPlace] = useState(false);
+  const [beginDate, setBeginDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [guest, setGuest] = useState(0);
   const [isChoosingPlace, setChoosingPlace] = useState(false);
   const [predictions, setPredictions] = useState([]);
   const [inputValue, setInputValue] = useState("");
   
   const navigate = useNavigate();
-  const {
-    changePlace,
-    changeStartDate,
-    changeEndDate,
-    changeGuest,
-    place,
-    startDate,
-    endDate,
-    guest,
-  } = useContext(SearchContext);
-
   const searchPlace = (input) => {
+    let search = JSON.parse(localStorage.getItem("search"));
+    let newSearch = {
+      ...search,
+      description: null,
+      latitude: null,
+      longitude: null
+    }
+    localStorage.setItem("search", JSON.stringify(newSearch));
     setInputValue(input);
-    autocompleteApi(
-      input,
-      (result) => {
-        setPredictions(result.data.predictions);
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
+    placeAutocompleteApi(input)
+      .then(res => {
+        console.log(input, res);
+        setPredictions(res);
+      })
   };
 
   const setSelectedPlace = (place_item) => {
     setSearchPlace(false);
     setChoosingPlace(false);
     setInputValue(place_item.description);
-    placeDetailApi(
-      place_item.place_id,
-      (result) => {
-        const location = result.data.results[0].geometry.location;
-        changePlace({
+    placeDetailsApi(place_item.place_id)
+      .then(res => {
+        const location = res.geometry.location;
+        console.log(place_item.description, res.geometry.location);
+        let search = JSON.parse(localStorage.getItem("search"));
+        let newSearch = {
+          ...search,
           description: place_item.description,
-          lat: location.lat,
-          lng: location.lng,
-        });
-      },
-      (err) => {
+          latitude: location.lat,
+          longitude: location.lng
+        }
+        localStorage.setItem("search", JSON.stringify(newSearch));
+      })
+      .catch(err => {
         console.error(err);
-      }
-    );
+      })
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (place.lat === null) {
-      autocompleteApi(
-        inputValue,
-        (result) => {
-          placeDetailApi(
-            result.data.predictions[0].place_id,
-            (detailResult) => {
-              const location = detailResult.data.results[0].geometry.location;
-              changePlace({
-                description: inputValue,
-                lat: location.lat,
-                lng: location.lng,
-              });
-              onHide();
-              const body = {
-                description: inputValue,
-                latitude: location.lat,
-                longitude: location.lng,
-                begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
-                end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
-                num_guest: guest,
-                radius: 10,
-              };
-              console.log(body);
-              localStorage.setItem("search", JSON.stringify(body));
-              navigate({
-                pathname: "/search",
-                search: `?${createSearchParams({
-                  ...body,
-                })}`,
-              });
-            },
-            (err) => {
-              console.error(err);
-            }
-          );
-        },
-        (err) => {
+    beginDate.setHours(beginDate.getHours() + 8);
+    endDate.setHours(endDate.getHours() + 8);
+    let search = JSON.parse(localStorage.getItem("search"));
+    if (search.description === null) {
+      placeAutocompleteApi(inputValue)
+        .then(res => placeDetailsApi(res[0].place_id))
+        .then(res => {
+          console.log(res);
+          const location = res.geometry.location;
+          const body = {
+            description: inputValue,
+            latitude: location.lat,
+            longitude: location.lng,
+            begin_date: beginDate !== null? new Date(beginDate).toISOString().split("T")[0] : null,
+            end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
+            num_guest: guest,
+            radius: 10,
+          };
+          console.log(body);
+          localStorage.setItem("search", JSON.stringify(body));
+          onHide();
+          navigate({
+            pathname: "/search",
+            search: `?${createSearchParams({ ...body })}`,
+          });
+        })
+
+        .catch(err => {
           console.error(err);
-        }
-      );
+        })
     } else {
-      onHide();
+      let search = JSON.parse(localStorage.getItem("search"));
       const body = {
         description: inputValue,
-        latitude: place.lat,
-        longitude: place.lng,
-        begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
+        latitude: search.latitude,
+        longitude: search.longitude,
+        begin_date: beginDate !== null? new Date(beginDate).toISOString().split("T")[0] : null,
         end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
         num_guest: guest,
         radius: 10,
       };
       console.log(body);
       localStorage.setItem("search", JSON.stringify(body));
+      onHide();
       navigate({
         pathname: "/search",
-        search: `?${createSearchParams({
-          ...body,
-        })}`,
+        search: `?${createSearchParams({ ...body })}`,
       });
     }
   };
@@ -172,11 +158,9 @@ const SearchModal = ({ show, onHide }) => {
             >
               <strong>Nhận phòng</strong>
               <DatePicker
-                selected={startDate}
+                selected={beginDate}
                 placeholderText="dd/MM/yyyy"
-                onChange={(date) => {
-                  changeStartDate(date);
-                }}
+                onChange={setBeginDate}
                 dateFormat="dd/MM/yyyy"
                 minDate={new Date()}
                 maxDate={endDate}
@@ -192,11 +176,9 @@ const SearchModal = ({ show, onHide }) => {
               <DatePicker
                 selected={endDate}
                 placeholderText="dd/MM/yyyy"
-                onChange={(date) => {
-                  changeEndDate(date);
-                }}
+                onChange={setEndDate}
                 dateFormat="dd/MM/yyyy"
-                minDate={startDate == null ? new Date() : startDate}
+                minDate={beginDate}
                 monthsShown={2}
                 customInput={<input />}
                 isClearable
@@ -207,7 +189,7 @@ const SearchModal = ({ show, onHide }) => {
               className="fixed-height d-flex flex-column justify-content-center col-12 col-md-2 btn-guest"
             >
               <strong>Khách</strong>
-              <GuestPicker guest={guest} changeGuest={changeGuest} />
+              <GuestPicker guest={guest} changeGuest={setGuest} />
             </div>
             <div className="fixed-height d-flex flex-column justify-content-center col-md-1">
               <label
@@ -279,120 +261,91 @@ const GuestPicker = ({ guest, changeGuest }) => {
 
 export const OnlySearchBar = () => {
   const [isSearchPlace, setSearchPlace] = useState(false);
+  const [beginDate, setBeginDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [guest, setGuest] = useState(0);
+  const [isChoosingPlace, setChoosingPlace] = useState(false);
   const [predictions, setPredictions] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [isChoosingPlace, setChoosingPlace] = useState(false);
+  
   const navigate = useNavigate();
-  const {
-    changePlace,
-    changeStartDate,
-    changeEndDate,
-    changeGuest,
-    place,
-    startDate,
-    endDate,
-    guest,
-  } = useContext(SearchContext);
-
-  const { searchBarOnViewport} = useContext(SearchContext);
-
-  const styles = useSpring({
-    config: { duration: 80 },
-    from: {
-      scale: searchBarOnViewport ? '60%' : '100%',
-      opacity: searchBarOnViewport ? 0 : 1,
-      translateY: 0
-    },
-    to: {
-      scale: searchBarOnViewport ? '100%' : '60%',
-      opacity: searchBarOnViewport ? 1 : 0,
-      translateY: searchBarOnViewport ? 0 : -50
-    }
-  });
-
-
-
   const searchPlace = (input) => {
+    let search = JSON.parse(localStorage.getItem("search"));
+    let newSearch = {
+      ...search,
+      description: null,
+      latitude: null,
+      longitude: null
+    }
+    localStorage.setItem("search", JSON.stringify(newSearch));
     setInputValue(input);
-    autocompleteApi(
-      input,
-      (result) => {
-        setPredictions(result.data.predictions);
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
+    placeAutocompleteApi(input)
+      .then(res => {
+        console.log(input, res);
+        setPredictions(res);
+      })
   };
 
   const setSelectedPlace = (place_item) => {
     setSearchPlace(false);
     setChoosingPlace(false);
     setInputValue(place_item.description);
-    placeDetailApi(
-      place_item.place_id,
-      (result) => {
-        const location = result.data.results[0].geometry.location;
-        changePlace({
+    placeDetailsApi(place_item.place_id)
+      .then(res => {
+        const location = res.geometry.location;
+        console.log(place_item.description, res.geometry.location);
+        let search = JSON.parse(localStorage.getItem("search"));
+        let newSearch = {
+          ...search,
           description: place_item.description,
-          lat: location.lat,
-          lng: location.lng,
-        });
-      },
-      (err) => {
+          latitude: location.lat,
+          longitude: location.lng
+        }
+        localStorage.setItem("search", JSON.stringify(newSearch));
+      })
+      .catch(err => {
         console.error(err);
-      }
-    );
+      })
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (place.lat === null) {
-      autocompleteApi(
-        inputValue,
-        (result) => {
-          placeDetailApi(
-            result.data.predictions[0].place_id,
-            (detailResult) => {
-              const location = detailResult.data.results[0].geometry.location;
-              changePlace({
-                description: inputValue,
-                lat: location.lat,
-                lng: location.lng,
-              });
-              const body = {
-                description: inputValue,
-                latitude: location.lat,
-                longitude: location.lng,
-                begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
-                end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
-                num_guest: guest,
-                radius: 10,
-              };
-              console.log(body);
-              localStorage.setItem("search", JSON.stringify(body));
-              navigate({
-                pathname: "/search",
-                search: `?${createSearchParams({
-                  ...body,
-                })}`,
-              });
-            },
-            (err) => {
-              console.error(err);
-            }
-          );
-        },
-        (err) => {
+    beginDate.setHours(beginDate.getHours() + 8);
+    endDate.setHours(endDate.getHours() + 8);
+    let search = JSON.parse(localStorage.getItem("search"));
+    if (search.description === null) {
+      placeAutocompleteApi(inputValue)
+        .then(res => placeDetailsApi(res[0].place_id))
+        .then(res => {
+          console.log(res);
+          const location = res.geometry.location;
+          const body = {
+            description: inputValue,
+            latitude: location.lat,
+            longitude: location.lng,
+            begin_date: beginDate !== null? new Date(beginDate).toISOString().split("T")[0] : null,
+            end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
+            num_guest: guest,
+            radius: 10,
+          };
+          console.log(body);
+          localStorage.setItem("search", JSON.stringify(body));
+          navigate({
+            pathname: "/search",
+            search: `?${createSearchParams({ ...body })}`,
+          });
+        })
+
+        .catch(err => {
           console.error(err);
-        }
-      );
+        })
     } else {
+      let search = JSON.parse(localStorage.getItem("search"));
       const body = {
         description: inputValue,
-        latitude: place.lat,
-        longitude: place.lng,
-        begin_date: startDate !== null? new Date(startDate).toISOString().split("T")[0] : null,
+        latitude: search.latitude,
+        longitude: search.longitude,
+        begin_date: beginDate !== null? new Date(beginDate).toISOString().split("T")[0] : null,
         end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
         num_guest: guest,
         radius: 10,
@@ -410,6 +363,22 @@ export const OnlySearchBar = () => {
     if (isChoosingPlace) return;
     setSearchPlace(false);
   }
+
+  const { searchBarOnViewport} = useContext(SearchContext);
+
+  const styles = useSpring({
+    config: { duration: 80 },
+    from: {
+      scale: searchBarOnViewport ? '60%' : '100%',
+      opacity: searchBarOnViewport ? 0 : 1,
+      translateY: 0
+    },
+    to: {
+      scale: searchBarOnViewport ? '100%' : '60%',
+      opacity: searchBarOnViewport ? 1 : 0,
+      translateY: searchBarOnViewport ? 0 : -50
+    }
+  });
 
   return (
     <animated.div
@@ -460,11 +429,9 @@ export const OnlySearchBar = () => {
             <div className="w-100 gray-border-right">
               <strong className="ms-1 search-form-label">Nhận phòng</strong>
               <DatePicker
-                selected={startDate}
+                selected={beginDate}
                 placeholderText="dd/MM/yyyy"
-                onChange={(date) => {
-                  changeStartDate(date);
-                }}
+                onChange={setBeginDate}
                 dateFormat="dd/MM/yyyy"
                 minDate={new Date()}
                 maxDate={endDate}
@@ -483,11 +450,9 @@ export const OnlySearchBar = () => {
               <DatePicker
                 selected={endDate}
                 placeholderText="dd/MM/yyyy"
-                onChange={(date) => {
-                  changeEndDate(date);
-                }}
+                onChange={setEndDate}
                 dateFormat="dd/MM/yyyy"
-                minDate={startDate == null ? new Date() : startDate}
+                minDate={beginDate}
                 monthsShown={2}
                 customInput={<input />}
                 isClearable
@@ -499,7 +464,7 @@ export const OnlySearchBar = () => {
             className="fixed-height d-flex flex-column justify-content-center col-12 col-md-2 btn-guest"
           >
             <strong className="ms-1 search-form-label">Khách</strong>
-            <GuestPicker guest={guest} changeGuest={changeGuest} />
+            <GuestPicker guest={guest} changeGuest={setGuest} />
           </div>
           <div className="fixed-height d-flex flex-column justify-content-center col-12 col-md-1">
             <label
