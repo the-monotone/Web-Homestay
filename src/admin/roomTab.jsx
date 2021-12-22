@@ -30,7 +30,7 @@ const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setCo
         await deleteRoom(userState.token, room.room_id)
             .then(res => {
                 setDeleteToast(true)
-                socket.emit("send_room", room.host_id, "Quản trị viên đã xóa phòng của bạn.|")
+                socket.emit("send_room", room.host_id, "Quản trị viên đã xóa phòng của bạn.|null")
             })
             .catch(err => alert('System error. Change later'))
         setLoading(false);
@@ -41,7 +41,7 @@ const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setCo
         await updateRoom(userState.token, {...room, confirmed: true})
             .then(res => {
                 setConfirmToast(true)
-                socket.emit("send_room", room.host_id, "Quản trị viên đã xác nhận phòng của bạn.|")
+                socket.emit("send_room", room.host_id, "Quản trị viên đã xác nhận phòng của bạn.|null")
             })
             .catch(err => alert('System error. Change later'))
         setLoading(false);
