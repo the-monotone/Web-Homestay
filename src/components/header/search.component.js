@@ -9,7 +9,7 @@ import {
   useSpring,
   animated,
 } from 'react-spring'
-import { placeAutocompleteApi, placeDetailsApi } from "../../api/maps.api";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 const SearchModal = ({ show, onHide }) => {
   const [isSearchPlace, setSearchPlace] = useState(false);
@@ -17,11 +17,10 @@ const SearchModal = ({ show, onHide }) => {
   const [endDate, setEndDate] = useState(null);
   const [guest, setGuest] = useState(0);
   const [isChoosingPlace, setChoosingPlace] = useState(false);
-  const [predictions, setPredictions] = useState([]);
   const [inputValue, setInputValue] = useState("");
   
   const navigate = useNavigate();
-  const searchPlace = (input) => {
+  const handleChange = (input) => {
     let search = JSON.parse(localStorage.getItem("search"));
     let newSearch = {
       ...search,
@@ -31,69 +30,57 @@ const SearchModal = ({ show, onHide }) => {
     }
     localStorage.setItem("search", JSON.stringify(newSearch));
     setInputValue(input);
-    placeAutocompleteApi(input)
-      .then(res => {
-        console.log(input, res);
-        setPredictions(res);
-      })
   };
 
-  const setSelectedPlace = (place_item) => {
+  const setSelectedPlace = (address) => {
+    console.log(address);
     setSearchPlace(false);
     setChoosingPlace(false);
-    setInputValue(place_item.description);
-    placeDetailsApi(place_item.place_id)
-      .then(res => {
-        const location = res.geometry.location;
-        console.log(place_item.description, res.geometry.location);
+    setInputValue(address);
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        console.log('Success', latLng)
         let search = JSON.parse(localStorage.getItem("search"));
         let newSearch = {
           ...search,
-          description: place_item.description,
-          latitude: location.lat,
-          longitude: location.lng
+          description: address,
+          latitude: latLng.lat,
+          longitude: latLng.lng
         }
         localStorage.setItem("search", JSON.stringify(newSearch));
       })
-      .catch(err => {
-        console.error(err);
-      })
+      .catch(err => console.error(err));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    beginDate.setHours(beginDate.getHours() + 8);
-    endDate.setHours(endDate.getHours() + 8);
+    if (beginDate) beginDate.setHours(beginDate.getHours() + 8);
+    if (endDate) endDate.setHours(endDate.getHours() + 8);
     let search = JSON.parse(localStorage.getItem("search"));
     if (search.description === null) {
-      placeAutocompleteApi(inputValue)
-        .then(res => placeDetailsApi(res[0].place_id))
-        .then(res => {
-          console.log(res);
-          const location = res.geometry.location;
-          const body = {
-            description: inputValue,
-            latitude: location.lat,
-            longitude: location.lng,
-            begin_date: beginDate !== null? new Date(beginDate).toISOString().split("T")[0] : null,
-            end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
-            num_guest: guest,
-            radius: 10,
-          };
-          console.log(body);
-          localStorage.setItem("search", JSON.stringify(body));
-          onHide();
-          navigate({
-            pathname: "/search",
-            search: `?${createSearchParams({ ...body })}`,
-          });
-        })
-
-        .catch(err => {
-          console.error(err);
-        })
+      geocodeByAddress(inputValue)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        let body = {
+          description: inputValue,
+          latitude: latLng.lat,
+          longitude: latLng.lng,
+          begin_date: beginDate !== null? new Date(beginDate).toISOString().split("T")[0] : null,
+          end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
+          num_guest: guest,
+          radius: 10,
+        }
+        console.log(body);
+        localStorage.setItem("search", JSON.stringify(body));
+        onHide();
+        navigate({
+          pathname: "/search",
+          search: `?${createSearchParams({ ...body})}`,
+        });
+      })
+      .catch(err => console.error(err));
     } else {
-      let search = JSON.parse(localStorage.getItem("search"));
       const body = {
         description: inputValue,
         latitude: search.latitude,
@@ -104,8 +91,8 @@ const SearchModal = ({ show, onHide }) => {
         radius: 10,
       };
       console.log(body);
-      localStorage.setItem("search", JSON.stringify(body));
       onHide();
+      localStorage.setItem("search", JSON.stringify(body));
       navigate({
         pathname: "/search",
         search: `?${createSearchParams({ ...body })}`,
@@ -132,26 +119,39 @@ const SearchModal = ({ show, onHide }) => {
               className="col-12 col-md-3 gray-border-right position-relative"
             >
               <strong className="ms-1">Địa điểm</strong>
-              <input
-                type="text"
-                value={inputValue}
-                placeholder="Bạn muốn đi đâu?"
-                onChange={(e) => searchPlace(e.target.value)}
-                className="input-w100 search-input"
-                onFocus={() => {setSearchPlace(true)}}
-                onBlur={handleBlurInput}
-                required
-              />
-              {
-                isSearchPlace && 
-                <div onMouseEnter={() => {setChoosingPlace(true)}}
-                  onMouseLeave={() => {setChoosingPlace(false)}}>
-                  <PlacePicker
-                    predictions={predictions}
-                    setSelectedPlace={setSelectedPlace}
-                  />
-                </div>
-              }
+              <PlacesAutocomplete value={inputValue} onChange={handleChange} onSelect={setSelectedPlace}>
+                {({getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                  <div>
+                    <input 
+                      {...getInputProps({
+                        type: "text", 
+                        placeholder: "Bạn muốn đi đâu?", 
+                        className: "w-100 search-input",
+                        onFocus: () => {setSearchPlace(true)},
+                        onBlur: handleBlurInput
+                      })} />
+                    {
+                      isSearchPlace &&
+                      <div className="search-place round-radius shadow mt-3"
+                        onMouseEnter={() => {setChoosingPlace(true)}}
+                        onMouseLeave={() => {setChoosingPlace(false)}}>
+                        <div className="ms-1 d-flex align-items-center fw-bold">
+                          Địa điểm tìm kiếm
+                        </div>
+                        <ListGroup>
+                          {suggestions.map((item) => {
+                            return (
+                              <ListGroupItem key={item.placeId} {...getSuggestionItemProps(item)}>
+                                {item.description}
+                              </ListGroupItem>
+                            )
+                          })}
+                        </ListGroup>
+                      </div>
+                    }
+                  </div>
+                )}
+              </PlacesAutocomplete>
             </div>
             <div
               className="fixed-height d-flex flex-column justify-content-center col-12 col-md-3 gray-border-right"
@@ -166,6 +166,7 @@ const SearchModal = ({ show, onHide }) => {
                 maxDate={endDate}
                 monthsShown={2}
                 customInput={<input />}
+                isClearable
                 className="input-w100 search-input"
               />
             </div>
@@ -207,28 +208,6 @@ const SearchModal = ({ show, onHide }) => {
   );
 };
 
-const PlacePicker = (props) => {
-  return (
-    <div className="search-place round-radius shadow mt-3">
-      <div className="ms-1 d-flex align-items-center fw-bold">
-        Địa điểm tìm kiếm
-      </div>
-      <ListGroup>
-        {props.predictions.map((item) => (
-          <ListGroupItem
-            key={item.place_id}
-            onClick={() => {
-              props.setSelectedPlace(item);
-            }}
-          >
-            {item.description}
-          </ListGroupItem>
-        ))}
-      </ListGroup>
-    </div>
-  );
-};
-
 const GuestPicker = ({ guest, changeGuest }) => {
   const increase = () => {
     changeGuest(guest + 1);
@@ -265,11 +244,11 @@ export const OnlySearchBar = () => {
   const [endDate, setEndDate] = useState(null);
   const [guest, setGuest] = useState(0);
   const [isChoosingPlace, setChoosingPlace] = useState(false);
-  const [predictions, setPredictions] = useState([]);
   const [inputValue, setInputValue] = useState("");
   
   const navigate = useNavigate();
-  const searchPlace = (input) => {
+  
+  const handleChange = (input) => {
     let search = JSON.parse(localStorage.getItem("search"));
     let newSearch = {
       ...search,
@@ -279,68 +258,56 @@ export const OnlySearchBar = () => {
     }
     localStorage.setItem("search", JSON.stringify(newSearch));
     setInputValue(input);
-    placeAutocompleteApi(input)
-      .then(res => {
-        console.log(input, res);
-        setPredictions(res);
-      })
   };
 
-  const setSelectedPlace = (place_item) => {
+  const setSelectedPlace = (address) => {
+    console.log(address);
     setSearchPlace(false);
     setChoosingPlace(false);
-    setInputValue(place_item.description);
-    placeDetailsApi(place_item.place_id)
-      .then(res => {
-        const location = res.geometry.location;
-        console.log(place_item.description, res.geometry.location);
+    setInputValue(address);
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        console.log('Success', latLng)
         let search = JSON.parse(localStorage.getItem("search"));
         let newSearch = {
           ...search,
-          description: place_item.description,
-          latitude: location.lat,
-          longitude: location.lng
+          description: address,
+          latitude: latLng.lat,
+          longitude: latLng.lng
         }
         localStorage.setItem("search", JSON.stringify(newSearch));
       })
-      .catch(err => {
-        console.error(err);
-      })
+      .catch(err => console.error(err));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    beginDate.setHours(beginDate.getHours() + 8);
-    endDate.setHours(endDate.getHours() + 8);
+    if (beginDate) beginDate.setHours(beginDate.getHours() + 8);
+    if (endDate) endDate.setHours(endDate.getHours() + 8);
     let search = JSON.parse(localStorage.getItem("search"));
     if (search.description === null) {
-      placeAutocompleteApi(inputValue)
-        .then(res => placeDetailsApi(res[0].place_id))
-        .then(res => {
-          console.log(res);
-          const location = res.geometry.location;
-          const body = {
-            description: inputValue,
-            latitude: location.lat,
-            longitude: location.lng,
-            begin_date: beginDate !== null? new Date(beginDate).toISOString().split("T")[0] : null,
-            end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
-            num_guest: guest,
-            radius: 10,
-          };
-          console.log(body);
-          localStorage.setItem("search", JSON.stringify(body));
-          navigate({
-            pathname: "/search",
-            search: `?${createSearchParams({ ...body })}`,
-          });
-        })
-
-        .catch(err => {
-          console.error(err);
-        })
+      geocodeByAddress(inputValue)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        let body = {
+          description: inputValue,
+          latitude: latLng.lat,
+          longitude: latLng.lng,
+          begin_date: beginDate !== null? new Date(beginDate).toISOString().split("T")[0] : null,
+          end_date: endDate !== null? new Date(endDate).toISOString().split("T")[0] : null,
+          num_guest: guest,
+          radius: 10,
+        }
+        console.log(body);
+        localStorage.setItem("search", JSON.stringify(body));
+        navigate({
+          pathname: "/search",
+          search: `?${createSearchParams({ ...body})}`,
+        });
+      })
+      .catch(err => console.error(err));
     } else {
-      let search = JSON.parse(localStorage.getItem("search"));
       const body = {
         description: inputValue,
         latitude: search.latitude,
@@ -399,27 +366,40 @@ export const OnlySearchBar = () => {
           >
             <div className="w-100 gray-border-right position-relative">
               <strong className="ms-1 search-form-label">Địa điểm</strong>
-              <input
-                type="text"
-                value={inputValue}
-                placeholder="Bạn muốn đi đâu?"
-                onChange={(e) => searchPlace(e.target.value)}
-                className="w-100 search-input"
-                onFocus={() => {setSearchPlace(true)}}
-                onBlur={handleBlurInput}
-                required
-              />
-              {
-                isSearchPlace && 
-                <div 
-                  onMouseEnter={() => {setChoosingPlace(true)}}
-                  onMouseLeave={() => {setChoosingPlace(false)}}>
-                  <PlacePicker
-                    predictions={predictions}
-                    setSelectedPlace={setSelectedPlace}
-                  />
-                </div>
-              }
+              <PlacesAutocomplete value={inputValue} onChange={handleChange} onSelect={setSelectedPlace}>
+                {({getInputProps, suggestions, getSuggestionItemProps, loading }) => {
+                  return (
+                    <div>
+                      <input 
+                        {...getInputProps({
+                          type: "text", 
+                          placeholder: "Bạn muốn đi đâu?", 
+                          className: "w-100 search-input",
+                          onFocus: () => {setSearchPlace(true)},
+                          onBlur: handleBlurInput
+                        })} />
+                      {
+                        isSearchPlace &&
+                        <div className="search-place round-radius shadow mt-3"
+                          onMouseEnter={() => {setChoosingPlace(true)}}
+                          onMouseLeave={() => {setChoosingPlace(false)}}>
+                          <div className="ms-1 d-flex align-items-center fw-bold">
+                            Địa điểm tìm kiếm
+                          </div>
+                          <ListGroup>
+                            {suggestions.map((item) => {
+                              return (
+                                <ListGroupItem key={item.placeId} {...getSuggestionItemProps(item)}>
+                                  {item.description}
+                                </ListGroupItem>
+                              )
+                            })}
+                          </ListGroup>
+                        </div>
+                      }
+                    </div>
+                )}}
+              </PlacesAutocomplete>
             </div>
             
           </div>

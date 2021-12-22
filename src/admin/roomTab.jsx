@@ -13,7 +13,7 @@ import { MAX_REQUEST } from '../reducer/actionTypes';
 import { RoomContext } from '../context/roomContext';
 import { useNavigate } from 'react-router-dom';
 import { NotificationContext } from '../context/notificationContext';
-import { placeAutocompleteApi, placeDetailsApi } from '../api/maps.api';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setConfirmToast, socket}) => {
 
@@ -62,71 +62,55 @@ const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setCo
 
 export const SearchPlaceInput = ({label, errStyle,setPosition , ...props}) => {
     const [isSearchPlace, setSearchPlace] = useState(false);
-    const [predictions, setPredictions] = useState([]);
     const [field, meta, helper] = useField(props);
-
-    const searchPlace = (input) => {
-        placeAutocompleteApi(input)
-          .then(res => {
-            console.log(input, res);
-            setPredictions(res);
-          })
-      };
     
-      const setSelectedPlace = (place_item) => {
-        helper.setValue(place_item.description);
-        placeDetailsApi(place_item.place_id)
-          .then(res => {
-            const location = res.geometry.location;
-            setPosition(location);
-          })
-          .catch(err => {
-            console.error(err);
-          })
-      };
+    const setSelectedPlace = (address) => {
+        helper.setValue(address);
+        geocodeByAddress(address)
+        .then(results => getLatLng(results[0]))
+        .then(latLng => {
+            setPosition(latLng);
+        })
+    };
     
-    useEffect(() => {
-        searchPlace(field.value)
-    },[field.value])
-
     return(
         <Form.Group 
             className={`btn-place ${props.pos ?  props.pos : "mb-3"}`} 
             onClick={() => setSearchPlace(state => !state)} 
         >
             {label && <Form.Label>{label}</Form.Label>}
-            <Form.Control 
-                className={`input-w100 form-control shadow-none ${meta.touched && meta.error && 'is-invalid'}`}
-                {...field}
-                {...props}
-                as='input'
-                autoComplete="off"
-            />
-            {
-                isSearchPlace && 
-                <PlacePicker 
-                    predictions={predictions} 
-                    setSelectedPlace={setSelectedPlace} 
-                />
-            }
+            <PlacesAutocomplete value={field.value} onChange={helper.setValue} onSelect={setSelectedPlace}>
+                {({getInputProps, suggestions, getSuggestionItemProps, loading }) => {
+                  return (
+                    <div className="position-relative">
+                      <Form.Control 
+                        {...getInputProps({
+                            className: `input-w100 form-control shadow-none ${meta.touched && meta.error && 'is-invalid'}`, 
+                            as: 'input',
+                            autoComplete: 'off',
+                            onFocus: () => {setSearchPlace(true)},
+                            onBlur: () => {setSearchPlace(false)}
+                        })} />
+                      {
+                        isSearchPlace &&
+                        <div id="search-place-2" className="gray-border round-radius shadow mt-1"> 
+                          <ListGroup>
+                            {suggestions.map((item) => {
+                              return (
+                                <ListGroupItem key={item.placeId} {...getSuggestionItemProps(item)}>
+                                  {item.description}
+                                </ListGroupItem>
+                              )
+                            })}
+                          </ListGroup>
+                        </div>
+                      }
+                    </div>
+                )}}
+              </PlacesAutocomplete>
             <ErrorMessage name={field.name} component='div' style={!errStyle ? {color:'red'} : errStyle}/>
         </Form.Group>
 
-    )
-}
-
-const PlacePicker = (props) => {
-    return (
-        <div id="search-place-2" className="gray-border round-radius shadow mt-1">  
-            <ListGroup>
-                {props.predictions.map(
-                    item => 
-                        <ListGroupItem key={item.place_id} onClick={() => {props.setSelectedPlace(item)}}>
-                            {item.description}
-                        </ListGroupItem>
-                )}
-            </ListGroup>
-        </div>
     )
 }
 
