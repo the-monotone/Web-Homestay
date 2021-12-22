@@ -8,8 +8,8 @@ import FeedbackCard from '../components/card/FeedbackCard';
 import Layout from '../components/layout.component';
 import { RoomContext } from '../context/roomContext';
 import { FeedbackContext } from '../context/feedbackContext';
-import './roomView.page.css';
 import StarRatings from 'react-star-ratings';
+import './roomView.page.css';
 
 const RoomViewPage = () => {
     const {readRoom, roomFacility, getRentalDateByRoom, roomInit} = useContext(RoomContext);
@@ -92,7 +92,7 @@ const RoomViewPage = () => {
                             starRatedColor='rgb(230, 67, 47)'
                         />
                         </div>
-                        <div className="ms-2 me-2" voting-num>{`${parseFloat(room.rate).toFixed(1)}`}</div>
+                        <div className="ms-2 me-2 voting-num">{`${parseFloat(room.rate).toFixed(1)}`}</div>
                     </div>
                     : "Chưa có đánh giá"  : "Chưa có đánh giá"
                 }
@@ -166,8 +166,12 @@ const RoomViewPage = () => {
                     {userState === null? <p>Đăng nhập để xem đánh giá</p> : feedback === null? 
                         <Spinner animation="border" /> :
                         feedback.total === 0? <p>Chưa có đánh giá nào</p> :
-                    <ListGroup>
-                        {feedback.feedbacks.map(feedbackItem => <FeedbackCard key={feedbackItem.id} feedback={feedbackItem} />)}
+                    <ListGroup className="row">
+                        {feedback.feedbacks.map(feedbackItem => 
+                            <div className="col-12 col-md-7" key={feedbackItem.id}>
+                                <FeedbackCard feedback={feedbackItem} />
+                            </div>
+                        )}
                     </ListGroup>
                     }
                 </div>

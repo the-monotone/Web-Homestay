@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
-import { Tabs, Tab, Row, Col, Spinner, Button, Container } from 'react-bootstrap';
+import { Tabs, Tab, Row, Spinner, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import Layout from '../components/layout.component';
-import { HostRentalCard } from '../components/shared/hostRentalCard';
 import { RentalContext } from '../context/rentalContext';
 import { RatingModal } from '../components/shared/weModal';
 import { RentalBanner } from '../assets/rentalBanner';
@@ -73,12 +72,12 @@ const RentTab = ({rentalList, canRate, handleClickRate}) => {
     return (
         rentalList.length <= 0 ? 
         <p className="no-rental-text"><i className="bi bi-journal"></i>Hiện không có bản thuê nào</p> :
-        <div>
-            <Row className = "host-rental-container mt-3 mb-3 g-4" >
+        <div className="container">
+        <div className="row mt-3 mb-3 g-4" >
             {
                 rentalList.map((rental, index) => {
                     return(
-                        <Col md = "3" key={index}>
+                        <div className="col col-sm-6 col-md-4" key={index}>
                             <RentalCard rental={rental}>
                                 {
                                     canRate && 
@@ -87,11 +86,11 @@ const RentTab = ({rentalList, canRate, handleClickRate}) => {
                                     </Button>
                                 }
                             </RentalCard>
-                        </Col>
+                        </div>
                     )
                 })
             }
-            </Row>
+        </div>
         </div>
     )
 }

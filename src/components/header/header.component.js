@@ -86,6 +86,14 @@ function Header() {
                 setNewNotiCount((prevCount) => prevCount + 1);
             }
         })
+        socket.on("receive_room", (content, sendDate) => {
+            if (isActive) {
+                const exposedContent = content.split("|")[0];
+                setToastNoti(exposedContent);
+                setToast(true);
+                setNewNotiCount((prevCount) => prevCount + 1);
+            }
+        })
         handleViewNotification();
         return () => {
             isActive = false;
@@ -158,7 +166,7 @@ function Header() {
                                     {   isLoadNoti? <Spinner animation="border" /> : noti.length > 0 ?
                                         noti.map(notiItem => 
                                             <Dropdown.Item key={notiItem.id}>
-                                                <NotificationItem noti={notiItem}/>
+                                                <NotificationItem noti={notiItem} handleClickNoti={() => {setNewNotiCount(newNotiCount-1)}}/>
                                             </Dropdown.Item>) :
                                         <div className="container">
                                             <p>Không có thông báo nào</p>

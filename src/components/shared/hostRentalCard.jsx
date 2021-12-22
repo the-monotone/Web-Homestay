@@ -15,8 +15,6 @@ const displayMoney = (amount) => {
 }
 
 export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
-    console.log(rental);
-
     const userState = JSON.parse(localStorage.getItem("user-state"));
     const { socket } = useContext(NotificationContext);
 
@@ -34,10 +32,23 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
                     console.log(res);
                     const optionGuest = JSON.stringify({
                         forHost: false,
-                        rental_id: rental.rental_id,
                         host_id: rental.host_id
                     });
-                    socket.emit("send_rental", rental.client_id, `Chủ nhà ${userState.name} đã cập nhật bản thuê của bạn|${optionGuest}`)
+                    const optionHost = JSON.stringify({
+                        forHost: true,
+                        client_id: rental.client_id
+                    })
+                    if (res.data) {
+                        for (let clientId of res.data) {
+                            socket.emit("send_rental", clientId, `Chủ nhà ${userState.name} đã từ chối bản thuê của bạn.|${optionGuest}`);
+                        }
+                    }
+                    if (rentalAfter.status === "CONFIRMED") {
+                        socket.emit("send_rental", rental.host_id, `Cho thuê thành công.|${optionHost}`);
+                    } else if (rentalAfter.status === "RETURNED") {
+                        socket.emit("send_rental", rental.host_id, `Trả phòng thành công.|${optionHost}`);
+                    }
+                    socket.emit("send_rental", rental.client_id, `Chủ nhà ${userState.name} đã cập nhật trạng thái bản thuê của bạn.|${optionGuest}`)
                 })
                 .catch(err => {
                     console.log(err);
@@ -53,7 +64,7 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
                 <Row>
                     <Col md='10' className='rental-room-name'>{rental.room_name}</Col>
                     <Col md='1'>
-                        <OverlayTrigger trigger='click' placement='right' overlay={<WePopover id={rental.client_id}/>}>
+                        <OverlayTrigger trigger='click' placement='right' rootClose overlay={<WePopover id={rental.client_id}/>}>
                             <span className="bi bi-telephone-outbound-fill"></span>
                         </OverlayTrigger>
                     </Col> 

@@ -95,6 +95,14 @@ function HostHeader() {
                 setNewNotiCount((prevCount) => prevCount + 1);
             }
         })
+        socket.on("receive_room", (content, sendDate) => {
+            if (isActive) {
+                const exposedContent = content.split("|")[0];
+                setToastNoti(exposedContent);
+                setToast(true);
+                setNewNotiCount((prevCount) => prevCount + 1);
+            }
+        })
         handleViewNotification();
 
         return () => {
@@ -142,14 +150,14 @@ function HostHeader() {
                                 <Dropdown.Toggle className='rounded-pill'>
                                     <div onClick={handleViewNotification}>
                                         <span className="bi bi-bell-fill white-icon"></span>
-                                        {newNotiCount > 0 && <Badge pill bg="danger">{newNotiCount}</Badge>}
+                                        {newNotiCount > 0 && <Badge pill bg="danger" className='position-absolute top-0 start-50' id='noti-badge'>{newNotiCount}</Badge>}
                                     </div>
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className="notification-menu position-absolute dropdown-menu-end">
                                     {   isLoadNoti? <Spinner animation="border" /> : noti.length > 0 ?
                                         noti.map(notiItem => 
                                             <Dropdown.Item key={notiItem.id}>
-                                                <NotificationItem noti={notiItem}/>
+                                                <NotificationItem noti={notiItem} handleClickNoti={() => {setNewNotiCount(cnt => cnt-1)}}/>
                                             </Dropdown.Item>) :
                                         <div className="container">
                                             <p>Không có thông báo nào</p>
