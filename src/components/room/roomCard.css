@@ -67,9 +67,9 @@
   position: relative;
 }
 .my-card-footer {
-  position: absolute;
   bottom: 0px;
-  width: 90%;
+  right: 0px;
+  width: 100%;
   z-index: 1;
 }
 

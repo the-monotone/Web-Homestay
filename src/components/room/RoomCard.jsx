@@ -80,7 +80,7 @@ export const RoomCard = ({onClick, isEditable, room, canFavorite, isFavorite}) =
                         }
                         </Carousel>
                     </Col>
-                    <Col sm="12" md="8" className='ps-3 pt-2 pb-2 pe-1 my-card-body h-100'>
+                    <Col sm="12" md="8" className='ps-3 pt-2 pb-2 pe-1 my-card-body'>
                         <div>
                             <Row>
                                 <Col sm='10' className='room-title fw-bolder fs-5 overflow-hidden' onClick={onClick}>{room.room_name}</Col>
@@ -97,22 +97,21 @@ export const RoomCard = ({onClick, isEditable, room, canFavorite, isFavorite}) =
                                 <i className="bi bi-dot"></i>
                                 {`${room.num_bathroom} phòng tắm`}
                             </div>
-                            <FacilityBadgeList facList={room.facilities} />
+                            <FacilityBadgeList facList={room.facilities}/>
                             
                         </div>
-                        <div className="d-flex justify-content-between my-card-footer">
-                            <div>
-                                <i className="bi bi-star-fill small-icon"></i>
-                                {room.rate !== null ? parseFloat(room.rate).toFixed(1) !== 0.0 ? parseFloat(room.rate).toFixed(1): "Chưa có đánh giá"  : "Chưa có đánh giá"}
-                            </div>
-                            <div>
-                                <strong>{displayMoney(parseFloat(room.price))}</strong>{"/đêm"}
-                            </div>
-                        </div>
-                        
                     </Col>
 
                 </Row>
+                <div className="d-flex justify-content-between my-card-footer mt-1">
+                    <div>
+                        <i className="bi bi-star-fill small-icon"></i>
+                        {room.rate !== null ? parseFloat(room.rate).toFixed(1) !== 0.0 ? parseFloat(room.rate).toFixed(1): "Chưa có đánh giá"  : "Chưa có đánh giá"}
+                    </div>
+                    <div>
+                        <strong>{displayMoney(parseFloat(room.price))}</strong>{"/đêm"}
+                    </div>
+                </div>
                 { isEditable &&
                             <div className="room-edit-option">
                                 <animated.div
