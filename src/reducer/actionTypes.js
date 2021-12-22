@@ -1,7 +1,3 @@
-export const CHANGE_PLACE = "CHANGE_PLACE";
-export const CHANGE_STARTDATE = "CHANGE_STARTDATE";
-export const CHANGE_ENDDATE = "CHANGE_ENDDATE";
-export const CHANGE_GUEST = "CHANGE_GUEST";
 export const ADD_RESULTS = "ADD_RESULTS";
 export const ADD_ERROR = "ADD_ERROR";
 
