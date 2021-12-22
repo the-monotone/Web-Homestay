@@ -4,7 +4,6 @@ import ReactDatePicker from 'react-datepicker';
 import { NotificationContext } from '../../context/notificationContext';
 import { RentalContext } from '../../context/rentalContext';
 import { RoomContext } from '../../context/roomContext';
-import { SearchContext } from '../../context/searchContext';
 
 const renderTooltip = (props) => {
     return (
@@ -104,7 +103,12 @@ const calcMaxEndDate = (startDate, endDate, rentalDateList) => {
 
 const BillingCard = ({roomId, price, rating, hostId, rentalDateList}) => {
     const [isLoggedIn, setLoggedIn] = useState(false);
-    const {startDate, endDate, guest, changeStartDate, changeEndDate, changeGuest} = useContext(SearchContext);
+    const search = JSON.parse(localStorage.getItem("search"));
+    
+    const [startDate, setStartDate] = useState(search.begin_date);
+    const [endDate, setEndDate] = useState(search.end_date);
+    const [guest, setGuest] = useState(search.guest);
+
     const { getRentalDateByRoom } = useContext(RoomContext);
     const { postRental } = useContext(RentalContext);
     const { socket } = useContext(NotificationContext);
@@ -189,7 +193,7 @@ const BillingCard = ({roomId, price, rating, hostId, rentalDateList}) => {
                                 <ReactDatePicker
                                     name="begin_date"
                                     selected={startDate}
-                                    onChange={date => {changeStartDate(date)}} 
+                                    onChange={setStartDate} 
                                     dateFormat="dd/MM/yyyy" 
                                     minDate={calcMinStartDate(startDate, endDate, rentalDateList)} 
                                     maxDate={endDate}
@@ -208,7 +212,7 @@ const BillingCard = ({roomId, price, rating, hostId, rentalDateList}) => {
                                 <ReactDatePicker
                                     name="end_date"
                                     selected={endDate}
-                                    onChange={date => {changeEndDate(date)}} 
+                                    onChange={setEndDate} 
                                     dateFormat="dd/MM/yyyy" 
                                     minDate={startDate === null? new Date() : startDate}
                                     maxDate={calcMaxEndDate(startDate, endDate, rentalDateList)} 
@@ -225,7 +229,7 @@ const BillingCard = ({roomId, price, rating, hostId, rentalDateList}) => {
                     <Row className="mb-2">
                         <Col>
                             <strong className="ms-1 search-form-label">Khách</strong>
-                                <GuestPicker guest={guest} changeGuest={changeGuest}/>
+                                <GuestPicker guest={guest} changeGuest={setGuest}/>
                         </Col>
                     </Row>
                     <Form.Control hidden type="text" name="status" />
