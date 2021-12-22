@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from 'react';
 import Map from '../components/GoogleMapComponent';
-import '@goongmaps/goong-js/dist/goong-js.css';
 import { RoomCard } from '../components/room/RoomCard';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/layout.component';
