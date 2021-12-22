@@ -74,16 +74,12 @@ const PlaceCard = ({colorVariant, imageSrc, place, latitude, longitude}) => {
         }
     })
 
-    const {changePlace} = useContext(SearchContext);
     const navigate = useNavigate();
     const handleClick = () => {
-        changePlace({
-            description: place,
-            lat: latitude,
-            lng: longitude
-        })
         const body = {
             description: place,
+            begin_date: null,
+            end_date: null,
             latitude: latitude,
             longitude: longitude,
             radius: 20
