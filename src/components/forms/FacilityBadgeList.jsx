@@ -17,13 +17,18 @@ export const FacilityBadgeList = ({facList}) => {
     }
 
     return(
-        <Card.Text>
+        <Card.Text className='pb-3'>
             {
                 facList.map((fac, index) => {
                     return (
-                        <span className='fs-6 fw-light lh-sm' key={index}>
-                            {index > 0 ? <i className="bi bi-dot"></i> : ''}
-                            {getFacility(fac)}
+                        <span key={index}>
+                        { index <= 3 ? 
+                            <span className='fs-6 fw-light lh-sm'>
+                                {index > 0 ? <i className="bi bi-dot"></i> : ''}
+                                {getFacility(fac)}
+                            </span>
+                            : index === 4 ? <span><i className="bi bi-dot"></i> ... </span> : <span></span>
+                        }
                         </span>
                     )
                 })
