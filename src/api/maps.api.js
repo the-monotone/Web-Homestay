@@ -4,7 +4,7 @@ import { GOOGLE_MAP_KEY } from "../config";
 
 export const placeAutocompleteApi = (input) => {
     var nonSpaceInput = input.replace(" ", "%20");
-    const path = `/autocomplete/json?input=${nonSpaceInput}&components=country:vn&language=vi&key=${GOOGLE_MAP_KEY}`;
+    const path = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${nonSpaceInput}&components=country:vn&language=vi&key=${GOOGLE_MAP_KEY}`;
     const config = {
         method: 'get',
         url: path,
@@ -20,7 +20,7 @@ export const placeAutocompleteApi = (input) => {
 }
 
 export const placeDetailsApi = (place_id) => {
-    const path = `/details/json?place_id=${place_id}&region=vn&language=vi&key=${GOOGLE_MAP_KEY}`;
+    const path = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&region=vn&language=vi&key=${GOOGLE_MAP_KEY}`;
     const config = {
         method: 'get',
         url: path,

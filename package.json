@@ -1,7 +1,7 @@
 {
   "name": "homestay",
   "version": "0.1.0",
-  "proxy": "https://maps.googleapis.com/maps/api/place",
+  "homepage": "https://wehomeapp.tk/",
   "private": true,
   "dependencies": {
     "@goongmaps/goong-geocoder": "^1.1.1",
