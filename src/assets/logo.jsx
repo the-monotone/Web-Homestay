@@ -4,13 +4,14 @@ import { Image } from 'react-bootstrap';
 import WeHomeLogo from './onlyLogo.svg';
 import WeHomeLogoBgDark from './weHomeLogo.svg';
 import WeBranch from './logoandbrand.svg';
+import Banner from '../assets/banner.svg'
 
 export const WeLogo = (props) => {
     return (
         <Image
-            src={WeHomeLogo}  
+            src={Banner}  
             alt=""
-            style={{ height: 60, width: 60 }}
+            style={{ height: '60px'}}
             className='me-2'
             {...props}
             />

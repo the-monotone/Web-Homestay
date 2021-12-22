@@ -64,10 +64,10 @@ export const RoomSignUp = () => {
     facilities: [],
     images: [],
     rule: '',
-    num_guest: 0,
-    num_bed: 0,
-    num_bedroom: 0,
-    num_bathroom: 0,
+    num_guest: 1,
+    num_bed: 1,
+    num_bedroom: 1,
+    num_bathroom: 1,
     price: 23012.13,
     location: null
   };

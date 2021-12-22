@@ -117,7 +117,7 @@ function Header() {
             <Container fluid="md" className='w-100'>
                 <Navbar.Toggle />
                 <Navbar.Brand href="/" className="order-0 me-auto">
-                    <WeLogo style={{ height: '30px'}} />
+                    <WeLogo style={{ height: '60px'}} />
                 </Navbar.Brand>
                 <Navbar.Collapse className="order-last">
                     <Nav navbar className="m-auto">

@@ -44,7 +44,7 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
     });
 
     return(
-        <Card className="host-rental-card mb-2 me-2 ">
+        <Card className="host-rental-card mb-2 me-2">
             <Card.Title className="rental-card-title m-2">
                 <Row>
                     <Col md='10' className='rental-room-name'>{rental.room_name}</Col>
