@@ -73,13 +73,20 @@ export const SearchPlaceInput = ({label, errStyle,setPosition , ...props}) => {
         })
     };
     
+    const options = {
+        componentRestrictions: { country: "vn" },
+    }
+
     return(
         <Form.Group 
             className={`btn-place ${props.pos ?  props.pos : "mb-3"}`} 
-            onClick={() => setSearchPlace(state => !state)} 
         >
             {label && <Form.Label>{label}</Form.Label>}
-            <PlacesAutocomplete value={field.value} onChange={helper.setValue} onSelect={setSelectedPlace}>
+            <PlacesAutocomplete 
+                value={field.value} 
+                onChange={helper.setValue} 
+                onSelect={setSelectedPlace}
+                searchOptions={options}>
                 {({getInputProps, suggestions, getSuggestionItemProps, loading }) => {
                   return (
                     <div className="position-relative">
@@ -94,15 +101,15 @@ export const SearchPlaceInput = ({label, errStyle,setPosition , ...props}) => {
                       {
                         isSearchPlace &&
                         <div id="search-place-2" className="gray-border round-radius shadow mt-1"> 
-                          <ListGroup>
-                            {suggestions.map((item) => {
-                              return (
-                                <ListGroupItem key={item.placeId} {...getSuggestionItemProps(item)}>
-                                  {item.description}
-                                </ListGroupItem>
-                              )
-                            })}
-                          </ListGroup>
+                            <ListGroup>
+                                {suggestions.map((item) => {
+                                return (
+                                    <ListGroupItem key={item.placeId} {...getSuggestionItemProps(item)}>
+                                    {item.description}
+                                    </ListGroupItem>
+                                )
+                                })}
+                            </ListGroup>
                         </div>
                       }
                     </div>

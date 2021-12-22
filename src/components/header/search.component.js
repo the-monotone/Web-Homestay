@@ -11,6 +11,10 @@ import {
 } from 'react-spring'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
+const options = {
+  componentRestrictions: { country: "vn" },
+}
+
 const SearchModal = ({ show, onHide }) => {
   const [isSearchPlace, setSearchPlace] = useState(false);
   const [beginDate, setBeginDate] = useState(null);
@@ -119,7 +123,11 @@ const SearchModal = ({ show, onHide }) => {
               className="col-12 col-md-3 gray-border-right position-relative"
             >
               <strong className="ms-1">Địa điểm</strong>
-              <PlacesAutocomplete value={inputValue} onChange={handleChange} onSelect={setSelectedPlace}>
+              <PlacesAutocomplete 
+                value={inputValue} 
+                onChange={handleChange} 
+                onSelect={setSelectedPlace}
+                searchOptions={options}>
                 {({getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                   <div>
                     <input 
@@ -366,7 +374,11 @@ export const OnlySearchBar = () => {
           >
             <div className="w-100 gray-border-right position-relative">
               <strong className="ms-1 search-form-label">Địa điểm</strong>
-              <PlacesAutocomplete value={inputValue} onChange={handleChange} onSelect={setSelectedPlace}>
+              <PlacesAutocomplete 
+                value={inputValue} 
+                onChange={handleChange} 
+                onSelect={setSelectedPlace}
+                searchOptions={options}>
                 {({getInputProps, suggestions, getSuggestionItemProps, loading }) => {
                   return (
                     <div>

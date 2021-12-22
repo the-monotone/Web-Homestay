@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from 'react';
-import Map from '../components/MapComponent';
+import Map from '../components/GoogleMapComponent';
 import '@goongmaps/goong-js/dist/goong-js.css';
 import { RoomCard } from '../components/room/RoomCard';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
@@ -55,6 +55,7 @@ const SearchResultPage = () => {
         }
         searchPlaceApi(searchBody)
             .then(res => {
+                console.log(res);
                 if (isActive) {
                     setResults(res);
                     setLoading(false);
@@ -99,7 +100,7 @@ const SearchResultPage = () => {
                         )
                     })}
                 </div>
-                <div className={`col ${!showMap && "d-none "} d-lg-block col-lg-7 h-100 position-fixed bottom-0 end-0 div-map p-0`}>
+                <div className={`col ${!showMap && "d-none"} position-fixed end-0 bottom-0 d-lg-block col-lg-7 h-100 div-map p-0`}>
                     {
                         location &&
                         <Map 

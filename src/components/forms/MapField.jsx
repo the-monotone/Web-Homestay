@@ -1,53 +1,82 @@
-import '@goongmaps/goong-js/dist/goong-js.css';
-import '@goongmaps/goong-geocoder/dist/goong-geocoder.css'
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useField, ErrorMessage } from 'formik';
-import { GOONG_MAP_KEY, GOONG_API_KEY } from '../../config';
+import { Autocomplete, GoogleMap, Marker } from '@react-google-maps/api';
 
-const GoongGeocoder = require('@goongmaps/goong-geocoder');
-const goongjs = require('@goongmaps/goong-js');
-goongjs.accessToken = GOONG_MAP_KEY[Math.floor(Math.random() * GOONG_MAP_KEY.length)];
+const containerStyle = {
+  width: '100%',
+  height: '100%'
+};
 
-let map, geocoder;
+const center = {
+  lat: 21.028195403,
+  lng: 105.854159778
+};
 
 const MapField = ({label, ...props}) => {
-  const [field,,helper] = useField(props);
-  useEffect(() => {
-    if (map == null) {
-      map = new goongjs.Map({
-        container: 'map',
-        style: 'https://tiles.goong.io/assets/goong_map_web.json',
-        center: [105.853460, 21.026975],
-        zoom: 14
-      })
-      geocoder = new GoongGeocoder({
-        accessToken: GOONG_API_KEY[Math.floor(Math.random() * GOONG_API_KEY.length)],
-        goongjs: goongjs,
-        marker: {
-          draggable: true
-        }
-      })
-      map.addControl(geocoder);
-    }
+  const [,,helper] = useField(props);
+  const [autocomplete, setAutocomplete] = useState(null);
+  const [map, setMap] = useState(null);;
+  const [marker, setMarker] = useState(null);
 
-    return () => {
-      if (geocoder && geocoder.mapMarker) {
-        helper.setValue({
-          latitude: geocoder.mapMarker._lngLat.lat,
-          longitude: geocoder.mapMarker._lngLat.lng
-        })
-      }
-      map.remove();
-      map = null;
-    }
-  }, [helper]);
-    
+  const onLoadMap = (mapItem) => {
+    setMap(mapItem);
+  }
+  const onLoadAutocomplete = (autocompleteItem) => {
+    setAutocomplete(autocompleteItem);
+  }
+  const onLoadMarker = (markerItem) => {
+    setMarker(markerItem);
+  }
 
+  const onPlaceChanged = () => {
+    if (autocomplete != null) {
+      map.panTo({
+        lat: autocomplete.getPlace().geometry.location.lat(),
+        lng: autocomplete.getPlace().geometry.location.lng()
+      })
+      marker.setPosition({
+        lat: autocomplete.getPlace().geometry.location.lat(),
+        lng: autocomplete.getPlace().geometry.location.lng()
+      })
+      helper.setValue({
+        latitude: marker.getPosition().lat(),
+        longitude: marker.getPosition().lng(),
+      })
+    } else {
+      console.log('Autocomplete is not loaded yet!')
+    }
+  }
+
+  const handleDragMarker = () => {
+    helper.setValue({
+      latitude: marker.getPosition().lat(),
+      longitude: marker.getPosition().lng(),
+    })
+  }
   return (
-    <div className="w-100 h-100">
-      <div className="w-100 h-100" id="map" />
-      <ErrorMessage name={field.name} component='div' style={{color:'red'}}/>
-    </div>
+    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} onLoad={onLoadMap}>
+      <Autocomplete onLoad={onLoadAutocomplete} onPlaceChanged={onPlaceChanged} fields={["geometry.location"]}>
+        <input
+            type="text"
+            placeholder="Nhập vị trí phòng"
+            style={{
+              boxSizing: `border-box`,
+              border: `1px solid transparent`,
+              width: `240px`,
+              height: `32px`,
+              padding: `0 12px`,
+              borderRadius: `3px`,
+              boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+              fontSize: `14px`,
+              outline: `none`,
+              textOverflow: `ellipses`,
+              position: "absolute",
+              left: "50%",
+            }}
+          />
+      </Autocomplete>
+      <Marker onLoad={onLoadMarker} draggable position={center} onDragEnd={handleDragMarker}/>
+    </GoogleMap>
   )
 }
 
