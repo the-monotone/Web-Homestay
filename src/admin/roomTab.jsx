@@ -14,10 +14,9 @@ import './admin.page.css'
 import { MAX_REQUEST } from '../reducer/actionTypes';
 import { RoomContext } from '../context/roomContext';
 import { useNavigate } from 'react-router-dom';
+import { NotificationContext } from '../context/notificationContext';
 
-
-
-const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setConfirmToast}) => {
+const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setConfirmToast, socket}) => {
 
     const userState = JSON.parse(localStorage.getItem('user-state'));
     const {deleteRoom, updateRoom} = useContext(RoomContext);
@@ -29,16 +28,21 @@ const RoomRow = ({room, isLoading, setLoading, removeRoom, setDeleteToast, setCo
         if(isLoading) return;
         setLoading(true);
         await deleteRoom(userState.token, room.room_id)
-            .then(res => {setDeleteToast(true)})
+            .then(res => {
+                setDeleteToast(true)
+                socket.emit("send_room", room.host_id, "Quản trị viên đã xóa phòng của bạn.|")
+            })
             .catch(err => alert('System error. Change later'))
         setLoading(false);
-
     }
     const handleConfirmRoom = async () => {
         if(isLoading) return;
         setLoading(true);
         await updateRoom(userState.token, {...room, confirmed: true})
-            .then(res => {setConfirmToast(true)})
+            .then(res => {
+                setConfirmToast(true)
+                socket.emit("send_room", room.host_id, "Quản trị viên đã xác nhận phòng của bạn.|")
+            })
             .catch(err => alert('System error. Change later'))
         setLoading(false);
     }
@@ -148,6 +152,7 @@ export const RoomTab = () => {
 
     const [location, setLocation] = useState({});
 
+    const { socket } = useContext(NotificationContext);
 
     const handlePageNumber = (number) => {
         setCurrentPage(number);
@@ -222,6 +227,7 @@ export const RoomTab = () => {
         console.log('filter called');
         console.log(filterRoom);
         const doIt = filterRoom.position ? getRoomsByPosition : getAllRoomWithFilter;
+  
         setLoading(true);
         await doIt()
             .then((res) => {
@@ -326,7 +332,8 @@ export const RoomTab = () => {
                             setLoading={setLoading}
                             removeUser={removeRoom}
                             setDeleteToast={setDeleteToast}
-                            setConfirmToast={setConfirmToast}/>
+                            setConfirmToast={setConfirmToast}
+                            socket={socket} />
                         ))}
                     </tbody>
                 </Table>

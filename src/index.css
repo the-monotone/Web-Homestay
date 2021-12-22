@@ -100,3 +100,7 @@ a {
 .btn {
   border-radius: 50rem !important;
 }
+
+.clickable {
+  cursor: pointer;
+}

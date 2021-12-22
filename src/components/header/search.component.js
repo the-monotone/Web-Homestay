@@ -199,6 +199,7 @@ const SearchModal = ({ show, onHide }) => {
                 minDate={startDate == null ? new Date() : startDate}
                 monthsShown={2}
                 customInput={<input />}
+                isClearable
                 className="input-w100 search-input"
               />
             </div>
@@ -469,6 +470,7 @@ export const OnlySearchBar = () => {
                 maxDate={endDate}
                 monthsShown={2}
                 customInput={<input />}
+                isClearable
                 className="input-w100 search-input"
               />
             </div>
@@ -488,6 +490,7 @@ export const OnlySearchBar = () => {
                 minDate={startDate == null ? new Date() : startDate}
                 monthsShown={2}
                 customInput={<input />}
+                isClearable
                 className="input-w100 search-input"
               />
             </div>

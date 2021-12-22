@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Card, OverlayTrigger, Row, Col, Overlay, Tooltip } from 'react-bootstrap';
+import React from 'react';
+import { Card, OverlayTrigger, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { WePopover } from '../shared/wePopover';
-import './rentalCard.css';
 
 const displayMoney = (amount) => {
     var formatter = new Intl.NumberFormat('vi', {
@@ -14,12 +14,16 @@ const displayMoney = (amount) => {
 
 const RentalCard = ({rental, children}) => {
     console.log(rental);
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(`/room/${rental.room_id}`);
+    }
     return(
-        <Card className="host-rental-card mb-2 me-2">
-            <Card.Title className="m-2">
+        <Card className="w-100 host-rental-card mb-2 me-2">
+            <Card.Title className="m-2" >
                 <Row>
-                    <Col className="rental-card-title" xs='10'>{rental.room_name}</Col>
-                    <Col md='1'>
+                    <Col className="rental-card-title clickable" xs='10' onClick={handleClick}>{rental.room_name}</Col>
+                    <Col xs='1'>
                         <OverlayTrigger trigger='click' rootClose placement='right' overlay={<WePopover id={rental.host_id}/>}>
                             <span className="bi bi-telephone-outbound-fill"></span>
                         </OverlayTrigger>

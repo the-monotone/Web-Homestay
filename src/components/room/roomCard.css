@@ -1,33 +1,15 @@
-@media only screen and (min-width: 768px) {
-  .row-body {
-    height: 150px
-  }
-  .row-body > div {
-    height: 100%
-  }
-  .carousel {
-    height: 100%
-  }
-  .carousel > .carousel-inner {
-    height: 100%
-  }
+.row-body {
+  height: 150px
 }
-
-@media only screen and (max-width: 768px) {
-  .row-body {
-    height: 600px
-  }
-  .row-body > div {
-    height: 80%
-  }
-  .carousel {
-    height: 100%
-  }
-  .carousel > .carousel-inner {
-    height: 100%
-  }
+.row-body > div {
+  height: 100%
 }
-
+.carousel {
+  height: 100%
+}
+.carousel > .carousel-inner {
+  height: 100%
+}
 
 .carousel-img {
   height: 100%;

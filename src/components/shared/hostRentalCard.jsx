@@ -3,6 +3,7 @@ import { Card, OverlayTrigger, Row, Col } from 'react-bootstrap';
 import './hostRentalCard.css'
 import { RentalContext } from '../../context/rentalContext';
 import { WePopover } from './wePopover';
+import { NotificationContext } from '../../context/notificationContext';
 
 const displayMoney = (amount) => {
     var formatter = new Intl.NumberFormat('vi', {
@@ -14,9 +15,8 @@ const displayMoney = (amount) => {
 }
 
 export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
-    console.log(rental);
-
     const userState = JSON.parse(localStorage.getItem("user-state"));
+    const { socket } = useContext(NotificationContext);
 
     const {updateRental} = useContext(RentalContext);
 
@@ -30,6 +30,25 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
             await updateRental(userState.token, rentalAfter)
                 .then(res => {
                     console.log(res);
+                    const optionGuest = JSON.stringify({
+                        forHost: false,
+                        host_id: rental.host_id
+                    });
+                    const optionHost = JSON.stringify({
+                        forHost: true,
+                        client_id: rental.client_id
+                    })
+                    if (res.data) {
+                        for (let clientId of res.data) {
+                            socket.emit("send_rental", clientId, `Chủ nhà ${userState.name} đã từ chối bản thuê của bạn.|${optionGuest}`);
+                        }
+                    }
+                    if (rentalAfter.status === "CONFIRMED") {
+                        socket.emit("send_rental", rental.host_id, `Cho thuê thành công.|${optionHost}`);
+                    } else if (rentalAfter.status === "RETURNED") {
+                        socket.emit("send_rental", rental.host_id, `Trả phòng thành công.|${optionHost}`);
+                    }
+                    socket.emit("send_rental", rental.client_id, `Chủ nhà ${userState.name} đã cập nhật trạng thái bản thuê của bạn.|${optionGuest}`)
                 })
                 .catch(err => {
                     console.log(err);
@@ -39,17 +58,13 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
         update();
     }
 
-    const ThisWillWork = forwardRef((props, ref) => {
-        return <div className = "host-rental-cost" ref={ref}>{`Id: ${rental.cost}`}</div>;
-    });
-
     return(
         <Card className="host-rental-card mb-2 me-2">
             <Card.Title className="rental-card-title m-2">
                 <Row>
                     <Col md='10' className='rental-room-name'>{rental.room_name}</Col>
                     <Col md='1'>
-                        <OverlayTrigger trigger='click' placement='right' overlay={<WePopover id={rental.client_id}/>}>
+                        <OverlayTrigger trigger='click' placement='right' rootClose overlay={<WePopover id={rental.client_id}/>}>
                             <span className="bi bi-telephone-outbound-fill"></span>
                         </OverlayTrigger>
                     </Col> 

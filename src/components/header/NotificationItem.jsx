@@ -7,7 +7,7 @@ const splitContent = (content) => {
     return [contentArray[0], JSON.parse(contentArray[1])];
 }
 
-const NotificationItem = ({noti}) => {
+const NotificationItem = ({noti, handleClickNoti}) => {
     const textDecoClass = (noti.status === "UNREAD"? "fw-bold" : "fst-normal");
     const { seenNotification } = useContext(NotificationContext);
     const navigate = useNavigate();
@@ -15,6 +15,7 @@ const NotificationItem = ({noti}) => {
     const handleClick = () => {
         const userState = JSON.parse(localStorage.getItem("user-state"));
         if (noti.status === "UNREAD") {
+            handleClickNoti();
             seenNotification(noti.id, userState.token)
                 .catch(err => {
                     alert(err);
@@ -28,6 +29,8 @@ const NotificationItem = ({noti}) => {
             } else {
                 navigate(`/rental/user/${noti.user_id}`)
             }
+        } else if (noti.type === "ROOM") {
+            navigate("/host/roommanager");
         }
     }
     return (
