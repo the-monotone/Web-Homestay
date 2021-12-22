@@ -4,6 +4,7 @@ import { Footer } from "./footer/footer.component";
 import "../index.css";
 
 export default function Layout({styleName="", containerStyleName="container-md", showFooter=true, children}) {
+
   return(
     <div className={`d-flex flex-column position-relative ${styleName}`}>
       <Header />
