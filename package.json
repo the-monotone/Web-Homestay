@@ -1,7 +1,6 @@
 {
   "name": "homestay",
   "version": "0.1.0",
-  "homepage": "https://wehomeapp.tk/",
   "proxy": "https://maps.googleapis.com/maps/api/place",
   "private": true,
   "dependencies": {
