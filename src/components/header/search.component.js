@@ -9,7 +9,6 @@ import {
   useSpring,
   animated,
 } from 'react-spring'
-import { placeAutocompleteApi, placeDetailsApi } from "../../api/maps.api";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 const SearchModal = ({ show, onHide }) => {
@@ -18,7 +17,6 @@ const SearchModal = ({ show, onHide }) => {
   const [endDate, setEndDate] = useState(null);
   const [guest, setGuest] = useState(0);
   const [isChoosingPlace, setChoosingPlace] = useState(false);
-  const [predictions, setPredictions] = useState([]);
   const [inputValue, setInputValue] = useState("");
   
   const navigate = useNavigate();
