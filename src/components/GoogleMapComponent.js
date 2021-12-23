@@ -2,6 +2,7 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import PopupRoomCard from './room/PopupRoomCard';
+import { GOOGLE_MAP_KEY } from '../config';
 
 const Marker = ({children}) => <div className="marker-container">{children}</div>;
 
@@ -43,7 +44,7 @@ const Map = ({ latitude, longitude, results, handleClickPopup }) => {
     return (
         <div style={containerStyle}>
             <GoogleMapReact
-                bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
+                bootstrapURLKeys={{ key: GOOGLE_MAP_KEY }}
                 defaultCenter={center} 
                 defaultZoom={12}>
                     {markers}
