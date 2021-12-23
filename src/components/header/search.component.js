@@ -127,7 +127,8 @@ const SearchModal = ({ show, onHide }) => {
                 value={inputValue} 
                 onChange={handleChange} 
                 onSelect={setSelectedPlace}
-                searchOptions={options}>
+                searchOptions={options}
+                required>
                 {({getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                   <div>
                     <input 
@@ -136,7 +137,8 @@ const SearchModal = ({ show, onHide }) => {
                         placeholder: "Bạn muốn đi đâu?", 
                         className: "w-100 search-input",
                         onFocus: () => {setSearchPlace(true)},
-                        onBlur: handleBlurInput
+                        onBlur: handleBlurInput,
+                        required: true
                       })} />
                     {
                       isSearchPlace &&
@@ -378,7 +380,8 @@ export const OnlySearchBar = () => {
                 value={inputValue} 
                 onChange={handleChange} 
                 onSelect={setSelectedPlace}
-                searchOptions={options}>
+                searchOptions={options}
+                required>
                 {({getInputProps, suggestions, getSuggestionItemProps, loading }) => {
                   return (
                     <div>
@@ -388,7 +391,8 @@ export const OnlySearchBar = () => {
                           placeholder: "Bạn muốn đi đâu?", 
                           className: "w-100 search-input",
                           onFocus: () => {setSearchPlace(true)},
-                          onBlur: handleBlurInput
+                          onBlur: handleBlurInput,
+                          required: true
                         })} />
                       {
                         isSearchPlace &&

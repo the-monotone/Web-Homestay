@@ -132,44 +132,44 @@ const BillingCard = ({roomId, price, rating, hostId, rentalDateList}) => {
                         (endDate >= startRentalDate && endDate <= endRentalDate)) {
                         alert("Bản thuê đã trùng. Vui lòng thử lại.");
                         window.location.reload();
+                        return;
                     }
                 }
+                const roomCost = ((endDate - startDate) / 24 / 3600 / 1000 + 1) * price;
+                startDate.setHours(startDate.getHours() + 8);
+                endDate.setHours(startDate.getHours() + 8);
+                
+
+                const body = {
+                    room_id: roomId,
+                    begin_date: dateToString(startDate),
+                    end_date: dateToString(endDate),
+                    status: "UNCONFIRMED",
+                    cost: roomCost,
+                    client_id: userState.userId,
+                    token: userState.token
+                }
+                postRental(userState.token, body)
+                    .then(data => {
+                        console.log(data);
+                        const optionGuest = JSON.stringify({
+                            forHost: false,
+                            host_id: hostId
+                        });
+                        const optionHost = JSON.stringify({
+                            forHost: true,
+                            client_id: userState.userId
+                        })
+                        socket.emit("send_rental", userState.userId, `Đã gửi yêu cầu đặt phòng.|${optionGuest}`)
+                        socket.emit("send_rental", hostId, `Khách ${userState.name} đã gửi yêu cầu đặt phòng của bạn|${optionHost}`);
+                    })
+                    .catch(err => {
+                        const error = new Error(err.message);
+                        alert(error);
+                    })
             })
             .catch(err => {
                 alert(err);
-            })
-
-        const roomCost = ((endDate - startDate) / 24 / 3600 / 1000 + 1) * price;
-        startDate.setHours(startDate.getHours() + 8);
-        endDate.setHours(startDate.getHours() + 8);
-        
-
-        const body = {
-            room_id: roomId,
-            begin_date: dateToString(startDate),
-            end_date: dateToString(endDate),
-            status: "UNCONFIRMED",
-            cost: roomCost,
-            client_id: userState.userId,
-            token: userState.token
-        }
-        postRental(userState.token, body)
-            .then(data => {
-                console.log(data);
-                const optionGuest = JSON.stringify({
-                    forHost: false,
-                    host_id: hostId
-                });
-                const optionHost = JSON.stringify({
-                    forHost: true,
-                    client_id: userState.userId
-                })
-                socket.emit("send_rental", userState.userId, `Đã gửi yêu cầu đặt phòng.|${optionGuest}`)
-                socket.emit("send_rental", hostId, `Khách ${userState.name} đã gửi yêu cầu đặt phòng của bạn|${optionHost}`);
-            })
-            .catch(err => {
-                const error = new Error(err.message);
-                alert(error);
             })
     }
     return (

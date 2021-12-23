@@ -10,13 +10,13 @@ import RentalContextProvider from './context/rentalContext';
 import UserContextProvider from './context/userContext';
 import HeaderContextProvider from './context/headerContext';
 import NotificationProvider from "./context/notificationContext";
+import FeedbackContextProvider from "./context/feedbackContext";
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import FeedbackContextProvider from "./context/feedbackContext";
 import ScrollToTop from "./scrollToTop";
 ReactDOM.render(
     <UserContextProvider>

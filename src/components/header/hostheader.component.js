@@ -75,22 +75,16 @@ function HostHeader() {
         let isActive = true;
         socket.on("receive_rental", (content, sendDate) => {
             if (isActive) {
-                setToastNoti({
-                    status: "SEEN",
-                    content: content,
-                    last_update: sendDate
-                })
+                const exposedContent = content.split("|")[0];
+                setToastNoti(exposedContent);
                 setToast(true);
                 setNewNotiCount((prevCount) => prevCount + 1);
             }
         })
         socket.on("receive_feedback", (content, sendDate) => {
             if (isActive) {
-                setToastNoti({
-                    status: "SEEN",
-                    content: content,
-                    last_update: sendDate
-                })
+                const exposedContent = content.split("|")[0];
+                setToastNoti(exposedContent);
                 setToast(true);
                 setNewNotiCount((prevCount) => prevCount + 1);
             }
@@ -185,7 +179,7 @@ function HostHeader() {
             </Container>
             <div className={isToast? "d-block position-fixed vh-100 vw-100 top-0 start-0" : "d-none"}>
                 <WeToast position="bottom-start" show={isToast} onClose={() => setToast(false)}>
-                    <NotificationItem noti={toastNoti} />
+                    {toastNoti}
                 </WeToast>
             </div>
         </Navbar>
