@@ -82,7 +82,7 @@ const PlaceCard = ({colorVariant, imageSrc, place, latitude, longitude}) => {
             end_date: null,
             latitude: latitude,
             longitude: longitude,
-            guest: 0,
+            num_guest: 0,
             radius: 20
         }
         localStorage.setItem("search", JSON.stringify(body));

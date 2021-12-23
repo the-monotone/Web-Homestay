@@ -107,7 +107,7 @@ const BillingCard = ({roomId, price, rating, hostId, rentalDateList}) => {
     
     const [startDate, setStartDate] = useState(search.begin_date);
     const [endDate, setEndDate] = useState(search.end_date);
-    const [guest, setGuest] = useState(search.guest);
+    const [guest, setGuest] = useState(search.num_guest);
 
     const { getRentalDateByRoom } = useContext(RoomContext);
     const { postRental } = useContext(RentalContext);
