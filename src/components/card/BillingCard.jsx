@@ -103,8 +103,14 @@ const calcMaxEndDate = (startDate, endDate, rentalDateList) => {
 
 const BillingCard = ({roomId, price, rating, hostId, rentalDateList}) => {
     const [isLoggedIn, setLoggedIn] = useState(false);
-    const search = JSON.parse(localStorage.getItem("search"));
-    
+    let search = JSON.parse(localStorage.getItem("search"));
+    if (search === null) {
+        search = {
+            begin_date: null,
+            end_date: null,
+            num_guest: 0,
+        }
+    }
     const [startDate, setStartDate] = useState(search.begin_date);
     const [endDate, setEndDate] = useState(search.end_date);
     const [guest, setGuest] = useState(search.num_guest);
