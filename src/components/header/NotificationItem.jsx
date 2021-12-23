@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NotificationContext } from '../../context/notificationContext';
+import { useLocation } from 'react-router-dom';
 
 const splitContent = (content) => {
     const contentArray = content.split("|");
@@ -12,6 +13,10 @@ const NotificationItem = ({noti, handleClickNoti}) => {
     const { seenNotification } = useContext(NotificationContext);
     const navigate = useNavigate();
     const [exposedNoti, hiddenNoti] = splitContent(noti.content);
+
+
+    const location = useLocation();
+
     const handleClick = () => {
         const userState = JSON.parse(localStorage.getItem("user-state"));
         if (noti.status === "UNREAD") {
@@ -22,12 +27,15 @@ const NotificationItem = ({noti, handleClickNoti}) => {
                 })
         }
         if (noti.type === "FEEDBACK") {
-            navigate(`/room/${hiddenNoti.room_id}#feedback`);
+            if (location.pathname === `/room/${hiddenNoti.room_id}`) window.location.reload();
+            else navigate(`/room/${hiddenNoti.room_id}#feedback`);
         } else if (noti.type === "RENTAL") {
             if (hiddenNoti.forHost === true) {
-                navigate(`/host/rentalmanagement`);
+                if (location.pathname === '/host/rentalmanagement') window.location.reload();
+                else navigate(`/host/rentalmanagement`);
             } else {
-                navigate(`/rental/user/${noti.user_id}`)
+                if (location.pathname === `/rental/user/${noti.user_id}`) window.location.reload();
+                else navigate(`/rental/user/${noti.user_id}`)
             }
         } else if (noti.type === "ROOM") {
             navigate("/host/roommanager");
