@@ -71,7 +71,6 @@ const UserContextProvider = ({children}) => {
             oldPassword: payload.currentPassword,
             password: payload.newPassword
         };
-        console.log(user_id,token, body);
         return axios.post(`${WEB_API}/api/user/${user_id}/change-password`, body,{
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -85,7 +84,6 @@ const UserContextProvider = ({children}) => {
     }
 
     const signUp = (payload) => {
-        console.log(payload);
         return axios.post(`${WEB_API}/api/user/create`, payload)
             .then(res => res.data)
             .catch(err => {throw(err.response)})

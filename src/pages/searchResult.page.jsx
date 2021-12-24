@@ -54,7 +54,6 @@ const SearchResultPage = () => {
         }
         searchPlaceApi(searchBody)
             .then(res => {
-                console.log(res);
                 if (isActive) {
                     setResults(res);
                     setLoading(false);

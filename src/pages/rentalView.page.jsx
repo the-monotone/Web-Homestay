@@ -33,7 +33,6 @@ const RentalViewPage = () => {
     useEffect(() => {
         getRental(userState.token, userState.userId)
             .then(res => {
-                console.log(res);
                 setRental(res);
             })
     }, []);

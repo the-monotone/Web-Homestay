@@ -39,7 +39,6 @@ function HostHeader() {
         setLoadNoti(true);
         getNotification(userState.token)
             .then(res => {
-                console.log(res);
                 setNoti(res);
                 setLoadNoti(false);
                 setNewNotiCount(res.filter((item) => item.status === "UNREAD").length);

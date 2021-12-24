@@ -25,7 +25,6 @@ const RoomViewPage = () => {
         let isActive = true;
         readRoom(roomId)
             .then(res => {
-                console.log(res);
                 if (isActive) setRoom(res);
                 if (!userState) return;
                 getFeedback(res.room_id, userState.token)
@@ -51,7 +50,6 @@ const RoomViewPage = () => {
 
         getRentalDateByRoom(roomId)
             .then(res => {
-                console.log(res);
                 if (isActive) setRentalDate(res);
             })
             .catch(err => {

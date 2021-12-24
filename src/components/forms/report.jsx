@@ -19,12 +19,10 @@ export const Report = (props) => {
         const request = {
             description: report
         }
-        console.log("Report: ", request);
         const sendReport = async () => {
             setIsSending(true);
             await axios.post(`${WEB_API}/api/report/create`, request)
                 .then(res => {
-                    console.log(res);
                     setToast(true);
                     props.onHide();
                 })

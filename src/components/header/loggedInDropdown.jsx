@@ -23,7 +23,6 @@ const LoggedInDropdown = () => {
             setGetting(true);
             await getInfo(userState.userId)
                 .then(data => {
-                    console.log(data);
                     if (isActive) setIsClient(data.role === 'client');
                 })
                 .catch(err => {
@@ -53,7 +52,6 @@ const LoggedInDropdown = () => {
             setGetting(true);
             await updateInfo(userState.token, {role: "host", user_id: userState.userId})
                 .then(res => {
-                    console.log(res);
                 })
                 .catch(err => {
                     console.log(err);

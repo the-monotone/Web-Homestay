@@ -157,7 +157,6 @@ const BillingCard = ({roomId, price, rating, hostId, rentalDateList}) => {
                 }
                 postRental(userState.token, body)
                     .then(data => {
-                        console.log(data);
                         const optionGuest = JSON.stringify({
                             forHost: false,
                             host_id: hostId

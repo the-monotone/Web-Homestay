@@ -48,7 +48,6 @@ export const RoomManager = () => {
       setGetting(true);
       await getRoomList(userState, type, roomPerPage, currentPage)
         .then(res => {
-          console.log(res);
           if (res.message === "No room") setRoomList([]);
           else {
             setRoomList([...res.rooms]);

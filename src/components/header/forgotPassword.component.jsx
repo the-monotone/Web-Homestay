@@ -19,7 +19,6 @@ const ForgotPasswordModal = (props) => {
             .email("Không đúng định dạng email"),
     })
     const handleSubmit = (value) => {
-        console.log(value); 
         const body = {
             username: value.username.trim(),
             email: value.email.trim()

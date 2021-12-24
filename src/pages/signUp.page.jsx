@@ -47,7 +47,6 @@ export const Signup = (props) => {
         const doSignUp = async () => {
             setPosting(true);
             const {userType, confirmPassword, ...account} = value;
-            console.log(account);
             await signUp({...account, role: userType === 2 ? "client" : "host"})
                 .then(res => {
                     const logInAccount = {

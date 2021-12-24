@@ -26,7 +26,6 @@ const RentalContextProvider = ({children}) => {
                 }
             })
             .then(res => {
-                console.log(res);
                 return res.data;
             })
             .catch(err => {
@@ -42,7 +41,6 @@ const RentalContextProvider = ({children}) => {
                 }
             })
             .then(res => {
-                console.log(res);
                 return res.data;
             })
             .catch(err => {
@@ -76,7 +74,6 @@ const RentalContextProvider = ({children}) => {
             return null;
         }
         const {rental_id, ...request} = payload;
-        console.log(rental_id, request);
         return axios
             .put(`${WEB_API}/api/rental/${rental_id}`, request, {
                 headers: {

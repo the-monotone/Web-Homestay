@@ -57,7 +57,6 @@ export const RentalManagement = () => {
             if (isUnconfirmedList) {
                 await getRentalByHost(userState.token, userState.userId, "UNCONFIRMED", currentPage, rentalPerPage)
                     .then(res => {
-                        console.log(res);
                         setRentalList([...res.rentals]);
                         setTotalRental(res.total);
                     })
@@ -67,7 +66,6 @@ export const RentalManagement = () => {
             } else {
                 await getRentalByHost(userState.token, userState.userId, "CONFIRMED", currentPage, rentalPerPage)
                     .then(res => {
-                        console.log(res);
                         setRentalList([...res.rentals]);
                         setTotalRental(res.total);
                     })

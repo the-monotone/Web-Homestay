@@ -29,7 +29,6 @@ export const HostRentalCard = ({rental, isUnconfirmed, children}) => {
             }
             await updateRental(userState.token, rentalAfter)
                 .then(res => {
-                    console.log(res);
                     const optionGuest = JSON.stringify({
                         forHost: false,
                         host_id: rental.host_id

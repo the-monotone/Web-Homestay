@@ -77,7 +77,6 @@ export const RatingModal = (props) => {
             feedback: event.target[0].value,
             rate: rating
         }
-        console.log(body);
         postFeedback(body, userState.token);
         const options = JSON.stringify({
             room_id: props.room_id

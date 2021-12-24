@@ -23,7 +23,6 @@ export const AccountSettings = () => {
             setGetting(true);
             await getInfo(userState.userId)
                 .then(data => {
-                    console.log(data);
                     setUserInfo({
                         user_id: data.user_id,
                         name: data.name,

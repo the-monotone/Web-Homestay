@@ -95,6 +95,7 @@ export const SearchPlaceInput = ({label, errStyle,setPosition , ...props}) => {
                             className: `input-w100 form-control shadow-none ${meta.touched && meta.error && 'is-invalid'}`, 
                             as: 'input',
                             autoComplete: 'off',
+                            placeholder: 'Place',
                             onFocus: () => {setSearchPlace(true)},
                             onBlur: () => {setSearchPlace(false)}
                         })} />

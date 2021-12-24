@@ -13,7 +13,6 @@ const displayMoney = (amount) => {
 }
 
 const RentalCard = ({rental, children}) => {
-    console.log(rental);
     const navigate = useNavigate();
     const handleClick = () => {
         navigate(`/room/${rental.room_id}`);

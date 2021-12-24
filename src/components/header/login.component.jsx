@@ -20,7 +20,6 @@ const LoginModal = (props) => {
             .required("Bắt buộc")
     })
     const handleSubmit = (value) => {
-        console.log(value); 
         const body = {
             username: value.username.trim(),
             password: value.password

@@ -81,7 +81,6 @@ const RoomContextProvider = ({children}) => {
                 }
         })
             .then(res => {
-                console.log(res);
                 return "Update success";
             })
             .catch(err => {
@@ -90,7 +89,6 @@ const RoomContextProvider = ({children}) => {
     }
 
     const deleteRoom = (token, id) => {
-        console.log(id);
         return axios.delete(`${WEB_API}/api/room/${id}`,{
             headers: {
                 "Authorization": `Bearer ${token}`

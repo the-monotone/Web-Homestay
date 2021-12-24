@@ -75,7 +75,6 @@ const SearchModal = ({ show, onHide }) => {
           num_guest: guest,
           radius: 10,
         }
-        console.log(body);
         localStorage.setItem("search", JSON.stringify(body));
         onHide();
         navigate({
@@ -94,7 +93,6 @@ const SearchModal = ({ show, onHide }) => {
         num_guest: guest,
         radius: 10,
       };
-      console.log(body);
       onHide();
       localStorage.setItem("search", JSON.stringify(body));
       navigate({
@@ -309,7 +307,6 @@ export const OnlySearchBar = () => {
           num_guest: guest,
           radius: 10,
         }
-        console.log(body);
         localStorage.setItem("search", JSON.stringify(body));
         navigate({
           pathname: "/search",
@@ -327,7 +324,6 @@ export const OnlySearchBar = () => {
         num_guest: guest,
         radius: 10,
       };
-      console.log(body);
       localStorage.setItem("search", JSON.stringify(body));
       navigate({
         pathname: "/search",
