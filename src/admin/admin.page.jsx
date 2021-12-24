@@ -31,7 +31,7 @@ export const AdminPage = () => {
         {!isAdmin ? <DenyAccess/> :  
         <Tab.Container id="left-tabs-example" defaultActiveKey="user" >
             <Row className='gx-0'>
-                <Col md='1' className='bg-success d-flex align-items-center justify-content-center' >
+                <Col md='1' className='bg-light d-flex align-items-center justify-content-center' >
                 <Nav variant="pills" className="flex-column">
                     <Nav.Item>
                         <Nav.Link eventKey="user" className='text-white'>User</Nav.Link>
